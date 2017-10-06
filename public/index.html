@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>BathyBoat</title>
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/index.js"></script>
 </head>
 <body>
     <h2>Welcome to BathyBoat</h2>
@@ -12,7 +15,36 @@
             Common Part
         </div>
         <div class="col-md-9">
-            Tabs
+            <div class="container">
+                <ul class="nav nav-pills">
+                    <li class="active"><a href="#tab-map" data-toggle="tab">Map</a></li>
+                    <li><a href="#tab-control" data-toggle="tab">Controls</a></li>
+                    <li><a href="#tab-measures" data-toggle="tab">Measures</a></li>
+                    <li><a href="#tab-4" data-toggle="tab">Tab 4</a></li>
+                    <li><a href="#tab-5" data-toggle="tab">Tab 5</a></li>
+                    <li><a href="#tab-6" data-toggle="tab">Tab 6</a></li>
+                </ul>
+                <div class="tab-content clearfix">
+                    <div class="tab-pane active" id="tab-map">
+                        <h1>MAP</h1>
+                    </div>
+                    <div class="tab-pane clearfix" id="tab-control">
+                        <h1>Controls</h1>
+                    </div>
+                    <div class="tab-pane clearfix" id="tab-measures">
+                        <h1>MEASURES</h1>
+                    </div>
+                    <div class="tab-pane clearfix" id="tab-4">
+                        <h1></h1>
+                    </div>
+                    <div class="tab-pane clearfix" id="tab-5">
+                        <h1></h1>
+                    </div>
+                    <div class="tab-pane clearfix" id="tab-6">
+                        <h1></h1>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
