@@ -9,39 +9,126 @@
     <script src="js/index.js"></script>
 </head>
 <body>
-    <h2>Welcome to BathyBoat</h2>
     <div class="row">
-        <div class="col-md-3">
-            Common Part
-        </div>
-        <div class="col-md-9">
-            <div class="container">
-                <ul class="nav nav-pills">
-                    <li class="active"><a href="#tab-map" data-toggle="tab">Map</a></li>
-                    <li><a href="#tab-control" data-toggle="tab">Controls</a></li>
-                    <li><a href="#tab-measures" data-toggle="tab">Measures</a></li>
-                    <li><a href="#tab-4" data-toggle="tab">Tab 4</a></li>
-                    <li><a href="#tab-5" data-toggle="tab">Tab 5</a></li>
-                    <li><a href="#tab-6" data-toggle="tab">Tab 6</a></li>
-                </ul>
-                <div class="tab-content clearfix">
-                    <div class="tab-pane active" id="tab-map">
-                        <h1>MAP</h1>
+            <div class="well col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <img class="img-responsive btn" id="stop_button" src="images/stop_button.png" style="alignment: center">
+                                <h4  style="text-align: center">STOP</h4>
+                            </div>
+                            <div class="col-md-7">
+                                <table>
+                                    <tr>
+                                        <td class="col-md-6"><img class="img-responsive" id="wifi_picture" style="width: 50%" src="images/wifi.png">
+                                        <td class="col-md-6" id="wifi_text" style="text-align: justify">Connected</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-6"><img class="img-responsive" id="battery_picture" style="width: 50%" src="images/battery_full.png"></td>
+                                        <td class="col-md-6">
+                                            <ul class="list-unstyled" style="text-align: justify" >
+                                                <li id="motor1_lvl_bat">90% M1</li>
+                                                <li id="motor2_lvl_bat">80% M2</li>
+                                                <li id="elec_lvl_bat">70% Elec</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                    <div class="tab-pane clearfix" id="tab-control">
-                        <h1>Controls</h1>
-                    </div>
-                    <div class="tab-pane clearfix" id="tab-measures">
-                        <h1>MEASURES</h1>
-                    </div>
-                    <div class="tab-pane clearfix" id="tab-4">
-                        <h1></h1>
-                    </div>
-                    <div class="tab-pane clearfix" id="tab-5">
-                        <h1></h1>
-                    </div>
-                    <div class="tab-pane clearfix" id="tab-6">
-                        <h1></h1>
+                </div>
+
+            <div class="panel panel-warning" id="warning_panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Warnings !</h3>
+                </div>
+                <div class="panel-body">
+                    <h5 id="alert1_text">Alerte1</h5>
+                    <h5 id="alert2_text">Alerte2</h5>
+                    <h5 id="alert3_text">Alerte3</h5>
+                    <h5 id="alert4_text">Alerte4</h5>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table>
+                        <tr>
+                            <td class="col-md-6"><img class="img-responsive" style="width: 35%" src="images/speed.png"></td>
+                            <td class="col-md-6"><img class="img-responsive" style="width: 35%" src="images/compass.png"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-6" style="text-align: center" id="speed_lvl"><h3>2 kts</h3></td>
+                            <td class="col-md-6" style="text-align: center" id="yaw_lvl"><h3>12°</h3></td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-6" style="text-align: center"><h4>Latitude:</h4></td>
+                            <td class="col-md-6" style="text-align: center"><h4>Longitude:</h4></td>
+                        <tr>
+                            <td class="col-md-6" style="text-align: center" id="latitude"><h3>359.33359265</h3></td>
+                            <td class="col-md-6" style="text-align: center" id="longitude"><h3>359.33359265</h3></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Session</h3>
+                </div>
+                <td class="panel-body">
+                    <table class="table table-striped table-hover ">
+                        <tr>
+                            <td>Temps</td>
+                            <td id="session_time">00:12:38</td>
+                        </tr>
+                        <tr>
+                            <td>Distance</td>
+                            <td id="session_distance">24km</td>
+                        </tr>
+                        <tr>
+                            <td>Progression</td>
+                            <td>
+                                <div class="progress progress-striped active">
+                                    <div class="progress-bar" id="session_progress" style="width: 45%"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        <div class=" col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab-map" data-toggle="tab">Carte</a></li>
+                        <li><a href="#tab-control" data-toggle="tab">Contrôles</a></li>
+                        <li><a href="#tab-measures" data-toggle="tab">Mesures</a></li>
+                        <li><a href="#tab-4" data-toggle="tab">Tab 4</a></li>
+                        <li><a href="#tab-5" data-toggle="tab">Tab 5</a></li>
+                        <li><a href="#tab-6" data-toggle="tab">Tab 6</a></li>
+                    </ul>
+                    <div class="tab-content clearfix">
+                        <div class="tab-pane active" id="tab-map">
+                            <h1>Cartes</h1>
+                        </div>
+                        <div class="tab-pane clearfix" id="tab-control">
+                            <h1>Contrôles</h1>
+                        </div>
+                        <div class="tab-pane clearfix" id="tab-measures">
+                            <h1>Mesures</h1>
+                        </div>
+                        <div class="tab-pane clearfix" id="tab-4">
+                            <h1></h1>
+                        </div>
+                        <div class="tab-pane clearfix" id="tab-5">
+                            <h1></h1>
+                        </div>
+                        <div class="tab-pane clearfix" id="tab-6">
+                            <h1></h1>
+                        </div>
                     </div>
                 </div>
             </div>
