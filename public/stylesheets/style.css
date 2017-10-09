@@ -69,7 +69,6 @@ a:hover {
 abbr[title] {
     border-bottom: 1px dotted;
 }
-
 b,
 strong {
     font-weight: bold;
@@ -323,6 +322,9 @@ th {
     .table-bordered td {
         border: 1px solid #ddd !important;
     }
+}
+.data{
+    font-size: 25px;
 }
 
 @font-face {
@@ -4917,7 +4919,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 
 .nav > li.disabled > a:hover,
 .nav > li.disabled > a:focus {
-    color: #b4bcc2;
+    color: #edf9ff;
     text-decoration: none;
     background-color: transparent;
     cursor: not-allowed;
@@ -4926,7 +4928,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav .open > a,
 .nav .open > a:hover,
 .nav .open > a:focus {
-    background-color: #ecf0f1;
+    background-color: #fafeff;
     border-color: #18bc9c;
 }
 
@@ -4958,14 +4960,14 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 
 .nav-tabs > li > a:hover {
-    border-color: #ecf0f1 #ecf0f1 #ecf0f1;
+    border-color: #18bc9c #18bc9c #18bc9c;
 }
 
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
     color: #2c3e50;
-    background-color: #ffffff;
+    background-color: #ecf0f1;
     border: 1px solid #ecf0f1;
     border-bottom-color: transparent;
     cursor: default;
@@ -5110,6 +5112,9 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     }
 }
 
+.tab-content {
+    background-color: #ecf0f1;
+}
 .tab-content > .tab-pane {
     display: none;
 }
@@ -7106,8 +7111,7 @@ button.list-group-item-danger.active:focus {
 
 .well {
     min-height: 20px;
-    padding: 15px;
-    margin-bottom: 20px;
+    padding: 12px 12px 1px 25px;
     background-color: #ecf0f1;
     border: 1px solid transparent;
     border-radius: 4px;
@@ -9849,7 +9853,7 @@ html {
 
 body {
     font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 15px;
+    font-size: 18px;
     line-height: 1.42857143;
     color: #2c3e50;
     background-color: #ffffff
@@ -12791,7 +12795,7 @@ textarea.input-group-sm > .form-control, textarea.input-group-sm > .input-group-
 
 .nav > li > a:hover, .nav > li > a:focus {
     text-decoration: none;
-    background-color: #ecf0f1
+    background-color: #fafeff
 }
 
 .nav > li.disabled > a {
@@ -12822,7 +12826,7 @@ textarea.input-group-sm > .form-control, textarea.input-group-sm > .input-group-
 }
 
 .nav-tabs {
-    border-bottom: 1px solid #ecf0f1
+    border-bottom: 1px solid #ecf0f1;
 }
 
 .nav-tabs > li {
@@ -12838,12 +12842,12 @@ textarea.input-group-sm > .form-control, textarea.input-group-sm > .input-group-
 }
 
 .nav-tabs > li > a:hover {
-    border-color: #ecf0f1 #ecf0f1 #ecf0f1
+    border-color: #18bc9c #18bc9c #18bc9c
 }
 
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
     color: #2c3e50;
-    background-color: #ffffff;
+    background-color: #ecf0f1;
     border: 1px solid #ecf0f1;
     border-bottom-color: transparent;
     cursor: default
@@ -14702,8 +14706,7 @@ a.list-group-item-danger.active, button.list-group-item-danger.active, a.list-gr
 
 .well {
     min-height: 20px;
-    padding: 15px;
-    margin-bottom: 20px;
+    padding: 12px 12px 1px 25px;
     background-color: #ecf0f1;
     border: 1px solid transparent;
     border-radius: 4px;

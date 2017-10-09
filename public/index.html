@@ -16,16 +16,15 @@
                         <div class="row">
                             <div class="col-md-5">
                                 <img class="img-responsive btn" id="stop_button" src="images/stop_button.png" style="alignment: center">
-                                <h4  style="text-align: center">STOP</h4>
                             </div>
                             <div class="col-md-7">
-                                <table>
+                                <table class="table-hover">
                                     <tr>
-                                        <td class="col-md-6"><img class="img-responsive" id="wifi_picture" style="width: 50%" src="images/wifi.png">
-                                        <td class="col-md-6" id="wifi_text" style="text-align: justify">Connected</td>
+                                        <td><img class="img-responsive" id="wifi_picture" style="width: 55%" src="images/wifi.png">
+                                        <td class="col-md-6" id="wifi_text" style="text-align: justify">Connecté</td>
                                     </tr>
                                     <tr>
-                                        <td class="col-md-6"><img class="img-responsive" id="battery_picture" style="width: 50%" src="images/battery_full.png"></td>
+                                        <td><img class="img-responsive" id="battery_picture" style="width: 55%" src="images/battery_full.png"></td>
                                         <td class="col-md-6">
                                             <ul class="list-unstyled" style="text-align: justify" >
                                                 <li id="motor1_lvl_bat">90% M1</li>
@@ -40,35 +39,36 @@
                     </div>
                 </div>
 
-            <div class="panel panel-warning" id="warning_panel">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Warnings !</h3>
+                <div class="alert alert-dismissible alert-warning">
+                    <button type="button" id="alerte1" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Alerte :</strong> Alerte1
                 </div>
-                <div class="panel-body">
-                    <h5 id="alert1_text">Alerte1</h5>
-                    <h5 id="alert2_text">Alerte2</h5>
-                    <h5 id="alert3_text">Alerte3</h5>
-                    <h5 id="alert4_text">Alerte4</h5>
+                <div class="alert alert-dismissible alert-warning">
+                    <button type="button" id="alerte2" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Alerte :</strong> Alerte2
                 </div>
-            </div>
+                <div class="alert alert-dismissible alert-warning">
+                    <button type="button" id="alerte3" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Alerte :</strong> Alerte3
+                </div>
 
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <table>
+                    <table class="table table-striped table-hover ">
                         <tr>
-                            <td class="col-md-6"><img class="img-responsive" style="width: 35%" src="images/speed.png"></td>
-                            <td class="col-md-6"><img class="img-responsive" style="width: 35%" src="images/compass.png"></td>
+                            <td class="col-md-6"><img class="img-responsive" style="width: 30%" src="images/speed.png"></td>
+                            <td class="col-md-6 data" id="speed_lvl">2 kts</td>
                         </tr>
                         <tr>
-                            <td class="col-md-6" style="text-align: center" id="speed_lvl"><h3>2 kts</h3></td>
-                            <td class="col-md-6" style="text-align: center" id="yaw_lvl"><h3>12°</h3></td>
+                            <td class="col-md-6"><img class="img-responsive" style="width: 30%" src="images/compass.png"></td>
+                            <td class="col-md-6 data" id="yaw_lvl">12°</td>
                         </tr>
                         <tr>
-                            <td class="col-md-6" style="text-align: center"><h4>Latitude:</h4></td>
-                            <td class="col-md-6" style="text-align: center"><h4>Longitude:</h4></td>
+                            <td class="col-md-6">Latitude</td>
+                            <td class="col-md-6" id="latitude">359.33359265</td>
                         <tr>
-                            <td class="col-md-6" style="text-align: center" id="latitude"><h3>359.33359265</h3></td>
-                            <td class="col-md-6" style="text-align: center" id="longitude"><h3>359.33359265</h3></td>
+                            <td class="col-md-6">Longitude</td>
+                            <td class="col-md-6" id="longitude">359.33359265</td>
                         </tr>
                     </table>
                 </div>
