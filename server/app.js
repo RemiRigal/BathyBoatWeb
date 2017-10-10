@@ -1,35 +1,49 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+var client = require('./tcp_client.js');
 
-var app = express();
+var data = {};
 
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+function splitData(raw) {
+    var splitted = raw.split(';');
+    if (splitted.length < 2) {
+        return null;
+    }
+    var msg = {
+        type: splitted[0],
+        date: splitted[1],
+        content: {}
+    };
+    if (msg.type === '$POS') {
+        msg.content.lat = splitted[2];
+        msg.content.long = splitted[3];
+        msg.content.yaw = splitted[4];
+        msg.content.pitch = splitted[5];
+        msg.content.roll = splitted[6];
+        msg.content.speed = splitted[7];
+        msg.content.signal = splitted[8];
+    } else if (msg.type === '$DATA') {
+        msg.content.temp = splitted[2];
+        msg.content.hydro1 = splitted[3];
+        msg.content.hydro2 = splitted[4];
+    } else if (msg.type === '$BATT') {
+        msg.content.m1 = splitted[2];
+        msg.content.m2 = splitted[3];
+        msg.content.elec = splitted[4];
+    } else {
+        return null;
+    }
+    return msg;
+}
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+function onDataReceived(data) {
+    console.log(splitData(data));
+}
+
+var readBuffer = '';
+client.on('data', function(data) {
+    readBuffer += data;
+    var msg = readBuffer.split('\n');
+    for (var i = 0; i < msg.length - 1; i++) {
+        onDataReceived(msg[i]);
+    }
+    readBuffer = msg[msg.length - 1];
 });
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
-module.exports = app;
