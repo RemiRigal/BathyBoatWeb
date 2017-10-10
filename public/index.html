@@ -10,6 +10,7 @@
     <script src="js/alerts.js"></script>
 </head>
 <body>
+
     <div class="row">
             <div class="well col-md-3">
                 <div class="panel panel-default">
@@ -89,6 +90,8 @@
                     </table>
                 </div>
             </div>
+
+
         <div class=" col-md-9">
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -102,10 +105,42 @@
                     </ul>
                     <div class="tab-content clearfix">
                         <div class="tab-pane active" id="tab-map">
-                            <h1>Cartes</h1>
                         </div>
                         <div class="tab-pane clearfix" id="tab-control">
-                            <h1>Contrôles</h1>
+                            <table class="table ">
+                                <tr>
+                                    <td class="col-md-6">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body" id="cmd_map">
+                                                Carte
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-md-6">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body" id="motor">
+                                                retour moteur
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-6">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body" id="reliability">
+                                                Fiabilité de la navigation
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-md-6">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body" id="speed_regulation">
+                                                Régulation vitesse
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                         <div class="tab-pane clearfix" id="tab-measures">
                             <h1>Mesures</h1>
