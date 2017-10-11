@@ -74,27 +74,9 @@
 
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Session</h3>
+                    <h3 class="panel-title">Carte</h3>
                 </div>
                 <div class="panel-body">
-                    <table class="table table-striped table-hover ">
-                        <tr>
-                            <td>Temps</td>
-                            <td id="session_time">00:00:00</td>
-                        </tr>
-                        <tr>
-                            <td>Distance</td>
-                            <td id="session_distance">0.000 km</td>
-                        </tr>
-                        <tr>
-                            <td>Progression</td>
-                            <td>
-                                <div class="progress progress-striped active">
-                                    <div class="progress-bar" id="session_progress" style="width: 100%"></div>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
                 </div>
             </div>
             </div>
@@ -143,25 +125,6 @@
                             <table class="table">
                                 <tr>
                                     <td class="col-md-4">
-                                        <div class="panel panel-info">
-                                            <div class="panel-heading"><h3 class="panel-title">Carte</h3></div>
-                                            <div class="panel-body" id="cmd_map">Carte</div>
-                                        </div>
-                                    </td>
-                                    <td class="col-md-6">
-                                        <div class="panel panel-info">
-                                            <div class="panel-heading"><h3 class="panel-title">Vidéo</h3></div>
-                                            <div class="panel-body"  style="background-color: #dde1e2;">
-                                                <div id="video" class="btn" style="width: 100%; height: 100%; background: #b62516;">
-                                                    <!--Video-->
-                                                </div>
-                                                <img src="images/play_button.png" style="width: 22%;" class="btn center-block" id="video_button" >
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-4">
                                         <div class="panel panel-default">
                                             <div class="panel-body">
                                                 <div class="tab-pane clearfix">
@@ -173,8 +136,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </td>
-                                    <td class="col-md-6">
                                         <div class="panel panel-default">
                                             <div class="panel-body">
                                                 <table class="table">
@@ -195,6 +156,17 @@
                                         <div class="panel panel-default">
                                             <div class="panel-body">
                                                 Fiabilité de la navigation : <strong  id="reliability"> 90% </strong>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-md-6">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading"><h3 class="panel-title">Vidéo</h3></div>
+                                            <div class="panel-body"  style="background-color: #dde1e2;">
+                                                <div id="video" class="btn" style="width: 100%; height: 100%; background: #b62516;">
+                                                    <!--Video-->
+                                                </div>
+                                                <img src="images/play_button.png" style="width: 22%;" class="btn center-block" id="video_button" >
                                             </div>
                                         </div>
                                     </td>
@@ -230,7 +202,7 @@
                                     <td class="col-md-6">
                                         <div class="panel panel-primary">
                                             <div class="panel-heading">
-                                                <h3 class="panel-title">Contrôle de qualité</h3>
+                                                <h3 class="panel-title">Contrôle qualité</h3>
                                             </div>
                                             <div class="panel-body">
                                                 <table class="table table-striped table-hover">
@@ -266,6 +238,30 @@
                         </div>
                         <div class="tab-pane clearfix" id="tab-6">
                             <h1></h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom navbar-fixed-bottom">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="copyright">
+                                <div class="row">
+                                    <div class="col-md-4"> Time : </div>
+                                    <div class="col-md-8">
+                                    <h4 id="session_time">00:00:00</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" design col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="row">
+                                <div class="col-md-4">Progression :</div>
+                                <div class="col-md-8 progress progress-bar-info progress-striped active">
+                                    <div class="progress-bar-info" id="session_progress" style="width: 100%"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

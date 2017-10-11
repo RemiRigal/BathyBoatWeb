@@ -6023,6 +6023,27 @@ a.label:focus {
 .label-danger[href]:focus {
     background-color: #d62c1a;
 }
+.footer-bottom {
+    background-color: #2c3e50;
+    min-height: 20px;
+    width: 100%;
+}
+.copyright {
+    color: #fff;
+    line-height: 30px;
+    min-height: 30px;
+    padding: 7px 0;
+}
+.design {
+    color: #fff;
+    line-height: 30px;
+    min-height: 30px;
+    padding: 7px 0;
+    text-align: right;
+}
+.design a {
+    color: #fff;
+}
 
 .badge {
     display: inline-block;
