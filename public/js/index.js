@@ -1,7 +1,13 @@
+var globalData = {
+    pos: [],
+    mot: [],
+    batt: [],
+    data: []
+};
 
 function setTelemetry(lat, long, yaw, pitch, roll, speed) {
-    $('#speed_lvl').html(speed + ' kts');
-    $('#yaw_lvl').html(yaw + '°');
+    $('#speed_lvl').html(Math.round(speed * 10) / 10 + ' kts');
+    $('#yaw_lvl').html(Math.round(yaw * 10) / 10 + '°');
     $('#latitude').html(lat);
     $('#longitude').html(long);
 }

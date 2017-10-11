@@ -4,6 +4,7 @@ var sessionProgress = 0;
 
 function startSession() {
     sessionStart = new Date();
+    setInterval(updateSession, 100);
 }
 
 function updateSession() {
