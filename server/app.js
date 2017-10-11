@@ -1,49 +1,69 @@
-var client = require('./tcp_client.js');
+var express = require('express');
+var cors = require('cors');
+var shell = require('shelljs');
+var backendUtils = require('./backend_utils.js');
+var bodyParser = require('body-parser');
+var tcpClient = require('./tcp_client.js');
 
-var data = {};
-
-function splitData(raw) {
-    var splitted = raw.split(';');
-    if (splitted.length < 2) {
-        return null;
-    }
-    var msg = {
-        type: splitted[0],
-        date: splitted[1],
-        content: {}
-    };
-    if (msg.type === '$POS') {
-        msg.content.lat = splitted[2];
-        msg.content.long = splitted[3];
-        msg.content.yaw = splitted[4];
-        msg.content.pitch = splitted[5];
-        msg.content.roll = splitted[6];
-        msg.content.speed = splitted[7];
-        msg.content.signal = splitted[8];
-    } else if (msg.type === '$DATA') {
-        msg.content.temp = splitted[2];
-        msg.content.hydro1 = splitted[3];
-        msg.content.hydro2 = splitted[4];
-    } else if (msg.type === '$BATT') {
-        msg.content.m1 = splitted[2];
-        msg.content.m2 = splitted[3];
-        msg.content.elec = splitted[4];
-    } else {
-        return null;
-    }
-    return msg;
-}
+// TCP Client
+var globalData = {
+    pos: [],
+    mot: [],
+    batt: [],
+    data: []
+};
 
 function onDataReceived(data) {
-    console.log(splitData(data));
+    switch (data.type) {
+        case '$POS':
+            globalData.pos.push(data);
+            break;
+        case '$BATT':
+            globalData.batt.push(data);
+            break;
+        case '$MOT':
+            globalData.mot.push(data);
+            break;
+        case '$DATA':
+            globalData.data.push(data);
+            break;
+    }
 }
 
-var readBuffer = '';
-client.on('data', function(data) {
-    readBuffer += data;
-    var msg = readBuffer.split('\n');
-    for (var i = 0; i < msg.length - 1; i++) {
-        onDataReceived(msg[i]);
+var client = tcpClient(onDataReceived);
+
+
+// Express App
+var app = express();
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(cors());
+
+app.get('/data', function(req, res) {
+    var now = new Date();
+    var update = {};
+
+    if (req.body.lastUpdate === undefined) {
+        update = globalData;
+    } else {
+        var lastUpdate = new Date(req.body.lastUpdate);
+        update.pos = backendUtils.getLastData(globalData.pos, lastUpdate);
+        update.batt = backendUtils.getLastData(globalData.batt, lastUpdate);
+        update.mot = backendUtils.getLastData(globalData.mot, lastUpdate);
+        update.data = backendUtils.getLastData(globalData.data, lastUpdate);
     }
-    readBuffer = msg[msg.length - 1];
+
+    update.newUpdate = now;
+    res.send(JSON.stringify(update));
 });
+
+app.post('/video', function(req, res) {
+    if (req.body.action === 'enable') {
+        console.log('Starting capture');
+        shell.exec('pm2 start video-capture');
+    } else {
+        console.log('Stopping capture');
+        shell.exec('pm2 stop video-capture');
+    }
+});
+
+app.listen(29201);
