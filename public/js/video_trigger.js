@@ -13,14 +13,14 @@ function triggerVideo() {
     }
     console.log('Video state: ' + videoEnabled);
 
-    $.ajax({
-        type: 'POST',
-        url: 'http://192.168.0.10:29201/video',
-        data: {action: videoEnabled ? 'enable' : 'disable', time: new Date()},
-        error: function(error) {
-            console.log(error);
-        }
-    });
+    // $.ajax({
+    //     type: 'POST',
+    //     url: 'http://192.168.0.10:29201/video',
+    //     data: {action: videoEnabled ? 'enable' : 'disable', time: new Date()},
+    //     error: function(error) {
+    //         console.log(error);
+    //     }
+    // });
 }
 
 $(document).ready(function() {
