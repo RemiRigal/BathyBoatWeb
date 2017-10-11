@@ -57,6 +57,7 @@ app.get('/data', function(req, res) {
 });
 
 app.post('/video', function(req, res) {
+
     if (req.body.action === 'enable') {
         console.log('Starting capture');
         shell.exec('pm2 start video-capture');
@@ -64,6 +65,7 @@ app.post('/video', function(req, res) {
         console.log('Stopping capture');
         shell.exec('pm2 stop video-capture');
     }
+    console.log(new Date(new Date() - new Date(req.body.time)));
 });
 
 app.listen(29201);
