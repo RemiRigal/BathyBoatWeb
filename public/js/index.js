@@ -22,6 +22,11 @@ function setBatteryLevels(m1, m2, elec) {
     $('#elec_lvl_bat').html('Elec: ' + elec + '%');
 }
 
-$(document).ready(function() {
+function test() {
+    var m = d3.range(2).map(d3.randomUniform(-2, 2));
+    updateBars(m[0], m[1]);
+}
 
+$(document).ready(function() {
+    setInterval(test, 100);
 });

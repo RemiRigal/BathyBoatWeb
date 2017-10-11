@@ -15957,3 +15957,12 @@ a.list-group-item-danger.active:hover, a.list-group-item-danger.active:focus {
 .popover {
     color: #2c3e50
 }
+
+.bar rect {
+    fill: #2c3e50;
+}
+
+.bar text {
+    fill: #red;
+    font: 10px sans-serif;
+}

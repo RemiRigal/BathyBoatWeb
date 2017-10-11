@@ -11,6 +11,8 @@
     <script src="js/session.js"></script>
     <script src="js/data_receiver.js"></script>
     <script src="js/video_trigger.js"></script>
+    <script src="js/d3.min.js"></script>
+    <script src="js/motor_monitor.js"></script>
 </head>
 <body>
 
@@ -130,16 +132,11 @@
                                         <div class="panel panel-default">
                                             <div class="panel-body">
                                                 <div class="tab-pane clearfix">
-                                                    <table class="table" >
-                                                        <tr>
-                                                            <td></td>
-                                                            <td></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Vitesse Moteur 1</td>
-                                                            <td>Vitesse Moteur 2</td>
-                                                        </tr>
-                                                    </table>
+                                                    <svg class="center-block" width="400" height="300"></svg>
+                                                    <div style="padding-left: 14%; padding-right: 14%">
+                                                        <div class="col-md-6 text-center">Moteur 1</div>
+                                                        <div class="col-md-6 text-center">Moteur 2</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
