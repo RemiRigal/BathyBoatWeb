@@ -13,6 +13,7 @@
     <script src="js/video_trigger.js"></script>
     <script src="js/d3.min.js"></script>
     <script src="js/motor_monitor.js"></script>
+    <script src="js/imp_exp_mission.js"></script>
 </head>
 <body>
 
@@ -96,7 +97,6 @@
                     </table>
                 </div>
             </div>
-
             </div>
         <div class=" col-md-9">
             <div class="panel panel-default">
@@ -109,12 +109,40 @@
                         <li><a href="#tab-5" data-toggle="tab">Tab 5</a></li>
                         <li><a href="#tab-6" data-toggle="tab">Tab 6</a></li>
                     </ul>
+
                     <div class="tab-content clearfix">
-                        <div class="tab-pane active" id="tab-map"></div>
-                        <div class="tab-pane clearfix" id="tab-control">
-                            <table class="table ">
+
+                        <div class="tab-pane active" id="tab-map">
+                            <table>
                                 <tr>
-                                    <td class="col-md-6">
+                                    <td class=" col-md-11">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                Carte
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class=" col-md-1">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <table>
+                                                    <tr>
+                                                        <td><button class="btn btn-info" id="import_mission_button">Importer une mission</button></td>
+                                                        <input style="display:none;" id="importDialog" type="file" nwsaveas="filename.txt"/>
+                                                        <td><button class="btn btn-info" id="export_mission_button">Exporter la mission</button></td>
+                                                        <input style="display:none;" id="exportDialog" type="file" />
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="tab-pane clearfix" id="tab-control">
+                            <table class="table">
+                                <tr>
+                                    <td class="col-md-4">
                                         <div class="panel panel-info">
                                             <div class="panel-heading"><h3 class="panel-title">Carte</h3></div>
                                             <div class="panel-body" id="cmd_map">Carte</div>
@@ -123,17 +151,17 @@
                                     <td class="col-md-6">
                                         <div class="panel panel-info">
                                             <div class="panel-heading"><h3 class="panel-title">Vidéo</h3></div>
-                                            <div class="panel-body"  style="background-color: #dde1e2; width: 640px; height: 380px;">
+                                            <div class="panel-body"  style="background-color: #dde1e2;">
                                                 <div id="video" class="btn" style="width: 100%; height: 100%; background: #b62516;">
                                                     <!--Video-->
                                                 </div>
-                                                <img src="images/play_button.png" style="width: 25%; padding-top: 15%; x:0; y:0" class="btn center-block" id="video_button" >
+                                                <img src="images/play_button.png" style="width: 22%;" class="btn center-block" id="video_button" >
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="col-md-6">
+                                    <td class="col-md-4">
                                         <div class="panel panel-default">
                                             <div class="panel-body">
                                                 <div class="tab-pane clearfix">
@@ -164,10 +192,6 @@
                                                 </table>
                                             </div>
                                         </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
                                         <div class="panel panel-default">
                                             <div class="panel-body">
                                                 Fiabilité de la navigation : <strong  id="reliability"> 90% </strong>
