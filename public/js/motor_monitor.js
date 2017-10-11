@@ -51,8 +51,8 @@ function updateBars(m1, m2) {
         svg.selectAll("rect").attr("stroke", "#566566");
     }
 
-    data[0].y += m1;
-    data[1].y += m2;
+    data[0].y = m1;
+    data[1].y = m2;
 
     bar = g.selectAll(".bar")
         .data(data)

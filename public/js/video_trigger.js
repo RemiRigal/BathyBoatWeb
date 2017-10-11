@@ -1,8 +1,18 @@
 var videoEnabled = false;
+var videoDiv, videoButton;
 
 function triggerVideo() {
-    videoEnabled = !videoEnabled;
-    console.log('Enable video: ' + videoEnabled);
+    if (videoEnabled) {
+        videoDiv.hide();
+        videoButton.show();
+        videoEnabled = false;
+    } else {
+        videoButton.hide();
+        videoDiv.show();
+        videoEnabled = true;
+    }
+    console.log('Video state: ' + videoEnabled);
+
     $.ajax({
         type: 'POST',
         url: 'http://localhost:29201/video',
@@ -14,5 +24,9 @@ function triggerVideo() {
 }
 
 $(document).ready(function() {
-    $('#stop_button').on('click', triggerVideo);
+    videoDiv = $('#video');
+    videoDiv.hide();
+    videoDiv.on('click', triggerVideo);
+    videoButton = $('#video_button');
+    videoButton.on('click', triggerVideo);
 });
