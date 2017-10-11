@@ -16,6 +16,23 @@ function setBatteryLevels(m1, m2, elec) {
     $('#elec_lvl_bat').html('Elec: ' + elec + '%');
 }
 
-$(document).ready(function() {
+var videoPlayed = false;
+function playVideo() {
+    if (videoPlayed) {
+        console.log('vidéo cliquée');
+        $('#video').hide();
+        $('#video_button').show();
+        videoPlayed = false;
+    } else {
+        console.log('bouton cliqué');
+        $('#video_button').hide();
+        $('#video').show();
+        videoPlayed = true;
+    }
+}
 
+$(document).ready(function() {
+    $('#video').hide();
+    $('#video').on('click', playVideo);
+    $('#video_button').on('click', playVideo);
 });
