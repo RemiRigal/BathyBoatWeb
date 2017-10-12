@@ -10,6 +10,7 @@ function setTelemetry(lat, long, yaw, pitch, roll, speed) {
     $('#yaw_lvl').html(Math.round(yaw * 10) / 10 + '°');
     $('#latitude').html(lat);
     $('#longitude').html(long);
+    updatePosition(lat, long);
 }
 
 function setConnectionState(connected) {

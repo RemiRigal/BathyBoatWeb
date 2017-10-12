@@ -15,30 +15,33 @@
     <script src="js/motor_monitor.js"></script>
     <script src="js/jsmpeg.min.js"></script>
     <script src="js/imp_exp_mission.js"></script>
+    <script src="js/map.js"></script>
 </head>
 <body>
 
-    <div class="row">
-            <div class="well col-md-3">
+    <div class="row" style="margin: 0">
+        <div class="col-md-3" style="padding-left: 2px">
+            <div class="well" style="padding: 0; margin-left: 8px">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-5">
-                                <img class="img-responsive btn" id="stop_button" src="images/stop_button.png" style="padding-top: 20%;">
+                                <img class="img-responsive btn" id="stop_button" src="images/stop_button.png" style="padding-top: 18%;">
                             </div>
                             <div class="col-md-7">
                                 <table class="table table-hover">
                                     <tr>
-                                        <td><img class="img-responsive" id="wifi_picture" style="width: 60%; vertical-align: middle;" src="images/wifi.png"></td>
-                                        <td class="col-md-6" id="wifi_text" style="text-align: justify; vertical-align: middle">Connecté</td>
+                                        <td><img class="img-responsive" id="wifi_picture" style="width: 50%; display: block; margin: auto" src="images/wifi.png"></td>
+                                        <td id="wifi_text" style="text-align: justify; vertical-align: middle">Déconnecté</td>
                                     </tr>
                                     <tr>
-                                        <td style="vertical-align: middle;"><img class="img-responsive" id="battery_picture" style="width: 60%;" src="images/battery_full.png"></td>
-                                        <td class="col-md-6">
+                                        <td style="vertical-align: middle;">
+                                            <img class="img-responsive" id="battery_picture" style="width: 50%; display: block; margin: auto" src="images/battery_full.png"></td>
+                                        <td>
                                             <ul class="list-unstyled" style="text-align: justify" >
-                                                <li id="motor1_lvl_bat">M1: 0%</li>
-                                                <li id="motor2_lvl_bat">M2: 0%</li>
-                                                <li id="elec_lvl_bat">Elec: 0%</li>
+                                                <li id="motor1_lvl_bat">M1: _</li>
+                                                <li id="motor2_lvl_bat">M2: _</li>
+                                                <li id="elec_lvl_bat">Elec: _</li>
                                             </ul>
                                         </td>
                                     </tr>
@@ -50,39 +53,41 @@
 
                 <div id="alert_container"></div>
 
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <table class="table table-striped table-hover ">
-                        <tr>
-                            <td class="col-md-6"><img class="img-responsive" style="width: 30%" src="images/speed.png"></td>
-                            <td class="col-md-6 data" id="speed_lvl">2 kts</td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-6"><img class="img-responsive" style="width: 30%" src="images/compass.png"></td>
-                            <td class="col-md-6 data" id="yaw_lvl">12°</td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-6">Latitude</td>
-                            <td class="col-md-6" id="latitude">45.356895712</td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-6">Longitude</td>
-                            <td class="col-md-6" id="longitude">102.33359265</td>
-                        </tr>
-                    </table>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <table class="table table-striped table-hover ">
+                            <tr>
+                                <td class="col-md-6"><img class="img-responsive" style="width: 30%" src="images/speed.png"></td>
+                                <td class="col-md-6 data" id="speed_lvl">_</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-6"><img class="img-responsive" style="width: 30%" src="images/compass.png"></td>
+                                <td class="col-md-6 data" id="yaw_lvl">_</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-6">Latitude</td>
+                                <td class="col-md-6" id="latitude">_</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-6">Longitude</td>
+                                <td class="col-md-6" id="longitude">_</td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
-            </div>
 
-            <div class="panel panel-primary">
+                <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Carte</h3>
                 </div>
-                <div class="panel-body" style="padding: 0">
-                    <img src="images/mapguerledanproche.png" class="img-responsive" id="mapLeftPanel">
+                <div class="panel-body" style="padding: 0; height: 250px;">
+                    <!-- TODO: Yoann -->
+                    <!--<img src="images/mapguerledanproche.png" class="img-responsive" id="mapLeftPanel">-->
                 </div>
             </div>
             </div>
-        <div class=" col-md-9">
+        </div>
+        <div class="col-md-9">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <ul class="nav nav-tabs">
@@ -120,43 +125,44 @@
                                         </div>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <!--<svg width="1280" height="1280">-->
+                                        <!--<image xlink:href="images/mapguerledanglobale.png" height="640px" width="640px"></image>-->
+                                    <!--</svg>-->
+                                </tr>
                             </table>
                         </div>
                         <div class="tab-pane clearfix" id="tab-control">
                             <table class="table">
-                                <tr>
+                                <div>
                                     <td class="col-md-4">
                                         <div class="panel panel-default">
                                             <div class="panel-body">
                                                 <div class="tab-pane clearfix">
-                                                    <svg class="center-block" width="400" height="300"></svg>
+                                                    <svg class="center-block" width="300" height="300"></svg>
                                                     <div style="padding-left: 8%; padding-right: 8%">
-                                                        <div class="col-md-6 text-center" style="padding-right: 0px">Moteur 1</div>
-                                                        <div class="col-md-6 text-center" style="padding-right: 0px">Moteur 2</div>
+                                                        <div class="col-md-6 text-center" style="padding-right: 0">Moteur 1</div>
+                                                        <div class="col-md-6 text-center" style="padding-right: 0">Moteur 2</div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="panel panel-default">
                                             <div class="panel-body">
-                                                <table class="table">
-                                                    <tr>
-                                                        <td class="col-md-6">Régulation de la vitesse : <strong><span id="speed_regulation">0.5</span></strong></td>
-                                                        <td class="col-md-6">
-                                                            <input type="range" min="0" max="100" onclick="showValue(this.value)" />
-                                                            <script>
-                                                                function showValue(newValue) {
-                                                                    $('#speed_regulation').html(newValue / 100 + "");
-                                                                }
-                                                            </script>
-                                                        </td>
-                                                    </tr>
-                                                </table>
+                                                <div>
+                                                    Régulation de la vitesse: <strong><span id="speed_regulation">0.5</span></strong>
+                                                    <input type="range" min="0" max="100" onclick="showValue(this.value)" />
+                                                    <script>
+                                                        function showValue(newValue) {
+                                                            $('#speed_regulation').html(newValue / 100 + "");
+                                                        }
+                                                    </script>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="panel panel-default">
                                             <div class="panel-body">
-                                                Fiabilité de la navigation : <strong  id="reliability"> 90% </strong>
+                                                Fiabilité de la navigation: <strong  id="reliability">_</strong>
                                             </div>
                                         </div>
                                     </td>
@@ -168,22 +174,22 @@
                                                         <td class="col-md-3">Mode autonome:</td>
                                                         <td class="col-md-3">
                                                             <label class="switch" style="vertical-align: middle">
-                                                                <input type="checkbox" id="switchGoHome">
+                                                                <input type="checkbox" id="switch_autopilot">
                                                                 <span class="slider round"></span>
                                                             </label>
                                                         </td>
-                                                        <td class="col-md-6 btn btn-info" id="rtlButton" style="vertical-align: middle"><strong>RTL</strong></td>
+                                                        <td class="col-md-6 btn btn-info" id="rtl_button" style="vertical-align: middle"><strong>RTL</strong></td>
                                                     </tr>
                                                 </table>
                                             </div>
                                         </div>
                                         <div class="panel panel-info">
                                             <div class="panel-heading"><h3 class="panel-title">Vidéo</h3></div>
-                                            <div class="panel-body"  style="background-color: #dde1e2;">
-                                                <div id="video" class="btn" style="width: 100%; height: 100%;">
-                                                    <canvas id="video-canvas"></canvas>
+                                            <div class="panel-body"  style="background-color: #dde1e2; padding: 0; height: 484px">
+                                                <div id="video" class="btn" style="width: 100%; height: 100%; padding: 0">
+                                                    <canvas class="center-block" id="video-canvas"></canvas>
                                                 </div>
-                                                <img src="images/play_button.png" style="width: 22%;" class="btn center-block" id="video_button" >
+                                                <img src="images/play_button.png" style="width: 22%; display: block; margin: auto" class="btn center-block" id="video_button">
                                             </div>
                                         </div>
                                     </td>
@@ -262,19 +268,17 @@
             <div class="footer-bottom navbar-fixed-bottom" style="text-align: center; font-size: 15px;">
                 <div class="container">
                     <div class="row">
-                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                             <div class="copyright">
                                 <div class="row">
-                                    <div class="col-md-4"> Durée : </div>
-                                    <div id="session_time" class="col-md-8">
-                                    00:00:00
-                                    </div>
+                                    <div class="col-md-6 text-right">Durée: </div>
+                                    <div id="session_time" class="col-md-6 text-left">00:00:00</div>
                                 </div>
                             </div>
                         </div>
-                        <div class=" design col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <div class=" design col-xs-12 col-sm-8 col-md-8 col-lg-8">
                             <div class="row">
-                                <div class="col-md-4">Progression :</div>
+                                <div class="col-md-4">Progression: </div>
                                 <div class="col-md-8 progress progress-striped progress-bar-info  active" style="margin-top: 11px; margin-bottom: 0">
                                     <div class="progress-bar-info" id="session_progress" style="width: 100%;"></div>
                                 </div>

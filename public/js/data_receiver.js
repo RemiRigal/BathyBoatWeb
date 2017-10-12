@@ -23,7 +23,7 @@ function success(result) {
     }
     if (json.mot.length > 0) {
         var mot = json.mot[json.mot.length - 1].content;
-        setBatteryLevels(mot.m1, mot.m2, mot.elec);
+        updateBars(mot.m1, mot.m2);
     }
 
     //console.log(globalData);
