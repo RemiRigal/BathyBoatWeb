@@ -102,35 +102,57 @@
                     <div class="tab-content clearfix">
 
                         <div class="tab-pane active" id="tab-map">
-                            <table>
-                                <tr>
-                                    <td class=" col-md-11">
-                                        <div class="panel panel-default">
-                                            <div class="panel-body">
-                                                Carte
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="col-md-1">
-                                        <div class="panel panel-default">
-                                            <div class="panel-body">
-                                                <table>
-                                                    <tr>
-                                                        <td><button class="btn btn-info" id="import_mission_button">Importer une mission</button></td>
-                                                        <input style="display:none;" id="importDialog" type="file"/>
-                                                        <td>
-                                                            <a class="btn btn-info" href="" id="export_mission_button" download>Exporter la mission</a>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td id="global_map"></td>
-                                </tr>
-                            </table>
+                            <div class="col-md-8 panel panel-default" style="padding-right: 0">
+                                <div id="global_map" style="margin: 15px;
+                                    background-image: url('images/mapguerledanglobale.png');
+                                    height: 100%; width: 94%; background-position: 0 0">
+                                </div>
+                            </div>
+                            <div class="col-md-3 panel panel-default">
+                                <div style="padding: 0; margin: 0">
+                                    <div class="col-xs-6" style="padding: 15px">
+                                        <button class="btn btn-info" id="import_mission_button">Importer</button>
+                                        <input style="display:none;" id="importDialog" type="file"/>
+                                    </div>
+                                    <div class="col-xs-6" style="padding: 15px">
+                                        <a class="btn btn-info" href="" id="export_mission_button" download>Exporter</a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!--<table>-->
+                                <!--<tr>-->
+                                    <!--<td class=" col-md-11">-->
+                                        <!--<div class="panel panel-default">-->
+                                            <!--<div id="global_map" style="margin: 15px; background-image: url('images/mapguerledanglobale.png');-->
+                                            <!--height: 500px; width: 700px; background-position: 0 0"></div>-->
+                                        <!--</div>-->
+                                    <!--</td>-->
+                                    <!--<td class="col-md-1">-->
+                                        <!--<div class="panel panel-default">-->
+                                            <!--<div class="panel-body">-->
+                                                <!--<table>-->
+                                                    <!--<tr>-->
+                                                        <!--<td><button class="btn btn-info" id="import_mission_button">Importer une mission</button></td>-->
+                                                        <!--<input style="display:none;" id="importDialog" type="file"/>-->
+                                                        <!--<td>-->
+                                                            <!--<a class="btn btn-info" href="" id="export_mission_button" download>Exporter la mission</a>-->
+                                                        <!--</td>-->
+                                                    <!--</tr>-->
+                                                <!--</table>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>-->
+
+                                    <!--</td>-->
+                                    <!--&lt;!&ndash;<td id="global_map">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</td>&ndash;&gt;-->
+                                <!--</tr>-->
+                            <!--</table>-->
                         </div>
                         <div class="tab-pane clearfix" id="tab-control">
                             <table class="table">
