@@ -1,7 +1,7 @@
 var long, lat, mpp, zoom, scale, size, taillemap, kmpd, deltalong, deltalat;
 var longmin, longmax, latmin, latmax, longpp, latpp;
-var svg = d3.select("svg");
-var sizeaffichageimage = 640;
+var svg;
+var sizeaffichageimage = 500;
 var circle;
 
 long = -3.020906;                                                   //longitude du centre de l'image, à récupérer plus tard automatiquement via url api google
@@ -21,7 +21,6 @@ latmax = lat + deltalat;
 longpp = 2 * deltalong / (sizeaffichageimage);                                 //longitude par pixel sur l'image
 latpp = 2 * deltalat / (sizeaffichageimage);                                   //idem pour latitude
 
-
 function updatePosition(latitude, longitude, remove){
     if (circle !== undefined && remove === true){
         circle.remove();
@@ -33,9 +32,22 @@ function updatePosition(latitude, longitude, remove){
     difflat = Math.abs(latitude-latmax);
     nbrpixlat = Math.round(difflat/latpp);
 
+    console.log(nbrpixlat, nbrpixlong);
+
     circle = svg.append("circle")
         .attr("cx", nbrpixlong)
         .attr("cy", nbrpixlat)
         .attr("r", 3)
         .attr("fill", "red");
 }
+
+$(document).ready(function() {
+    svg = d3.select("#global_map")
+        .append("svg")
+        .attr("width", 500)
+        .attr("height", 500)
+        .attr("id", "svg_map");
+    $('#svg_map').html('<image xlink:href="images/mapguerledanglobale.png" height="500px" width="500px"></image>');
+
+    //updatePosition(48.199040, -3.015805);
+});
