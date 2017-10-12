@@ -37,7 +37,7 @@ function requestData() {
     }
     $.ajax({
         type: 'GET',
-        url: 'http://localhost:29201/data',
+        url: 'http://192.168.0.10:29201/data',
         data: data,
         success: success,
         error: function(error) {

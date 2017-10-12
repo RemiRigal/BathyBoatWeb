@@ -13,6 +13,7 @@
     <script src="js/video_trigger.js"></script>
     <script src="js/d3.min.js"></script>
     <script src="js/motor_monitor.js"></script>
+    <script src="js/jsmpeg.min.js"></script>
     <script src="js/imp_exp_mission.js"></script>
 </head>
 <body>
@@ -23,7 +24,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-5">
-                                <img class="img-responsive btn" id="stop_button" src="images/stop_button.png" style="padding-top: 25%;">
+                                <img class="img-responsive btn" id="stop_button" src="images/stop_button.png" style="padding-top: 20%;">
                             </div>
                             <div class="col-md-7">
                                 <table class="table table-hover">
@@ -76,7 +77,8 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">Carte</h3>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body" style="padding: 0">
+                    <img src="images/mapguerledanproche.png" class="img-responsive" id="mapLeftPanel">
                 </div>
             </div>
             </div>
@@ -110,9 +112,8 @@
                                                 <table>
                                                     <tr>
                                                         <td><button class="btn btn-info" id="import_mission_button">Importer une mission</button></td>
-                                                        <input style="display:none;" id="importDialog" type="file" nwsaveas="filename.txt"/>
+                                                        <input style="display:none;" id="importDialog" type="file"/>
                                                         <td><button class="btn btn-info" id="export_mission_button">Exporter la mission</button></td>
-                                                        <input style="display:none;" id="exportDialog" type="file" />
                                                     </tr>
                                                 </table>
                                             </div>
@@ -129,9 +130,9 @@
                                             <div class="panel-body">
                                                 <div class="tab-pane clearfix">
                                                     <svg class="center-block" width="400" height="300"></svg>
-                                                    <div style="padding-left: 14%; padding-right: 14%">
-                                                        <div class="col-md-6 text-center">Moteur 1</div>
-                                                        <div class="col-md-6 text-center">Moteur 2</div>
+                                                    <div style="padding-left: 8%; padding-right: 8%">
+                                                        <div class="col-md-6 text-center" style="padding-right: 0px">Moteur 1</div>
+                                                        <div class="col-md-6 text-center" style="padding-right: 0px">Moteur 2</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -140,12 +141,12 @@
                                             <div class="panel-body">
                                                 <table class="table">
                                                     <tr>
-                                                        <td class="col-md-6">Régulation de la vitesse : <strong><span id="speed_regulation">0</span>%</strong></td>
+                                                        <td class="col-md-6">Régulation de la vitesse : <strong><span id="speed_regulation">0.5</span></strong></td>
                                                         <td class="col-md-6">
-                                                            <input type="range" min="-100" max="100" onchange="showValue(this.value)" />
+                                                            <input type="range" min="0" max="100" onclick="showValue(this.value)" />
                                                             <script>
                                                                 function showValue(newValue) {
-                                                                    document.getElementById("speed_regulation").innerHTML=newValue;
+                                                                    $('#speed_regulation').html(newValue / 100 + "");
                                                                 }
                                                             </script>
                                                         </td>
@@ -159,12 +160,28 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="col-md-6">
+                                    <td class="col-md-8">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <table class="table">
+                                                    <tr>
+                                                        <td class="col-md-3">Mode autonome:</td>
+                                                        <td class="col-md-3">
+                                                            <label class="switch" style="vertical-align: middle">
+                                                                <input type="checkbox" id="switchGoHome">
+                                                                <span class="slider round"></span>
+                                                            </label>
+                                                        </td>
+                                                        <td class="col-md-6 btn btn-info" id="rtlButton" style="vertical-align: middle"><strong>RTL</strong></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
                                         <div class="panel panel-info">
                                             <div class="panel-heading"><h3 class="panel-title">Vidéo</h3></div>
                                             <div class="panel-body"  style="background-color: #dde1e2;">
-                                                <div id="video" class="btn" style="width: 100%; height: 100%; background: #b62516;">
-                                                    <!--Video-->
+                                                <div id="video" class="btn" style="width: 100%; height: 100%;">
+                                                    <canvas id="video-canvas"></canvas>
                                                 </div>
                                                 <img src="images/play_button.png" style="width: 22%;" class="btn center-block" id="video_button" >
                                             </div>
@@ -242,15 +259,15 @@
                     </div>
                 </div>
             </div>
-            <div class="footer-bottom navbar-fixed-bottom">
+            <div class="footer-bottom navbar-fixed-bottom" style="text-align: center; font-size: 15px;">
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                             <div class="copyright">
                                 <div class="row">
-                                    <div class="col-md-4"> Time : </div>
-                                    <div class="col-md-8">
-                                    <h4 id="session_time">00:00:00</h4>
+                                    <div class="col-md-4"> Durée : </div>
+                                    <div id="session_time" class="col-md-8">
+                                    00:00:00
                                     </div>
                                 </div>
                             </div>
@@ -258,8 +275,8 @@
                         <div class=" design col-xs-12 col-sm-6 col-md-6 col-lg-6">
                             <div class="row">
                                 <div class="col-md-4">Progression :</div>
-                                <div class="col-md-8 progress progress-bar-info progress-striped active">
-                                    <div class="progress-bar-info" id="session_progress" style="width: 100%"></div>
+                                <div class="col-md-8 progress progress-striped progress-bar-info  active" style="margin-top: 11px; margin-bottom: 0">
+                                    <div class="progress-bar-info" id="session_progress" style="width: 100%;"></div>
                                 </div>
                             </div>
                         </div>

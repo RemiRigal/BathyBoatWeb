@@ -16,7 +16,6 @@ function showDialogImport() {
 
 function showDialogExport() {
     console.log("export");
-    chooseFile('#exportDialog');
 }
 
 

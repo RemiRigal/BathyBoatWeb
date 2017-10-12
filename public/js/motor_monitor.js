@@ -73,6 +73,6 @@ function updateBars(m1, m2) {
 }
 
 $(document).ready(function() {
-    updateBars(-20.5, 34.8);
+    updateBars(0, 0);
 });
 
