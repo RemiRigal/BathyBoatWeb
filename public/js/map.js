@@ -1,6 +1,6 @@
 var long, lat, mpp, zoom, scale, size, taillemap, kmpd, deltalong, deltalat;
 var longmin, longmax, latmin, latmax, longpp, latpp;
-var svg, globalMap;
+var svg, svgMini, globalMap, miniMap;
 var sizeaffichageimage = 1280;
 var circle;
 
@@ -26,20 +26,34 @@ function updatePosition(latitude, longitude, remove){
         circle.remove();
     }
     var difflong, nbrpixlong, difflat, nbrpixlat;
-    var wFrame, hFrame;
-    wFrame = globalMap.width();
-    hFrame = globalMap.height();
+
     
     difflong = longitude-longmin;
     nbrpixlong = Math.round(difflong/longpp);
     difflat = Math.abs(latitude-latmax);
     nbrpixlat = Math.round(difflat/latpp);
 
-    globalMap.css("background-position", "-" + (nbrpixlong - (wFrame/2)) + "px -" + (nbrpixlat - (hFrame/2)) + "px");
+    // Global map
+    var wGlobalMap, hGlobalMap;
+    wGlobalMap = globalMap.width();
+    hGlobalMap = globalMap.height();
+    globalMap.css("background-position", "-" + (nbrpixlong - (wGlobalMap/2)) + "px -" + (nbrpixlat - (hGlobalMap/2)) + "px");
 
     circle = svg.append("circle")
-        .attr("cx", wFrame/2)
-        .attr("cy", hFrame/2)
+        .attr("cx", wGlobalMap/2)
+        .attr("cy", hGlobalMap/2)
+        .attr("r", 3)
+        .attr("fill", "#fab548");
+
+    // Mini map
+    var wMiniMap, hMiniMap;
+    wMiniMap = miniMap.width();
+    hMiniMap = miniMap.height();
+    miniMap.css("background-position", "-" + (nbrpixlong - (wMiniMap/2)) + "px -" + (nbrpixlat - (hMiniMap/2)) + "px");
+
+    circle = svgMini.append("circle")
+        .attr("cx", wMiniMap/2)
+        .attr("cy", hMiniMap/2)
         .attr("r", 3)
         .attr("fill", "#fab548");
 }
@@ -51,6 +65,11 @@ $(document).ready(function() {
         .attr("width", 500)
         .attr("height", 500)
         .attr("id", "svg_map");
+
+    miniMap = $('#mini_map');
+    svgMini = d3.select("#mini_map")
+        .append("svg")
+        .attr("id", "svg_mini_map");
 
     updatePosition(48.199040, -3.015805, true);
 });

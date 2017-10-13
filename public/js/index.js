@@ -10,7 +10,7 @@ function setTelemetry(lat, long, yaw, pitch, roll, speed) {
     $('#yaw_lvl').html(Math.round(yaw * 10) / 10 + '°');
     $('#latitude').html(lat);
     $('#longitude').html(long);
-    updatePosition(lat, long);
+    updatePosition(lat, long, true);
 }
 
 function setConnectionState(connected) {
@@ -22,6 +22,8 @@ function setBatteryLevels(m1, m2, elec) {
     $('#motor1_lv2_bat').html('M2: ' + m2 + '%');
     $('#elec_lvl_bat').html('Elec: ' + elec + '%');
 }
+
+
 
 $(document).ready(function() {
 
