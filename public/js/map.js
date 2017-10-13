@@ -2,7 +2,7 @@ var long, lat, mpp, zoom, scale, size, taillemap, kmpd, deltalong, deltalat;
 var longmin, longmax, latmin, latmax, longpp, latpp;
 var svg, svgMini, globalMap, miniMap;
 var sizeaffichageimage = 1280;
-var circle;
+var circle, miniCircle;
 
 long = -3.020906;                                                   //longitude du centre de l'image, à récupérer plus tard automatiquement via url api google
 lat = 48.2040407;                                                   //idem latitude
@@ -24,6 +24,7 @@ latpp = 2 * deltalat / (sizeaffichageimage);                                   /
 function updatePosition(latitude, longitude, remove){
     if (circle !== undefined && remove === true){
         circle.remove();
+        miniCircle.remove();
     }
     var difflong, nbrpixlong, difflat, nbrpixlat;
 
@@ -51,7 +52,7 @@ function updatePosition(latitude, longitude, remove){
     hMiniMap = miniMap.height();
     miniMap.css("background-position", "-" + (nbrpixlong - (wMiniMap/2)) + "px -" + (nbrpixlat - (hMiniMap/2)) + "px");
 
-    circle = svgMini.append("circle")
+    miniCircle = svgMini.append("circle")
         .attr("cx", wMiniMap/2)
         .attr("cy", hMiniMap/2)
         .attr("r", 3)
