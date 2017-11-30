@@ -15,6 +15,7 @@ function chooseFile() {
                 jsonFileMission = JSON.parse(e.target.result);
                 console.log(jsonFileMission);
                 console.log(jsonMissionName);
+                showingWaypoints();
             };
         })(files[0]);
 
