@@ -20,6 +20,7 @@
     <!--<script src="js/map.js"></script>-->
     <script src="js/fullscreen.js"></script>
     <script src="js/leaflet_map.js"></script>
+    <script src="js/mission_selection.js"></script>
 </head>
 <body>
 
@@ -125,26 +126,37 @@
                                                 </div>
 
                                                 <div class="row" style="padding-left: 15px; padding-right: 15px">
-                                                    <div class="dropdown">
+                                                    <div id="add_mission" onclick="addMission()">
+                                                        <button style="width: 100%; margin-top: 10px; margin-bottom: 10px" class="btn btn-success"
+                                                                type="button">
+                                                            Ajouter une mission
+                                                        </button>
+                                                    </div>
+                                                    <div id="menu_type_mission" class="dropdown" style="display: none">
                                                         <button style="width: 100%; margin-top: 10px; margin-bottom: 10px" class="btn btn-primary dropdown-toggle"
                                                                 type="button" data-toggle="dropdown">
                                                             Type de mission
                                                             <span class="caret"></span>
                                                         </button>
                                                         <ul class="dropdown-menu">
-                                                            <li><a href="#">Waypoints</a></li>
-                                                            <li><a href="#">Radiales</a></li>
+                                                            <li><a onclick="selectTypeWay()" href="#">Waypoints</a></li>
+                                                            <li><a onclick="selectTypeRad()" href="#">Radiales</a></li>
                                                         </ul>
                                                     </div>
                                                 </div>
 
-
-
-                                                <div id="waypoint_mission">
+                                                <div id="type_mission" style="display: none">
                                                     <table class="table table-striped table-hover">
                                                         <tr>
-                                                            <th>Waypoints</th>
+                                                            <th><div id="name_mission"></div>
+                                                                <div onclick="deleteMission()">
+                                                                    <button style="width: 100%; margin-top: 10px; margin-bottom: 10px" class="btn btn-danger" type="button">
+                                                                        Supprimer
+                                                                    </button>
+                                                                </div>
+                                                            </th>
                                                         </tr>
+                                                        <tbody id="table_points_mission"></tbody>
                                                         <!--Example-->
                                                         <!--<tr>-->
                                                             <!--<td>-->
