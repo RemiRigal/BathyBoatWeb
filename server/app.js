@@ -1,9 +1,12 @@
 var express = require('express');
 var cors = require('cors');
 var shell = require('shelljs');
-var backendUtils = require('./backend_utils.js');
 var bodyParser = require('body-parser');
-var tcpClient = require('./tcp_client.js');
+
+var backendUtils = require('./backend_utils');
+var tcpClient = require('./tcp_client');
+var mapDownloader = require('./map_downloader');
+
 
 // TCP Client
 var globalData = {
@@ -36,6 +39,8 @@ var client = tcpClient(onDataReceived);
 // Express App
 var app = express();
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(mapDownloader.handleRequest);
+app.use(express.static(__dirname + '/../public'));
 app.use(cors());
 
 app.get('/data', function(req, res) {

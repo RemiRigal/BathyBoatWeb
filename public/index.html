@@ -4,19 +4,22 @@
     <meta charset="UTF-8">
     <title>BathyBoat</title>
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/leaflet.min.css">
     <script src="js/lib/jquery.min.js"></script>
     <script src="js/lib/bootstrap.min.js"></script>
+    <script src="js/lib/leaflet.min.js"></script>
+    <script src="js/lib/d3.min.js"></script>
+    <script src="js/lib/jsmpeg.min.js"></script>
     <script src="js/index.js"></script>
     <script src="js/alerts.js"></script>
     <script src="js/session.js"></script>
     <script src="js/data_receiver.js"></script>
     <script src="js/video_trigger.js"></script>
-    <script src="js/lib/d3.min.js"></script>
     <script src="js/motor_monitor.js"></script>
-    <script src="js/lib/jsmpeg.min.js"></script>
     <script src="js/imp_exp_mission.js"></script>
-    <script src="js/map.js"></script>
+    <!--<script src="js/map.js"></script>-->
     <script src="js/fullscreen.js"></script>
+    <script src="js/leaflet_map.js"></script>
 </head>
 <body>
 
@@ -81,10 +84,8 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">Carte</h3>
                 </div>
-                <div class="panel-body" style="padding: 0; height: 250px;">
-                    <div id="mini_map" style="background-image: url('images/mapguerledanglobale.png');
-                          height: 100%; width: 100%; background-position: 0 0">
-                    </div>
+                <div class="panel-body" style="padding: 0; height: 330px;">
+                    <div id="miniMap" style="height: 100%; width: 100%"></div>
                 </div>
             </div>
             </div>
@@ -104,9 +105,7 @@
                                 <tr>
                                     <td style="width: 70%">
                                         <div class="panel panel-default" style="padding-right: 0">
-                                            <div id="global_map" style="background-image: url('images/mapguerledanglobale.png');
-                                                margin: 15px; height: 100%; width: 96%; background-position: 0 0">
-                                            </div>
+                                            <div id="gloablMap" style="height: 730px; width: 100%"></div>
                                         </div>
                                     </td>
                                     <td style="width: 30%; vertical-align: top">

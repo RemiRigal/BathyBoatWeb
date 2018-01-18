@@ -1,4 +1,4 @@
-function getLastData(array, date) {
+exports.getLastData = function(array, date) {
     if (array.length === 0) {
         return [];
     }
@@ -9,8 +9,4 @@ function getLastData(array, date) {
         i++;
     }
     return last;
-}
-
-module.exports = {
-    getLastData: getLastData
 };
