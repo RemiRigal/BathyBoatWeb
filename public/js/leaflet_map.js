@@ -15,11 +15,11 @@ $(document).ready(function() {
 
     L.tileLayer('http://localhost:29201/images/maps/{z}/{x}/{y}.png', {
         maxZoom: 19,
-        minZoom: 13
+        minZoom: 0
     }).addTo(globalMap);
     L.tileLayer('http://localhost:29201/images/maps/{z}/{x}/{y}.png', {
         maxZoom: 19,
-        minZoom: 13
+        minZoom: 0
     }).addTo(miniMap);
 });
 
@@ -98,17 +98,18 @@ function addCurrentPolygon(latlng){
 function addTablePoints(latlng){
     var div1 = document.createElement('div');
     div1.setAttribute('id', 'point_number' + nbrPoint);
+    div1.setAttribute('class', 'pull-left');
     div1.innerHTML = "<b>Point " + nbrPoint + "</b>";
     var div2 = document.createElement('div');
-    div2.setAttribute('class', 'col-xs-10');
+    div2.setAttribute('class', 'pull-right');
+    div2.setAttribute('class', 'text-right');
     div2.setAttribute('id', 'latlng_point' + nbrPoint);
     div2.innerHTML = latlng.lat.toFixed(6) + "; " + latlng.lng.toFixed(6);
 
-    var td = document.createElement('td');
-    td.appendChild(div1).appendChild(div2);
-    var tr = document.createElement('tr');
-    tr.appendChild(td);
-    $('#table_points_mission').append(tr);
+    var mainDiv = document.createElement('div');
+    $(div1).appendTo(mainDiv);
+    $(div2).appendTo(mainDiv);
+    $('#table_points_mission').append(mainDiv);
 }
 
 
