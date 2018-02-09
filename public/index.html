@@ -14,7 +14,7 @@
     <script src="js/alerts.js"></script>
     <script src="js/session.js"></script>
     <script src="js/data_receiver.js"></script>
-    <script src="js/video_trigger.js"></script>
+    <!--<script src="js/video_trigger.js"></script>-->
     <script src="js/motor_monitor.js"></script>
     <script src="js/imp_exp_mission.js"></script>
     <!--<script src="js/map.js"></script>-->
@@ -125,81 +125,36 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="row" style="padding-left: 15px; padding-right: 15px">
-                                                    <div id="add_mission" onclick="addMission()">
-                                                        <button style="width: 100%; margin-top: 10px; margin-bottom: 10px" class="btn btn-success"
-                                                                type="button">
-                                                            Ajouter une mission
-                                                        </button>
-                                                    </div>
-                                                    <div id="menu_type_mission" class="dropdown" style="display: none">
-                                                        <button style="width: 100%; margin-top: 10px; margin-bottom: 10px" class="btn btn-primary dropdown-toggle"
-                                                                type="button" data-toggle="dropdown">
-                                                            Type de mission
-                                                            <span class="caret"></span>
-                                                        </button>
-                                                        <ul class="dropdown-menu">
-                                                            <li><a onclick="selectTypeWay()" href="#">Waypoints</a></li>
-                                                            <li><a onclick="selectTypeRad()" href="#">Radiales</a></li>
-                                                        </ul>
-                                                    </div>
+                                                <button id="add_mission" style="width: 100%; margin-top: 10px; margin-bottom: 10px" class="btn btn-success" type="button">
+                                                    Ajouter une mission
+                                                </button>
+                                                <div id="missions_list">
+
+                                                </div>
+                                                <div id="menu_type_mission" class="dropdown" style="display: none">
+                                                    <button style="width: 100%; margin-top: 10px; margin-bottom: 10px" class="btn btn-primary dropdown-toggle"
+                                                            type="button" data-toggle="dropdown">
+                                                        Type de mission
+                                                        <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="#">Waypoints</a></li>
+                                                        <li><a href="#">Radiales</a></li>
+                                                    </ul>
                                                 </div>
 
-                                                <div id="type_mission" style="display: none">
-                                                    <table class="table table-striped table-hover">
-                                                        <tr>
-                                                            <th><div id="name_mission"></div>
-                                                                <div onclick="deleteMission()">
-                                                                    <button style="width: 100%; margin-top: 10px; margin-bottom: 10px" class="btn btn-danger" type="button">
-                                                                        Supprimer
-                                                                    </button>
-                                                                </div>
-                                                            </th>
-                                                        </tr>
-                                                        <tbody id="table_points_mission"></tbody>
-                                                        <!--Example-->
+                                                <!--<div id="type_mission" style="display: none">-->
+                                                    <!--<table class="table table-striped table-hover">-->
                                                         <!--<tr>-->
-                                                            <!--<td>-->
-                                                                <!--<div class="col-xs-2">-->
-                                                                    <!--A-->
-                                                                <!--</div>-->
-                                                                <!--<div class="col-xs-10">-->
-                                                                    <!--48.199040 ; -3.015805-->
-                                                                <!--</div>-->
-                                                            <!--</td>-->
+                                                            <!--<th><div id="name_mission"></div>-->
+                                                                <!--<button style="width: 100%; margin-top: 10px; margin-bottom: 10px" class="btn btn-danger" type="button">-->
+                                                                    <!--Supprimer-->
+                                                                <!--</button>-->
+                                                            <!--</th>-->
                                                         <!--</tr>-->
-                                                        <!--<tr>-->
-                                                            <!--<td>-->
-                                                                <!--<div class="col-xs-2">-->
-                                                                    <!--B-->
-                                                                <!--</div>-->
-                                                                <!--<div class="col-xs-10">-->
-                                                                    <!--48.199240 ; -3.019547-->
-                                                                <!--</div>-->
-                                                            <!--</td>-->
-                                                        <!--</tr>-->
-                                                        <!--<tr>-->
-                                                            <!--<td>-->
-                                                                <!--<div class="col-xs-2">-->
-                                                                    <!--C-->
-                                                                <!--</div>-->
-                                                                <!--<div class="col-xs-10">-->
-                                                                    <!--48.199038 ; -3.016205-->
-                                                                <!--</div>-->
-                                                            <!--</td>-->
-                                                        <!--</tr>-->
-                                                        <!--<tr>-->
-                                                            <!--<td>-->
-                                                                <!--<div class="col-xs-2">-->
-                                                                    <!--D-->
-                                                                <!--</div>-->
-                                                                <!--<div class="col-xs-10">-->
-                                                                    <!--48.195987 ; -3.015834-->
-                                                                <!--</div>-->
-                                                            <!--</td>-->
-                                                        <!--</tr>-->
-                                                    </table>
-                                                </div>
+                                                        <!--<tbody id="table_points_mission"></tbody>-->
+                                                    <!--</table>-->
+                                                <!--</div>-->
 
 
                                             </div>
