@@ -1,25 +1,29 @@
-var net = require('net');
+var tcpClient = require('./tcp_client');
 
-var client = new net.Socket();
-client.setEncoding('utf8');
 
-function initConnection() {
-    //console.log('Connection...');
-    client.connect(29200, '192.168.0.11');
+var client;
+
+module.exports = function() {
+    client = tcpClient('Command', rosIP, 29200, onDataReceived);
+};
+
+function onDataReceived(msg) {
+    var data = splitData(msg);
+    switch (data.type) {
+        case '$POS':
+            globalData.pos.push(data);
+            break;
+        case '$BATT':
+            globalData.batt.push(data);
+            break;
+        case '$MOT':
+            globalData.mot.push(data);
+            break;
+        case '$DATA':
+            globalData.data.push(data);
+            break;
+    }
 }
-
-client.on('connect', function() {
-    console.log('Connected');
-});
-
-client.on('close', function(had_error) {
-    //console.log('Connection closed');
-    setTimeout(initConnection, 500);
-});
-
-client.on('error', function() {
-    //console.log('Error');
-});
 
 function splitData(raw) {
     var splitted = raw.split(';');
@@ -56,21 +60,3 @@ function splitData(raw) {
     }
     return msg;
 }
-
-function initClient(receiveCallback) {
-    initConnection();
-
-    var readBuffer = '';
-    client.on('data', function(data) {
-        readBuffer += data;
-        var msg = readBuffer.split('\n');
-        for (var i = 0; i < msg.length - 1; i++) {
-            receiveCallback(splitData(msg[i]));
-        }
-        readBuffer = msg[msg.length - 1];
-    });
-
-    return client;
-}
-
-module.exports = initClient;
