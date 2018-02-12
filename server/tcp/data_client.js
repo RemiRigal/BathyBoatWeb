@@ -1,10 +1,10 @@
 var tcpClient = require('./tcp_client');
 
 
-var client;
+var dataClient;
 
 module.exports = function() {
-    client = tcpClient('Data', rosIP, 29200, onDataReceived);
+    dataClient = new tcpClient('Data', rosIP, 29200, onDataReceived);
 };
 
 function onDataReceived(msg) {

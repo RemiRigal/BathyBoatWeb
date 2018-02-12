@@ -26,7 +26,7 @@ module.exports = function(name, ip, port, receiveCallback) {
     });
 
     this.client.on('error', function(e) {
-        console.log(e);
+        //console.log(e);
     });
 
     this.client.on('close', function() {

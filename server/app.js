@@ -19,7 +19,7 @@ global.globalData = {
 };
 
 // TCP Client
-global.rosIP = '192.168.100.100';
+global.rosIP = '192.168.43.224';
 dataClient();
 commandClient();
 
