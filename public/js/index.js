@@ -1,3 +1,7 @@
+var mainRow, footerBar, mainPanel;
+var mainTabContent, mainTabHead;
+var globalMapContainer;
+
 var globalData = {
     pos: [],
     mot: [],
@@ -23,8 +27,25 @@ function setBatteryLevels(m1, m2, elec) {
     $('#elec_lvl_bat').html('Elec: ' + elec + '%');
 }
 
+function onWindowResized() {
+    mainRow.height($(window).height() - footerBar.height());
+    mainPanel.height(mainPanel.parent().height() - (mainPanel.outerHeight(true) - mainPanel.outerHeight(false)));
+    mainTabContent.height(mainTabContent.parent().height() - mainTabHead.height());
+    globalMapContainer.height(globalMapContainer.parent().height());
+    if (globalMap) {
+        setTimeout(globalMap.invalidateSize, 500);
+    }
+}
 
 
 $(document).ready(function() {
+    mainRow = $('#main_row');
+    footerBar = $('#footer_bar');
+    mainPanel = $('#main_panel');
+    mainTabContent = $('#main_tab_content');
+    mainTabHead = $('#main_tab_head');
+    globalMapContainer = $('#globalMap');
 
+    $(window).on('resize', onWindowResized);
+    onWindowResized();
 });

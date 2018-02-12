@@ -25,9 +25,8 @@ module.exports = function(name, ip, port, receiveCallback) {
         console.log('TCP client ' + tcp.name + ' connected');
     });
 
-    this.client.on('error', function() {
-        //console.log('Connection ' + tcp.name + ' error. Reconnecting...');
-        //setTimeout(tcp.initConnection, 500, tcp);
+    this.client.on('error', function(e) {
+        console.log(e);
     });
 
     this.client.on('close', function() {
