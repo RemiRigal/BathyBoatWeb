@@ -4,25 +4,29 @@
     <meta charset="UTF-8">
     <title>BathyBoat</title>
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/leaflet.min.css">
     <script src="js/lib/jquery.min.js"></script>
     <script src="js/lib/bootstrap.min.js"></script>
+    <script src="js/lib/leaflet.min.js"></script>
+    <script src="js/lib/d3.min.js"></script>
+    <script src="js/lib/jsmpeg.min.js"></script>
     <script src="js/index.js"></script>
     <script src="js/alerts.js"></script>
     <script src="js/session.js"></script>
     <script src="js/data_receiver.js"></script>
-    <script src="js/video_trigger.js"></script>
-    <script src="js/lib/d3.min.js"></script>
+    <!--<script src="js/video_trigger.js"></script>-->
     <script src="js/motor_monitor.js"></script>
-    <script src="js/lib/jsmpeg.min.js"></script>
     <script src="js/imp_exp_mission.js"></script>
-    <script src="js/map.js"></script>
+    <!--<script src="js/map.js"></script>-->
     <script src="js/fullscreen.js"></script>
+    <script src="js/leaflet_map.js"></script>
+    <script src="js/mission_selection.js"></script>
 </head>
 <body>
 
-    <div class="row" style="margin: 0">
-        <div class="col-md-3" style="padding-left: 2px">
-            <div class="well" style="padding: 0; margin-left: 8px">
+    <div class="row" id="main_row" style="margin: 0">
+        <div class="col-md-3 expand-y" style="padding-left: 2px">
+            <div class="well expand-y" style="padding: 8px; margin: 0">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="row">
@@ -81,121 +85,75 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">Carte</h3>
                 </div>
-                <div class="panel-body" style="padding: 0; height: 250px;">
-                    <div id="mini_map" style="background-image: url('images/mapguerledanglobale.png');
-                          height: 100%; width: 100%; background-position: 0 0">
-                    </div>
+                <div class="panel-body" style="padding: 0; height: 330px;">
+                    <div id="miniMap" style="height: 100%; width: 100%"></div>
                 </div>
             </div>
             </div>
         </div>
-        <div class="col-md-9">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <ul class="nav nav-tabs" style="margin-top: 0">
+        <div class="col-md-9 expand-y">
+            <div id="main_panel" class="panel panel-default">
+                <div class="panel-body expand-y">
+                    <ul id="main_tab_head" class="nav nav-tabs" style="margin-top: 0">
                         <li class="active"><a href="#tab-map" data-toggle="tab">Carte</a></li>
                         <li><a href="#tab-control" data-toggle="tab">Contrôles</a></li>
                         <li><a href="#tab-measures" data-toggle="tab">Mesures</a></li>
                         <li><a href="#tab-alerts" data-toggle="tab">Alertes</a></li>
                     </ul>
-                    <div class="tab-content clearfix">
-                        <div class="tab-pane active" id="tab-map">
-                            <table class="table" style="width: 100%; table-layout: fixed">
-                                <tr>
-                                    <td style="width: 70%">
-                                        <div class="panel panel-default" style="padding-right: 0">
-                                            <div id="global_map" style="background-image: url('images/mapguerledanglobale.png');
-                                                margin: 15px; height: 100%; width: 96%; background-position: 0 0">
+                    <div id="main_tab_content" class="tab-content clearfix">
+                        <div class="tab-pane active expand-y" id="tab-map">
+                            <div class="col col-md-9 expand-y" style="padding: 15px">
+                                <div id="globalMap" style="height: 200px; width: 100%"></div>
+                            </div>
+                            <div class="col col-md-3">
+                                <div class="panel panel-info" style="margin-right: 0; margin-left: 0">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Mission</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row" style="padding-left: 15px; padding-right: 15px">
+                                            <div class="col-xs-6 text-center" style="padding-right: 4px">
+                                                <button class="btn btn-info" id="import_mission_button" style="width: 100%">Importer</button>
+                                                <input style="display:none;" id="importDialog" type="file"/>
+                                            </div>
+                                            <div class="col-xs-6 text-center" style="padding-left: 4px; padding-right: 0">
+                                                <a class="btn btn-info" href="" id="export_mission_button" style="width: 100%" download>Exporter</a>
                                             </div>
                                         </div>
-                                    </td>
-                                    <td style="width: 30%; vertical-align: top">
-                                        <div class="panel panel-info">
-                                            <div class="panel-heading">
-                                                <h3 class="panel-title">Mission</h3>
-                                            </div>
-                                            <div class="panel-body">
-                                                <div class="row" style="padding-left: 15px; padding-right: 15px">
-                                                    <div class="col-xs-6 text-center" style="padding-right: 4px">
-                                                        <button class="btn btn-info" id="import_mission_button" style="width: 100%">Importer</button>
-                                                        <input style="display:none;" id="importDialog" type="file"/>
-                                                    </div>
-                                                    <div class="col-xs-6 text-center" style="padding-left: 4px; padding-right: 0">
-                                                        <a class="btn btn-info" href="" id="export_mission_button" style="width: 100%" download>Exporter</a>
-                                                    </div>
-                                                </div>
 
-                                                <div class="row" style="padding-left: 15px; padding-right: 15px">
-                                                    <div class="dropdown">
-                                                        <button style="width: 100%; margin-top: 10px; margin-bottom: 10px" class="btn btn-primary dropdown-toggle"
-                                                                type="button" data-toggle="dropdown">
-                                                            Type de mission
-                                                            <span class="caret"></span>
-                                                        </button>
-                                                        <ul class="dropdown-menu">
-                                                            <li><a href="#">Waypoints</a></li>
-                                                            <li><a href="#">Radiales</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-
-
-
-                                                <div id="waypoint_mission">
-                                                    <table class="table table-striped table-hover">
-                                                        <tr>
-                                                            <th>Waypoints</th>
-                                                        </tr>
-                                                        <!--Example-->
-                                                        <!--<tr>-->
-                                                            <!--<td>-->
-                                                                <!--<div class="col-xs-2">-->
-                                                                    <!--A-->
-                                                                <!--</div>-->
-                                                                <!--<div class="col-xs-10">-->
-                                                                    <!--48.199040 ; -3.015805-->
-                                                                <!--</div>-->
-                                                            <!--</td>-->
-                                                        <!--</tr>-->
-                                                        <!--<tr>-->
-                                                            <!--<td>-->
-                                                                <!--<div class="col-xs-2">-->
-                                                                    <!--B-->
-                                                                <!--</div>-->
-                                                                <!--<div class="col-xs-10">-->
-                                                                    <!--48.199240 ; -3.019547-->
-                                                                <!--</div>-->
-                                                            <!--</td>-->
-                                                        <!--</tr>-->
-                                                        <!--<tr>-->
-                                                            <!--<td>-->
-                                                                <!--<div class="col-xs-2">-->
-                                                                    <!--C-->
-                                                                <!--</div>-->
-                                                                <!--<div class="col-xs-10">-->
-                                                                    <!--48.199038 ; -3.016205-->
-                                                                <!--</div>-->
-                                                            <!--</td>-->
-                                                        <!--</tr>-->
-                                                        <!--<tr>-->
-                                                            <!--<td>-->
-                                                                <!--<div class="col-xs-2">-->
-                                                                    <!--D-->
-                                                                <!--</div>-->
-                                                                <!--<div class="col-xs-10">-->
-                                                                    <!--48.195987 ; -3.015834-->
-                                                                <!--</div>-->
-                                                            <!--</td>-->
-                                                        <!--</tr>-->
-                                                    </table>
-                                                </div>
-
-
-                                            </div>
+                                        <button id="add_mission" style="width: 100%; margin-top: 10px; margin-bottom: 10px" class="btn btn-success" type="button">
+                                            Ajouter une mission
+                                        </button>
+                                        <div id="missions_list"></div>
+                                        <div id="menu_type_mission" class="dropdown" style="display: none">
+                                            <button style="width: 100%; margin-top: 10px; margin-bottom: 10px" class="btn btn-primary dropdown-toggle"
+                                                    type="button" data-toggle="dropdown">
+                                                Type de mission
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#">Waypoints</a></li>
+                                                <li><a href="#">Radiales</a></li>
+                                            </ul>
                                         </div>
-                                    </td>
-                                </tr>
-                            </table>
+
+                                        <!--<div id="type_mission" style="display: none">-->
+                                        <!--<table class="table table-striped table-hover">-->
+                                        <!--<tr>-->
+                                        <!--<th><div id="name_mission"></div>-->
+                                        <!--<button style="width: 100%; margin-top: 10px; margin-bottom: 10px" class="btn btn-danger" type="button">-->
+                                        <!--Supprimer-->
+                                        <!--</button>-->
+                                        <!--</th>-->
+                                        <!--</tr>-->
+                                        <!--<tbody id="table_points_mission"></tbody>-->
+                                        <!--</table>-->
+                                        <!--</div>-->
+
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="tab-pane clearfix" id="tab-control">
                             <table class="table" style="table-layout: fixed">
@@ -318,31 +276,27 @@
                     </div>
                 </div>
             </div>
-            <div class="footer-bottom navbar-fixed-bottom" style="text-align: center; font-size: 15px;">
-                <div>
-                    <div>
-                        <div class="col-md-4">
-                            <div class="copyright">
-                                <div class="row">
-                                    <div class="col-xs-6 text-right">Durée: </div>
-                                    <div id="session_time" class="col-xs-6 text-left">00:00:00</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="design col-md-7">
-                            <div class="row">
-                                <div class="col-xs-4">Progression: </div>
-                                <div class="col-xs-8 progress progress-striped progress-bar-info  active" style="margin-top: 11px; margin-bottom: 0">
-                                    <div class="progress-bar-info" id="session_progress" style="width: 100%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-right col-md-1">
-                            <img id="fullscreen" src="images/fullscreen.png" style="width: 40%; padding: 8px; vertical-align: middle">
-                        </div>
-                    </div>
+        </div>
+    </div>
+    <div id="footer_bar" class="footer-bottom navbar-fixed-bottom" style="text-align: center; font-size: 15px;">
+        <div class="col-md-4">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-xs-6 text-right">Durée: </div>
+                    <div id="session_time" class="col-xs-6 text-left">00:00:00</div>
                 </div>
             </div>
+        </div>
+        <div class="design col-md-7">
+            <div class="row">
+                <div class="col-xs-4">Progression: </div>
+                <div class="col-xs-8 progress progress-striped progress-bar-info  active" style="margin-top: 11px; margin-bottom: 0">
+                    <div class="progress-bar-info" id="session_progress" style="width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1">
+            <img class="pull-right" id="fullscreen" src="images/fullscreen.png" style="height: 30px; margin: 8px; vertical-align: middle">
         </div>
     </div>
 </body>
