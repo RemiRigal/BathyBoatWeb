@@ -1,6 +1,5 @@
 var exportButton, importButton;
-var jsonFileMission = JSON.parse("{\n\"missions\": [\n{\n\"type\": \"WayPoint\",\n\"wayPoints\": [\n{\n\"latitude\": 48.198150,\n\"longitude\": -3.015854\n},\n{\n\"latitude\": 48.199040,\n\"longitude\": -3.015805\n}\n]\n},\n{\n\"type\": \"WayPoint\",\n\"wayPoints\": [\n{\n\"latitude\": 48.198150,\n\"longitude\": -3.015854\n}\n]\n}\n]\n}");
-var jsonMissionName = "mission0.json";
+var jsonMissionName = "mission.json";
 
 function chooseFile() {
     var chooser = $('#importDialog');
@@ -26,12 +25,10 @@ function chooseFile() {
 }
 
 function createJsonFile() {
-    var buttonExp = $('#export_mission_button');
+    var jsonFileMission = getJsonFileMission();
     var file = new Blob([JSON.stringify(jsonFileMission)], {type: JSON});
-    // console.log(file);
-    buttonExp.attr("href", URL.createObjectURL(file));
-    buttonExp.attr("download", jsonMissionName);
-    console.log("export", buttonExp.attr("href"));
+    exportButton.attr("href", URL.createObjectURL(file));
+    exportButton.attr("download", jsonMissionName);
 }
 
 $(document).ready(function() {

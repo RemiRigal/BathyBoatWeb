@@ -8,6 +8,11 @@ module.exports = function(name, ip, port, receiveCallback) {
     this.client = new net.Socket();
     this.client.setEncoding('utf8');
 
+    this.write = function(msg) {
+        console.log('Write to TCP ' + tcp.name + ': ' + msg);
+        tcp.client.write(msg);
+    };
+
     this.initConnection = function() {
         tcp.client.connect(tcp.port, tcp.ip);
     };
@@ -31,7 +36,7 @@ module.exports = function(name, ip, port, receiveCallback) {
 
     this.client.on('close', function() {
         console.log('Connection ' + tcp.name + ' timeout. Reconnecting...');
-        setTimeout(tcp.initConnection, 500, tcp);
+        setTimeout(tcp.initConnection, 10000);
     });
 
     this.name = name;

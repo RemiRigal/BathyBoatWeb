@@ -15,7 +15,7 @@ function triggerVideo() {
 
     // $.ajax({
     //     type: 'POST',
-    //     url: 'http://192.168.0.10:29201/video',
+    //     url: 'http://' + document.location.hostname + ':29201/video',
     //     data: {action: videoEnabled ? 'enable' : 'disable', time: new Date()},
     //     error: function(error) {
     //         console.log(error);
@@ -25,10 +25,14 @@ function triggerVideo() {
 
 $(document).ready(function() {
     videoDiv = $('#video');
-    videoDiv.hide();
-    videoDiv.on('click', triggerVideo);
     videoButton = $('#video_button');
-    videoButton.on('click', triggerVideo);
+    videoDiv.show();
+    videoButton.hide();
+
+    //videoDiv.hide();
+    //videoButton.show();
+    //videoDiv.on('click', triggerVideo);
+    //videoButton.on('click', triggerVideo);
 
     var canvas = document.getElementById('video-canvas');
     var url = 'ws://' + document.location.hostname + ':8082/';

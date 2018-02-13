@@ -32,8 +32,8 @@ function onWindowResized() {
     mainPanel.height(mainPanel.parent().height() - (mainPanel.outerHeight(true) - mainPanel.outerHeight(false)));
     mainTabContent.height(mainTabContent.parent().height() - mainTabHead.height());
     globalMapContainer.height(globalMapContainer.parent().height());
-    if (globalMap) {
-        setTimeout(globalMap.invalidateSize, 500);
+    if (globalMap && globalMap.map) {
+        setTimeout(globalMap.map.invalidateSize, 500);
     }
 }
 
