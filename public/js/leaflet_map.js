@@ -50,6 +50,8 @@ function LeafletMap(id, position, zoom, interactive) {
         } else if (leafletMap.mission.type === 'Radiales') {
             leafletMap.mission.polygon.addLatLng(latlng);
             leafletMap.mission.polygon.addTo(leafletMap.map);
+            // TODO: test
+            leafletMap.displayRadiales();
         }
     };
 
@@ -77,9 +79,10 @@ function LeafletMap(id, position, zoom, interactive) {
                 latlngs[markerId] = new L.LatLng(latlng.lat, latlng.lng);
                 leafletMap.mission.polyline.setLatLngs(latlngs);
             } else if (leafletMap.mission.type === 'Radiales'){
-                latlngs = leafletMap.mission.polygon.getLatLngs();
+                latlngs = leafletMap.mission.polygon.getLatLngs()[0];
                 latlngs[markerId] = new L.LatLng(latlng.lat, latlng.lng);
                 leafletMap.mission.polygon.setLatLngs(latlngs);
+                leafletMap.displayRadiales();
             }
         } else if (leafletMap.currentMarker !== null) {
             leafletMap.currentMarker = null;
@@ -88,6 +91,28 @@ function LeafletMap(id, position, zoom, interactive) {
 
     this.setPositionMarker = function(lat, lng) {
         this.positionMarker.setLatLng(new L.LatLng(lat, lng), {draggable: false});
+    };
+
+    this.displayRadiales = function() {
+        var points = leafletMap.mission.polygon.getLatLngs()[0];
+        if (points.length > 2) {
+            var polygon = [];
+            points.forEach(function(p) {
+                polygon.push([p.lat, p.lng]);
+            });
+            var radiales = radiale(leafletMap.mission.angle, leafletMap.mission.span, polygon);
+            if (leafletMap.mission.radiales) {
+                leafletMap.mission.radiales.forEach(function(l) { l.remove(); });
+            }
+            leafletMap.mission.radiales = [];
+            radiales.forEach(function(r) {
+                var line = L.polyline([], {color: leafletMap.mission.color});
+                line.addLatLng(new L.LatLng(r[0][0], r[0][1]));
+                line.addLatLng(new L.LatLng(r[1][0], r[1][1]));
+                line.addTo(leafletMap.map);
+                leafletMap.mission.radiales.push(line);
+            });
+        }
     };
 
     this.mission = null;

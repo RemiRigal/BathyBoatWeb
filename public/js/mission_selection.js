@@ -17,7 +17,18 @@ function Mission(missionId, color) {
         if (this.type === 'Waypoints') {
 
         } else if (this.type === 'Radiales') {
-
+            mission.missionExtra.html('<strong>Angle: <span id="mission_angle_' + mission.id + '">0</span></strong>' +
+                '<input id="mission_angle_input_' + mission.id + '" type="range" min="0" max="6.28" step="0.01"/>' +
+                '<strong>Ecart: <span id="mission_span_' + mission.id + '">0</span></strong>' +
+                '<input id="mission_span_input_' + mission.id + '" type="range" min="0.00001" max="0.001" step="0.00001"/>');
+            $('#mission_span_input_' + mission.id).on('input', function(e) {
+                mission.span = parseFloat(e.target.value);
+                globalMap.displayRadiales();
+            });
+            $('#mission_angle_input_' + mission.id).on('input', function(e) {
+                mission.angle = parseFloat(e.target.value);
+                globalMap.displayRadiales();
+            });
         }
     };
 
@@ -32,7 +43,7 @@ function Mission(missionId, color) {
     };
 
     this.initHtml = function() {
-        mission.htmlElement.html('<div id="mission_header_' + mission.id + '" class="col-xs-12">' +
+        var html = '<div id="mission_header_' + mission.id + '" class="col-xs-12">' +
             '<span id="mission_color_' + mission.id + '" class="pull-left" style="border-radius: 100%; width: 20px; height: 20px; margin: 10px 5px 10px 5px"></span>' +
             '<div class="pull-left h4">' + mission.name + '</div>' +
             '<span id="delete_mission_' + mission.id + '" class="pull-right glyphicon glyphicon-remove" style="padding-top: 10px"></span>' +
@@ -40,9 +51,10 @@ function Mission(missionId, color) {
             '<div class="col-xs-12" id="mission_body_' + mission.id + '"><div>' +
             '<select id="select_mission_type_' + mission.id + '" class="form-control">' +
             '<option>Waypoints</option><option>Radiales</option>' +
-            '</select>' +
-            '<div id="mission_points_' + mission.id + '"></div></div>' +
-            '</div>');
+            '</select><div id="mission_extra_' + mission.id + '"></div>' +
+            '<div id="mission_points_' + mission.id + '"></div></div></div>';
+        mission.htmlElement.html(html);
+        mission.missionExtra = $('#mission_extra_' + mission.id);
         mission.missionColor = $('#mission_color_' + mission.id);
         mission.missionColor.css('background-color', mission.color);
         mission.selectMissionType = $('#select_mission_type_' + mission.id);
@@ -71,10 +83,15 @@ function Mission(missionId, color) {
     this.name = 'Mission' + missionId;
     this.type = 'Waypoints';
     this.color = color;
-    this.polyline = L.polyline([], {color: 'white'});
-    this.polygon = L.polygon([], {color: 'white'});
     this.markers = [];
     this.nbrPoint = 0;
+    // Waypoints
+    this.polyline = L.polyline([], {color: 'white'});
+    // Radiales
+    this.polygon = L.polygon([], {color: 'white'});
+    this.radiales = [];
+    this.angle = 0;
+    this.span = 0.001;
 
     this.htmlElement = $('#mission_' + missionId);
     this.initHtml();
