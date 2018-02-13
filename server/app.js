@@ -23,7 +23,7 @@ global.commandTCP = undefined;
 global.dataTCP = undefined;
 
 // TCP Client
-global.rosIP = '192.168.43.224';
+global.rosIP = '127.0.0.1';
 dataClient();
 commandClient();
 
