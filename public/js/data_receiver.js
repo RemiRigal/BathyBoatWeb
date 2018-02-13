@@ -27,7 +27,7 @@ function success(result) {
     }
 
     //console.log(globalData);
-    setTimeout(requestData, 100);
+    //setTimeout(requestData, 100);
 }
 
 function requestData() {
@@ -47,5 +47,5 @@ function requestData() {
 }
 
 $(document).ready(function() {
-    setTimeout(requestData, 100);
+    setInterval(requestData, 100);
 });
