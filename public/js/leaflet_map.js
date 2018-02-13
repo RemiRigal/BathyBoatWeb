@@ -11,10 +11,17 @@ function LeafletMap(id, position, zoom, interactive) {
 
     var leafletMap = this;
 
-    this.unsetMission = function(mission) {
+    this.clearMission = function(mission) {
         mission.polyline.remove();
         mission.polygon.remove();
         mission.markers.forEach(function(m) { m.remove(); });
+        if (leafletMap.mission.radiales) {
+            leafletMap.mission.radiales.forEach(function(l) { l.remove(); });
+        }
+    };
+
+    this.unsetMission = function(mission) {
+        leafletMap.clearMission(mission);
         leafletMap.mission = null;
     };
 

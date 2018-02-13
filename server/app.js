@@ -1,7 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
-var bodyParser = require('body-parser');
 
 var dataClient = require('./tcp/data_client');
 var commandClient = require('./tcp/command_client');
@@ -30,7 +29,6 @@ commandClient();
 
 // Express App
 var app = express();
-app.use(bodyParser.urlencoded({extended: true}));
 app.use(mapDownloader);
 app.use(express.static(__dirname + '/../public'));
 app.use(bodyParser.urlencoded({extended: true}));

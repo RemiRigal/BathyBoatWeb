@@ -14,19 +14,31 @@ function Mission(missionId, color) {
     this.setType = function(type) {
         this.type = type;
         this.missionPoints.html('');
+        this.missionExtra.html('');
+        globalMap.clearMission(mission);
+        this.markers = [];
+        this.radiales = [];
+        this.polyline = L.polyline([], {color: 'white'});
+        this.polygon = L.polygon([], {color: 'white'});
         if (this.type === 'Waypoints') {
 
         } else if (this.type === 'Radiales') {
-            mission.missionExtra.html('<strong>Angle: <span id="mission_angle_' + mission.id + '">0</span></strong>' +
-                '<input id="mission_angle_input_' + mission.id + '" type="range" min="0" max="6.28" step="0.01"/>' +
-                '<strong>Ecart: <span id="mission_span_' + mission.id + '">0</span></strong>' +
-                '<input id="mission_span_input_' + mission.id + '" type="range" min="0.00001" max="0.001" step="0.00001"/>');
-            $('#mission_span_input_' + mission.id).on('input', function(e) {
+            mission.missionExtra.html('<strong>Angle: <span id="mission_angle_' + mission.id + '">0°</span></strong>' +
+                '<input id="mission_angle_input_' + mission.id + '" type="range" value="0" min="0" max="3.14" step="0.01"/>' +
+                '<strong>Ecart: <span id="mission_span_' + mission.id + '">0.005°</span></strong>' +
+                '<input id="mission_span_input_' + mission.id + '" type="range" value="0.0001" min="0.0001" max="0.01" step="0.00001"/>');
+            mission.angleDisplay = $('#mission_angle_' + mission.id);
+            mission.spanDisplay = $('#mission_span_' + mission.id);
+            mission.spanInput = $('#mission_span_input_' + mission.id);
+            mission.spanInput.on('input', function(e) {
                 mission.span = parseFloat(e.target.value);
+                mission.spanDisplay.html(mission.span + '°');
                 globalMap.displayRadiales();
             });
-            $('#mission_angle_input_' + mission.id).on('input', function(e) {
+            mission.angleInput = $('#mission_angle_input_' + mission.id);
+            mission.angleInput.on('input', function(e) {
                 mission.angle = parseFloat(e.target.value);
+                mission.angleDisplay.html(Math.round(mission.angle * 360 / (2 * Math.PI)) + '°');
                 globalMap.displayRadiales();
             });
         }
