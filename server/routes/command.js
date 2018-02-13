@@ -1,4 +1,5 @@
 var express = require('express');
+var fs = require('fs');
 
 var router = express.Router();
 
@@ -20,11 +21,17 @@ router.post('/command/idle', function(req, res) {
 });
 
 router.post('/command/mission', function(req, res) {
-    commandTCP.write('MISSION\0');
+    var mission = req.body.mission;
+    var file = fs.createWriteStream(missionFilePath);
+    file.on('open', function() {
+        file.write(mission);
+        file.close();
+        commandTCP.write('MISSION\0');
+    });
 });
 
 router.post('/command/spd', function(req, res) {
-    var speed = parseFloat(req.body.data.speed);
+    var speed = parseFloat(req.body.speed);
     commandTCP.write('SPD/' + speed + '\0');
 });
 

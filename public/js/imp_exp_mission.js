@@ -1,4 +1,5 @@
 var exportButton, importButton;
+var startMission;
 var jsonMissionName = "mission.json";
 
 function chooseFile() {
@@ -11,7 +12,7 @@ function chooseFile() {
         reader.onloadend = ( function(file) {
             return function(e) {
                 jsonMissionName = file.name;
-                jsonFileMission = JSON.parse(e.target.result);
+                var jsonFileMission = JSON.parse(e.target.result);
                 console.log(jsonFileMission);
                 console.log(jsonMissionName);
                 showingWaypoints();
@@ -31,9 +32,26 @@ function createJsonFile() {
     exportButton.attr("download", jsonMissionName);
 }
 
+function onStartMissionButtonClicked() {
+    if (missions.length > 0) {
+        var jsonFileMission = getJsonFileMission();
+        console.log(JSON.stringify(jsonFileMission));
+        $.ajax({
+            type: 'POST',
+            url: 'http://' + document.location.hostname + ':29201/command/mission',
+            data: { mission: JSON.stringify(jsonFileMission) },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
+}
+
 $(document).ready(function() {
     exportButton = $('#export_mission_button');
     exportButton.on('click', createJsonFile);
     importButton = $('#import_mission_button');
     importButton.on('click', chooseFile);
+    startMission = $('#start_mission');
+    startMission.on('click', onStartMissionButtonClicked);
 });

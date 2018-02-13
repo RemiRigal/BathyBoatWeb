@@ -21,9 +21,19 @@ function Mission(missionId, color) {
         }
     };
 
+    this.updatePoints = function() {
+        var latlngs;
+        if (mission.type === 'Waypoints') {
+            latlngs = mission.polyline.getLatLngs();
+        } else if (mission.type === 'Radiales') {
+            latlngs = mission.polygon.getLatLngs();
+        }
+        mission.missionPoints.html(html);
+    };
+
     this.initHtml = function() {
         mission.htmlElement.html('<div id="mission_header_' + mission.id + '" class="col-xs-12">' +
-            '<span id="mission_color_' + mission.id + '" class="pull-left" style="border-radius: 100%; width: 20px; height: 20px; display: block; margin: auto"></span>' +
+            '<span id="mission_color_' + mission.id + '" class="pull-left" style="border-radius: 100%; width: 20px; height: 20px; margin: 10px 5px 10px 5px"></span>' +
             '<div class="pull-left h4">' + mission.name + '</div>' +
             '<span id="delete_mission_' + mission.id + '" class="pull-right glyphicon glyphicon-remove" style="padding-top: 10px"></span>' +
             '</div>' +
@@ -90,10 +100,12 @@ function onAddMissionClicked() {
 function getJsonFileMission() {
     var fileMission = { missions: [] };
     missions.forEach(function(m) {
-        fileMission.missions.push({
+        // TODO: radiales mission
+        var json = {
             type: m.type,
             waypoints: m.polyline.getLatLngs()
-        });
+        };
+        fileMission.missions.push(json);
     });
     return fileMission;
 }

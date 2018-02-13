@@ -41,11 +41,12 @@ function requestData() {
         data: data,
         success: success,
         error: function(error) {
-            console.log(error);
+            //console.log(error);
         }
     });
 }
 
 $(document).ready(function() {
     setInterval(requestData, 100);
+    //setTimeout(requestData, 100);
 });
