@@ -1,13 +1,13 @@
 var fs = require('fs');
 var request = require('request');
-var mkdirp = require('mkdirp');
+var mkdir = require('mkdirp');
 
 
 var mapboxToken = 'pk.eyJ1IjoicmVtaXJpZ2FsIiwiYSI6ImNqYW1hamE4NjMyaTQzMm8ya3hnYng0c3EifQ.2wKZ-kDFg42q8d1xW9p2zg';
 var mapboxUrl = "https://api.tiles.mapbox.com/v4/mapbox.streets-satellite/{z}/{x}/{y}.png?access_token={accessToken}";
 
 
-exports.handleRequest = function(req, res, next) {
+module.exports = function(req, res, next) {
     var mapTilePattern = '/images/maps';
     if (req.url.substring(0, mapTilePattern.length) !== mapTilePattern) {
         next();
@@ -17,11 +17,11 @@ exports.handleRequest = function(req, res, next) {
     var z = splitted[3];
     var x = splitted[4];
     var y = splitted[5].split('.')[0];
-    if (exports.hasMap(z, x, y)) {
+    if (hasMap(z, x, y)) {
         next();
         return;
     }
-    exports.download(z, x, y, function (success) {
+    download(z, x, y, function (success) {
         if (success) {
             next();
         } else {
@@ -31,18 +31,18 @@ exports.handleRequest = function(req, res, next) {
     });
 };
 
-exports.hasMap = function(z, x, y) {
+function hasMap(z, x, y) {
     var tilePath = getMapTilePath(z, x, y);
     return fs.existsSync(tilePath.filePath);
-};
+}
 
-exports.download = function(z, x, y, callback) {
+function download(z, x, y, callback) {
     var uri = mapboxUrl;
     uri = uri.replace('{z}', z).replace('{x}', x).replace('{y}', y);
     uri = uri.replace('{accessToken}', mapboxToken);
     var tilePath = getMapTilePath(z, x, y);
 
-    mkdirp(tilePath.dirPath, function(error) {
+    mkdir(tilePath.dirPath, function(error) {
         if (error) {
             console.log('Unable to make path for map tile: ' + error);
             if (callback) callback(false);
@@ -64,11 +64,11 @@ exports.download = function(z, x, y, callback) {
             });
         });
     });
-};
+}
 
 function getMapTilePath(z, x, y) {
     return {
-        filePath: __dirname + "/../public/images/maps/" + z + "/" + x + "/" + y + ".png",
-        dirPath: __dirname + "/../public/images/maps/" + z + "/" + x
+        filePath: __dirname + "/../../public/images/maps/" + z + "/" + x + "/" + y + ".png",
+        dirPath: __dirname + "/../../public/images/maps/" + z + "/" + x
     };
 }

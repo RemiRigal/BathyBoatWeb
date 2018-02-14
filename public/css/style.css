@@ -16046,3 +16046,7 @@ a.list-group-item-danger.active:hover, a.list-group-item-danger.active:focus {
     fill: #red;
     font: 10px sans-serif;
 }
+
+.expand-y {
+    height: 100%
+}

@@ -1,28 +1,11 @@
 var globalMap, miniMap;
+
 var currentPolyline = {mini: L.polyline([], {color: 'white'}), global: L.polyline([], {color: 'white'})};
 var currentPolygon = {mini: L.polygon([], {color: 'white'}), global: L.polygon([], {color: 'white'})};
 var currentPoints = {mini: {}, global: {}};
 var currentMarker = null;
 var nbrPoint = 1;
 var isDragging = false;
-
-$(document).ready(function() {
-    globalMap = L.map('gloablMap').setView([48.199040, -3.015805], 17);
-    miniMap = L.map('miniMap').setView([48.199040, -3.015805], 17);
-    globalMap.on('click', onMapClick);
-    globalMap.on('mouseup', onMouseUp);
-    globalMap.on('mousemove', onMouseMove);
-
-    L.tileLayer('http://localhost:29201/images/maps/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        minZoom: 0
-    }).addTo(globalMap);
-    L.tileLayer('http://localhost:29201/images/maps/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        minZoom: 0
-    }).addTo(miniMap);
-});
-
 
 function onMapClick(e) {
     if ($('#name_mission').html() === ''){
@@ -46,7 +29,7 @@ function onMouseMove(event){
             updateCurrentPolygon(position, id);
         }
         updateTablePoints(position, id);
-    } else {
+    } else if (currentMarker !== null) {
         currentMarker = null;
     }
 }
@@ -171,3 +154,21 @@ function updatePoint(position, id){
     globalMap.addLayer(currentMarker);
     miniMap.addLayer(currentPoints.mini[id]);
 }
+
+
+$(document).ready(function() {
+    globalMap = L.map('globalMap').setView([48.199040, -3.015805], 17);
+    miniMap = L.map('miniMap').setView([48.199040, -3.015805], 17);
+    globalMap.on('click', onMapClick);
+    globalMap.on('mouseup', onMouseUp);
+    globalMap.on('mousemove', onMouseMove);
+
+    L.tileLayer('http://localhost:29201/images/maps/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        minZoom: 0
+    }).addTo(globalMap);
+    L.tileLayer('http://localhost:29201/images/maps/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        minZoom: 0
+    }).addTo(miniMap);
+});

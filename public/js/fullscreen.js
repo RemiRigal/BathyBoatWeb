@@ -19,10 +19,10 @@ function toggleFullScreen() {
             document.webkitCancelFullScreen();
         }
     }
+    setTimeout(onWindowResized, 1000);
 }
 
 $(document).ready(function() {
     fullscreen = $('#fullscreen');
     fullscreen.on('click', toggleFullScreen);
-    fullscreen
 });
