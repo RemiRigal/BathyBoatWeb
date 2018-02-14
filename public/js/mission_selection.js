@@ -1,6 +1,6 @@
 var addMissionButton, missionList;
 
-var currentMission;
+var currentMission = null;
 var missions = [];
 var missionId = 0;
 
@@ -81,7 +81,7 @@ function Mission(missionId, color) {
             mission.setType(mission.selectMissionType.prop('value'));
         });
         mission.missionHeader.on('click', function() {
-            if (currentMission.id === mission.id) {
+            if (currentMission === null || currentMission.id === mission.id) {
                 mission.missionBody.slideUp();
                 setCurrentMission(null);
             } else {

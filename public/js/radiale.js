@@ -108,6 +108,10 @@ function inside(point, poly) {
     return inside;
 }
 
+function scaleMat(factor, point, medX, medY) {
+    return [(point[0] - medX) * factor, (point[1] - medY) * factor];
+}
+
 function matProd(matRot, segment) {
     var result = [[0, 0], [0, 0]];
     result[0][0] = segment[0][0] * matRot[0][0] + segment[0][1] * matRot[1][0];

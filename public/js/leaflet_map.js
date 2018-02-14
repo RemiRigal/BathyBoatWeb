@@ -57,7 +57,7 @@ function LeafletMap(id, position, zoom, interactive) {
         } else if (leafletMap.mission.type === 'Radiales') {
             leafletMap.mission.polygon.addLatLng(latlng);
             leafletMap.mission.polygon.addTo(leafletMap.map);
-            // TODO: test
+            // TODO: radiales
             leafletMap.displayRadiales();
         }
     };
@@ -89,6 +89,7 @@ function LeafletMap(id, position, zoom, interactive) {
                 latlngs = leafletMap.mission.polygon.getLatLngs()[0];
                 latlngs[markerId] = new L.LatLng(latlng.lat, latlng.lng);
                 leafletMap.mission.polygon.setLatLngs(latlngs);
+                // TODO: radiales
                 leafletMap.displayRadiales();
             }
         } else if (leafletMap.currentMarker !== null) {
@@ -157,19 +158,4 @@ function updatePosition(lat, lng, remove) {
 $(document).ready(function() {
     globalMap = new LeafletMap('globalMap', [48.199040, -3.015805], 17, true);
     miniMap = new LeafletMap('miniMap', [48.199040, -3.015805], 17, false);
-
-    // globalMap = L.map('globalMap').setView([48.199040, -3.015805], 17);
-    // miniMap = L.map('miniMap').setView([48.199040, -3.015805], 17);
-    // globalMap.on('click', onMapClick);
-    // globalMap.on('mouseup', onMouseUp);
-    // globalMap.on('mousemove', onMouseMove);
-    //
-    // L.tileLayer('http://' + document.location.hostname + ':29201/images/maps/{z}/{x}/{y}.png', {
-    //     maxZoom: 19,
-    //     minZoom: 0
-    // }).addTo(globalMap);
-    // L.tileLayer('http://' + document.location.hostname + ':29201/images/maps/{z}/{x}/{y}.png', {
-    //     maxZoom: 19,
-    //     minZoom: 0
-    // }).addTo(miniMap);
 });
