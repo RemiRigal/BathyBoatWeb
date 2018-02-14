@@ -125,6 +125,7 @@ function LeafletMap(id, position, zoom, interactive) {
 
     this.setPositionMarker = function(lat, lng) {
         this.positionMarker.setLatLng(new L.LatLng(lat, lng), {draggable: false});
+        this.positionMarker.setRotationAngle(yaw);
     };
 
     this.displayRadiales = function() {
@@ -161,11 +162,16 @@ function LeafletMap(id, position, zoom, interactive) {
         maxZoom: 19,
         minZoom: 0
     }).addTo(this.map);
-    this.positionMarker = L.circleMarker(position, {
-        color: '#00fffc',
-        attribution: 'Position'
+    var boatIcon = L.icon({
+        iconUrl: 'http://' + document.location.hostname + ':29201/images/boat_icon.png',
+        iconSize:     [27, 55],
+        iconAnchor:   [13, 27]
     });
-    this.positionMarker.addTo(this.map);
+    this.positionMarker = L.marker(new L.LatLng(0, 0), {
+        color: '#00fffc',
+        icon: boatIcon,
+        attribution: 'Position'
+    }).addTo(this.map);
 
     if (interactive) {
         this.map.on('click', this.onMapClicked);

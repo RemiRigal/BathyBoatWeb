@@ -1,4 +1,6 @@
 var lastUpdate = undefined;
+var yaw;
+
 
 function success(result) {
     var json = JSON.parse(result);
@@ -11,6 +13,7 @@ function success(result) {
 
     if (json.pos.length > 0) {
         var pos = json.pos[json.pos.length - 1].content;
+        yaw = 360 * (pos.yaw / (2 * Math.PI));
         setTelemetry(pos.lat, pos.long, pos.yaw, pos.speed, pos.signal);
     }
     if (json.data.length > 0) {
