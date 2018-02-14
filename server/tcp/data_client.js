@@ -15,6 +15,7 @@ function onDataReceived(msg) {
             globalData.batt.push(data);
             break;
         case '$MOT':
+            console.log(msg);
             globalData.mot.push(data);
             break;
         case '$DATA':
@@ -37,10 +38,8 @@ function splitData(raw) {
         msg.content.lat = splitted[2];
         msg.content.long = splitted[3];
         msg.content.yaw = splitted[4];
-        msg.content.pitch = splitted[5];
-        msg.content.roll = splitted[6];
-        msg.content.speed = splitted[7];
-        msg.content.signal = splitted[8];
+        msg.content.speed = splitted[5];
+        msg.content.signal = splitted[6];
     } else if (msg.type === '$DATA') {
         msg.content.temp = splitted[2];
         msg.content.hydro1 = splitted[3];

@@ -9,9 +9,15 @@ var globalData = {
     data: []
 };
 
-function setTelemetry(lat, long, yaw, pitch, roll, speed) {
+function setTelemetry(lat, long, yaw, speed) {
     $('#speed_lvl').html(Math.round(speed * 10) / 10 + ' kts');
     $('#yaw_lvl').html(Math.round(yaw * 10) / 10 + '°');
+
+    // var deg = utmToDeg(lat, long);
+    // updatePosition(deg.lat, deg.lng, true);
+    // $('#latitude').html(deg.lat);
+    // $('#longitude').html(deg.lng);
+
     $('#latitude').html(lat);
     $('#longitude').html(long);
     updatePosition(lat, long, true);
