@@ -14,6 +14,7 @@ function LeafletMap(id, position, zoom, interactive) {
     this.clearMission = function(mission) {
         mission.polyline.remove();
         mission.polygon.remove();
+        mission.securityPolygon.remove();
         mission.markers.forEach(function(m) { m.remove(); });
         if (leafletMap.mission.radiales) {
             leafletMap.mission.radiales.forEach(function(l) { l.remove(); });
@@ -29,6 +30,7 @@ function LeafletMap(id, position, zoom, interactive) {
         leafletMap.mission = mission;
         leafletMap.mission.polygon.addTo(leafletMap.map);
         leafletMap.mission.polyline.addTo(leafletMap.map);
+        leafletMap.mission.securityPolygon.addTo(leafletMap.map);
         leafletMap.mission.markers.forEach(function(m) { m.addTo(leafletMap.map) });
     };
 
@@ -56,9 +58,43 @@ function LeafletMap(id, position, zoom, interactive) {
             leafletMap.mission.polyline.addTo(leafletMap.map);
         } else if (leafletMap.mission.type === 'Radiales') {
             leafletMap.mission.polygon.addLatLng(latlng);
+            console.log(latlng);
             leafletMap.mission.polygon.addTo(leafletMap.map);
+            leafletMap.findPolygonSecure();
+            leafletMap.mission.securityPolygon.addTo(leafletMap.map);
             // TODO: radiales
             leafletMap.displayRadiales();
+        }
+    };
+
+    this.findPolygonSecure = function(){
+        var secureDistance = 10;
+        var points = leafletMap.mission.polygon.getLatLngs()[0];
+        var size = points.length;
+        if (size > 2){
+            var utm = [];
+            for (var j = 0; j < size; j++){
+                utm[j] = degToUtm(points[j].lat, points[j].lng);
+            }
+
+            var sumLat = utm.reduce(function(acc, p) { return acc + p.lat }, 0);
+            var medX = sumLat / size;
+            var sumLng = utm.reduce(function(acc, p) { return acc + p.lng }, 0);
+            var medY = sumLng / size;
+
+            var homothety = [];
+            for (var i = 0; i < size; i++){
+                var lat = (utm[i].lat - medX);
+                var lng = (utm[i].lng - medY);
+                var dist = Math.sqrt(Math.pow(lat, 2) + Math.pow(lng, 2));
+                var ratio = 1 + secureDistance / dist;
+                lat = lat * ratio + medX;
+                lng = lng * ratio + medY;
+                var deg = utmToDeg(lat, lng);
+                console.log(deg);
+                homothety.push(new L.LatLng(deg.lat, deg.lng));
+            }
+            leafletMap.mission.securityPolygon.setLatLngs(homothety);
         }
     };
 
@@ -89,8 +125,8 @@ function LeafletMap(id, position, zoom, interactive) {
                 latlngs = leafletMap.mission.polygon.getLatLngs()[0];
                 latlngs[markerId] = new L.LatLng(latlng.lat, latlng.lng);
                 leafletMap.mission.polygon.setLatLngs(latlngs);
-                // TODO: radiales
                 leafletMap.displayRadiales();
+                leafletMap.findPolygonSecure();
             }
         } else if (leafletMap.currentMarker !== null) {
             leafletMap.currentMarker = null;
