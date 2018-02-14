@@ -142,10 +142,13 @@ function LeafletMap(id, position, zoom, interactive) {
         var points = leafletMap.mission.polygon.getLatLngs()[0];
         if (points.length > 2) {
             var polygon = [];
+            var polygon2 = [];
             points.forEach(function(p) {
                 polygon.push([p.lat, p.lng]);
+                polygon2.push([p.lat, p.lng]);
             });
-            var radiales = radiale(leafletMap.mission.angle, leafletMap.mission.span, polygon);
+            var radiales = radiale(leafletMap.mission.angle, leafletMap.mission.span * 3, polygon);
+            radiales = radiales.concat(radiale(leafletMap.mission.angle + (Math.PI / 2), leafletMap.mission.span, polygon2));
             if (leafletMap.mission.radiales) {
                 leafletMap.mission.radiales.forEach(function(l) { l.remove(); });
             }

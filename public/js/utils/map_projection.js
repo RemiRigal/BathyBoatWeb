@@ -1,5 +1,6 @@
 var deg = new Proj4js.Proj('EPSG:4326');
-var utm = new Proj4js.Proj('EPSG:27561');
+var utm = new Proj4js.Proj('EPSG:2154');
+
 
 function utmToDeg(lat, lng) {
     var p = new Proj4js.Point(lat, lng);
