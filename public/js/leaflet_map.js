@@ -68,7 +68,7 @@ function LeafletMap(id, position, zoom, interactive) {
     };
 
     this.findPolygonSecure = function(){
-        var secureDistance = 50000;
+        var secureDistance = 10;
         var points = leafletMap.mission.polygon.getLatLngs()[0];
         var size = points.length;
         if (size > 2){
@@ -84,16 +84,15 @@ function LeafletMap(id, position, zoom, interactive) {
 
             var homothety = [];
             for (var i = 0; i < size; i++){
-                var distX = Math.pow(Math.pow(utm[i].lat, 2) + Math.pow(medX, 2), 0.5);
-                var ratioX = 1 + secureDistance / distX;
-                console.log(ratioX);
-                var distY = Math.pow(Math.pow(utm[i].lng, 2) + Math.pow(medY, 2), 0.5);
-                var ratioY = 1 + secureDistance / distY;
-                var lat = (utm[i].lat - medX) * ratioX + medX;
-                var lng = (utm[i].lng - medY) * ratioY + medY;
+                var lat = (utm[i].lat - medX);
+                var lng = (utm[i].lng - medY);
+                var dist = Math.sqrt(Math.pow(lat, 2) + Math.pow(lng, 2));
+                var ratio = 1 + secureDistance / dist;
+                lat = lat * ratio + medX;
+                lng = lng * ratio + medY;
                 var deg = utmToDeg(lat, lng);
                 console.log(deg);
-                homothety[i] = new L.LatLng(deg.lat, deg.lng);
+                homothety.push(new L.LatLng(deg.lat, deg.lng));
             }
             leafletMap.mission.securityPolygon.setLatLngs(homothety);
         }
