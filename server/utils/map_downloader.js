@@ -5,10 +5,10 @@ var mkdir = require('mkdirp');
 
 var mapboxToken = 'pk.eyJ1IjoicmVtaXJpZ2FsIiwiYSI6ImNqYW1hamE4NjMyaTQzMm8ya3hnYng0c3EifQ.2wKZ-kDFg42q8d1xW9p2zg';
 var mapboxUrl = "https://api.tiles.mapbox.com/v4/mapbox.streets-satellite/{z}/{x}/{y}.png?access_token={accessToken}";
+var mapTilePattern = '/images/maps';
 
 
 module.exports = function(req, res, next) {
-    var mapTilePattern = '/images/maps';
     if (req.url.substring(0, mapTilePattern.length) !== mapTilePattern) {
         next();
         return;

@@ -13,12 +13,13 @@
     <script src="js/lib/jsmpeg.min.js"></script>
     <script src="js/lib/proj4.min.js"></script>
     <script src="js/lib/EPSG27561.min.js"></script>
+    <script src="js/lib/EPSG2154.min.js"></script>
     <script src="js/utils/map_projection.js"></script>
     <script src="js/index.js"></script>
     <script src="js/alerts.js"></script>
     <script src="js/session.js"></script>
     <script src="js/data_receiver.js"></script>
-    <!--<script src="js/video_trigger.js"></script>-->
+    <script src="js/video_trigger.js"></script>
     <script src="js/motor_monitor.js"></script>
     <script src="js/imp_exp_mission.js"></script>
     <script src="js/fullscreen.js"></script>
@@ -26,6 +27,7 @@
     <script src="js/mission_selection.js"></script>
     <script src="js/command.js"></script>
     <script src="js/radiale.js"></script>
+    <script src="js/blueview.js"></script>
 </head>
 <body>
 
@@ -127,32 +129,6 @@
                                             Ajouter une mission
                                         </button>
                                         <div id="missions_list"></div>
-                                        <div id="menu_type_mission" class="dropdown" style="display: none">
-                                            <button style="width: 100%; margin-top: 10px; margin-bottom: 10px" class="btn btn-primary dropdown-toggle"
-                                                    type="button" data-toggle="dropdown">
-                                                Type de mission
-                                                <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="#">Waypoints</a></li>
-                                                <li><a href="#">Radiales</a></li>
-                                            </ul>
-                                        </div>
-
-                                        <!--<div id="type_mission" style="display: none">-->
-                                        <!--<table class="table table-striped table-hover">-->
-                                        <!--<tr>-->
-                                        <!--<th><div id="name_mission"></div>-->
-                                        <!--<button style="width: 100%; margin-top: 10px; margin-bottom: 10px" class="btn btn-danger" type="button">-->
-                                        <!--Supprimer-->
-                                        <!--</button>-->
-                                        <!--</th>-->
-                                        <!--</tr>-->
-                                        <!--<tbody id="table_points_mission"></tbody>-->
-                                        <!--</table>-->
-                                        <!--</div>-->
-
-
                                     </div>
                                 </div>
                             </div>
@@ -255,10 +231,10 @@
                             </table>
                             <div class="panel panel-info">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">Profil Bathymétrique</h3>
+                                    <h3 class="panel-title">BlueView</h3>
                                 </div>
                                 <div id="bathy_profile" class="panel-body">
-                                    Profil
+                                    <img id="blueview_image" src="images/blueview/img.png">
                                 </div>
                             </div>
                         </div>
