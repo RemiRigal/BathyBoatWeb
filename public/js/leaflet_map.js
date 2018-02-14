@@ -16,9 +16,7 @@ function LeafletMap(id, position, zoom, interactive) {
         mission.polygon.remove();
         mission.securityPolygon.remove();
         mission.markers.forEach(function(m) { m.remove(); });
-        if (leafletMap.mission.radiales) {
-            leafletMap.mission.radiales.forEach(function(l) { l.remove(); });
-        }
+        mission.radiales.forEach(function(l) { l.remove(); });
     };
 
     this.unsetMission = function(mission) {
@@ -32,6 +30,7 @@ function LeafletMap(id, position, zoom, interactive) {
         leafletMap.mission.polyline.addTo(leafletMap.map);
         leafletMap.mission.securityPolygon.addTo(leafletMap.map);
         leafletMap.mission.markers.forEach(function(m) { m.addTo(leafletMap.map) });
+        leafletMap.mission.radiales.forEach(function(l) { l.addTo(leafletMap.map); });
     };
 
     this.onMarkerMouseDown = function(event) {
@@ -58,11 +57,9 @@ function LeafletMap(id, position, zoom, interactive) {
             leafletMap.mission.polyline.addTo(leafletMap.map);
         } else if (leafletMap.mission.type === 'Radiales') {
             leafletMap.mission.polygon.addLatLng(latlng);
-            console.log(latlng);
             leafletMap.mission.polygon.addTo(leafletMap.map);
             leafletMap.findPolygonSecure();
             leafletMap.mission.securityPolygon.addTo(leafletMap.map);
-            // TODO: radiales
             leafletMap.displayRadiales();
         }
     };
@@ -91,7 +88,6 @@ function LeafletMap(id, position, zoom, interactive) {
                 lat = lat * ratio + medX;
                 lng = lng * ratio + medY;
                 var deg = utmToDeg(lat, lng);
-                console.log(deg);
                 homothety.push(new L.LatLng(deg.lat, deg.lng));
             }
             leafletMap.mission.securityPolygon.setLatLngs(homothety);
