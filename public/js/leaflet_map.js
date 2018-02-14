@@ -1,11 +1,5 @@
 var globalMap, miniMap;
 
-var currentPolyline = {mini: L.polyline([], {color: 'white'}), global: L.polyline([], {color: 'white'})};
-var currentPolygon = {mini: L.polygon([], {color: 'white'}), global: L.polygon([], {color: 'white'})};
-var currentPoints = {mini: {}, global: {}};
-var currentMarker = null;
-var nbrPoint = 1;
-var isDragging = false;
 
 function LeafletMap(id, position, zoom, interactive) {
 
@@ -100,7 +94,7 @@ function LeafletMap(id, position, zoom, interactive) {
         }
     };
 
-    this.onMouseUp = function(event) {
+    this.onMouseUp = function() {
         leafletMap.map.dragging.enable();
         leafletMap.isDragging = false;
     };
@@ -181,7 +175,7 @@ function LeafletMap(id, position, zoom, interactive) {
 }
 
 function onMapUpdated() {
-
+    // TODO: mirror on mini map
 }
 
 function updatePosition(lat, lng, remove) {
