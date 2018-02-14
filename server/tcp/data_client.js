@@ -15,12 +15,23 @@ function onDataReceived(msg) {
             globalData.batt.push(data);
             break;
         case '$MOT':
-            console.log(msg);
             globalData.mot.push(data);
             break;
         case '$DATA':
             globalData.data.push(data);
             break;
+    }
+    if (globalData.pos.length > 100) {
+        globalData.pos.slice(globalData.pos.length - 100, globalData.pos.length - 1);
+    }
+    if (globalData.batt.length > 100) {
+        globalData.batt.slice(globalData.batt.length - 100, globalData.batt.length - 1);
+    }
+    if (globalData.mot.length > 100) {
+        globalData.mot.slice(globalData.mot.length - 100, globalData.mot.length - 1);
+    }
+    if (globalData.data.length > 100) {
+        globalData.data.slice(globalData.data.length - 100, globalData.data.length - 1);
     }
 }
 
