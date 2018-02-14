@@ -24,7 +24,7 @@ global.dataTCP = undefined;
 
 // TCP Client
 global.missionFilePath = '/home/user/BathyBoatMissions/mission.json';
-global.rosIP = '127.0.0.1';
+global.rosIP = '192.168.0.47';
 dataClient();
 commandClient();
 
