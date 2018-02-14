@@ -24,16 +24,16 @@ function Mission(missionId, color) {
         if (this.type === 'Waypoints') {
 
         } else if (this.type === 'Radiales') {
-            mission.missionExtra.html('<strong>Angle: <span id="mission_angle_' + mission.id + '">0°</span></strong>' +
+            mission.missionExtra.html('<strong>Angle: <step id="mission_angle_' + mission.id + '">0°</step></strong>' +
                 '<input id="mission_angle_input_' + mission.id + '" type="range" value="0" min="0" max="3.14" step="0.01"/>' +
-                '<strong>Ecart: <span id="mission_span_' + mission.id + '">0.005°</span></strong>' +
+                '<strong>Ecart: <step id="mission_span_' + mission.id + '">0.005°</step></strong>' +
                 '<input id="mission_span_input_' + mission.id + '" type="range" value="0.0001" min="0.0001" max="0.01" step="0.00001"/>');
             mission.angleDisplay = $('#mission_angle_' + mission.id);
             mission.spanDisplay = $('#mission_span_' + mission.id);
             mission.spanInput = $('#mission_span_input_' + mission.id);
             mission.spanInput.on('input', function(e) {
-                mission.span = parseFloat(e.target.value);
-                mission.spanDisplay.html(mission.span + '°');
+                mission.step = parseFloat(e.target.value);
+                mission.spanDisplay.html(mission.step + '°');
                 globalMap.displayRadiales();
             });
             mission.angleInput = $('#mission_angle_input_' + mission.id);
@@ -57,9 +57,9 @@ function Mission(missionId, color) {
 
     this.initHtml = function() {
         var html = '<div id="mission_header_' + mission.id + '" class="col-xs-12">' +
-            '<span id="mission_color_' + mission.id + '" class="pull-left" style="border-radius: 100%; width: 20px; height: 20px; margin: 10px 5px 10px 5px"></span>' +
+            '<step id="mission_color_' + mission.id + '" class="pull-left" style="border-radius: 100%; width: 20px; height: 20px; margin: 10px 5px 10px 5px"></step>' +
             '<div class="pull-left h4">' + mission.name + '</div>' +
-            '<span id="delete_mission_' + mission.id + '" class="pull-right glyphicon glyphicon-remove" style="padding-top: 10px"></span>' +
+            '<step id="delete_mission_' + mission.id + '" class="pull-right glyphicon glyphicon-remove" style="padding-top: 10px"></step>' +
             '</div>' +
             '<div class="col-xs-12" id="mission_body_' + mission.id + '"><div>' +
             '<select id="select_mission_type_' + mission.id + '" class="form-control">' +
@@ -105,7 +105,7 @@ function Mission(missionId, color) {
     this.securityPolygon = L.polygon([], {color: '#ffee00'});
     this.radiales = [];
     this.angle = 0;
-    this.span = 0.001;
+    this.step = 0.001;
 
     this.htmlElement = $('#mission_' + missionId);
     this.initHtml();
@@ -131,11 +131,33 @@ function onAddMissionClicked() {
 function getJsonFileMission() {
     var fileMission = { missions: [] };
     missions.forEach(function(m) {
-        // TODO: radiales mission
         var json = {
-            type: m.type,
-            waypoints: m.polyline.getLatLngs()
+            type: m.type
         };
+        if (m.type === 'Waypoints') {
+            var waypoints = m.polyline.getLatLngs();
+            waypoints.forEach(function(p, idx) {
+                waypoints[idx] = degToUtm(p.lat, p.lng);
+            });
+            json.waypoints = waypoints;
+        } else if (m.type === 'Radiales') {
+            var radiales = m.radiales;
+            radiales.forEach(function(r, idx) {
+                var latlngs = r.getLatLngs();
+                radiales[idx] = {
+                    start: degToUtm(latlngs[0].lat, latlngs[0].lng),
+                    end: degToUtm(latlngs[1].lat, latlngs[1].lng)
+                }
+            });
+            json.radiales = radiales;
+            var polygon = m.polygon.getLatLngs()[0];
+            polygon.forEach(function(p, idx) {
+                polygon[idx] = degToUtm(p.lat, p.lng);
+            });
+            json.polygon = polygon;
+            json.angle = m.angle;
+            json.step = m.step;
+        }
         fileMission.missions.push(json);
     });
     return fileMission;

@@ -1,5 +1,5 @@
 
-function radiale(angle, span, polygon) {
+function radiale(angle, step, polygon) {
 
 
     polygon.forEach(function(point, index) {
@@ -7,7 +7,7 @@ function radiale(angle, span, polygon) {
         polygon[index] = [newPoint.lat, newPoint.lng];
     });
 
-    span = span * 100000;
+    step = step * 100000;
 
     var maxX = polygon[0][0];
     var maxY = polygon[0][1];
@@ -29,13 +29,13 @@ function radiale(angle, span, polygon) {
         }
     }
 
-    var squareSize = 2 * span + Math.sqrt(Math.pow(maxX - minX, 2) + Math.pow(maxY - minY, 2));
+    var squareSize = 2 * step + Math.sqrt(Math.pow(maxX - minX, 2) + Math.pow(maxY - minY, 2));
     var rotMat = [[Math.cos(angle), -Math.sin(angle)], [Math.sin(angle), Math.cos(angle)]];
-    var n = Math.floor(squareSize / span) + 1;
+    var n = Math.floor(squareSize / step) + 1;
     var centeredSegments = [[[-squareSize / 2, -squareSize / 2], [squareSize / 2, -squareSize / 2]]];
 
     for (var i = 1; i < n; i++) {
-        centeredSegments = centeredSegments.concat([[[-squareSize / 2, -squareSize / 2 + i * span], [squareSize / 2, -squareSize / 2 + i * span]]]);
+        centeredSegments = centeredSegments.concat([[[-squareSize / 2, -squareSize / 2 + i * step], [squareSize / 2, -squareSize / 2 + i * step]]]);
     }
 
     for (var i = 0; i < centeredSegments.length; i++) {
