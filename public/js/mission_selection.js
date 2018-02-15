@@ -77,6 +77,7 @@ function Mission(missionId, color) {
         $('#delete_mission_' + mission.id).on('click', function() {
             mission.htmlElement.remove();
             globalMap.unsetMission(mission);
+            missions = missions.filter(function(m) { return m.id !== mission.id });
         });
         mission.selectMissionType.on('change', function() {
             mission.setType(mission.selectMissionType.prop('value'));
@@ -128,6 +129,17 @@ function onAddMissionClicked() {
     setCurrentMission(mission);
 }
 
+function getCurrentMission() {
+    $.ajax({
+        type: 'GET',
+        url: 'http://' + document.location.hostname + ':29201/mission',
+        data: {},
+        success: function (m) {
+            importMissions(JSON.parse(m));
+        }
+    });
+}
+
 function getJsonFileMission() {
     var fileMission = { missions: [] };
     missions.forEach(function(m) {
@@ -137,7 +149,7 @@ function getJsonFileMission() {
         if (m.type === 'Waypoints') {
             var waypoints = m.polyline.getLatLngs();
             waypoints.forEach(function(p, idx) {
-                waypoints[idx] = degToUtm(p.lat, p.lng);
+                waypoints[idx] = p;
             });
             json.waypoints = waypoints;
         } else if (m.type === 'Radiales') {
@@ -145,14 +157,14 @@ function getJsonFileMission() {
             radiales.forEach(function(r, idx) {
                 var latlngs = r.getLatLngs();
                 radiales[idx] = {
-                    start: degToUtm(latlngs[0].lat, latlngs[0].lng),
-                    end: degToUtm(latlngs[1].lat, latlngs[1].lng)
+                    start: latlngs[0],
+                    end: latlngs[1]
                 }
             });
             json.radiales = radiales;
             var polygon = m.polygon.getLatLngs()[0];
             polygon.forEach(function(p, idx) {
-                polygon[idx] = degToUtm(p.lat, p.lng);
+                polygon[idx] = p;
             });
             json.polygon = polygon;
             json.angle = m.angle;
@@ -168,4 +180,5 @@ $(document).ready(function() {
     addMissionButton = $('#add_mission');
     missionList = $('#missions_list');
     addMissionButton.on('click', onAddMissionClicked);
+    getCurrentMission();
 });

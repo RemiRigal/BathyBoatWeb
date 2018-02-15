@@ -6,6 +6,7 @@ module.exports = function() {
 };
 
 function onDataReceived(msg) {
+    console.log(msg);
     var data = splitData(msg);
     switch (data.type) {
         case '$POS':

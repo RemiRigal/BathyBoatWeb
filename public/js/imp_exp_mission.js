@@ -48,15 +48,13 @@ function importMissions(jsonMission) {
         setCurrentMission(mission);
         if (m.type === 'Waypoints') {
             m.waypoints.forEach(function(p) {
-                var deg = utmToDeg(p.lat, p.lng);
-                globalMap.addPoint(new L.LatLng(deg.lat, deg.lng));
+                globalMap.addPoint(new L.LatLng(p.lat, p.lng));
             });
         } else if (m.type === 'Radiales') {
             mission.angle = m.angle;
             mission.step = m.step;
             m.polygon.forEach(function(p) {
-                var deg = utmToDeg(p.lat, p.lng);
-                globalMap.addPoint(new L.LatLng(deg.lat, deg.lng));
+                globalMap.addPoint(new L.LatLng(p.lat, p.lng));
             });
         }
     });
