@@ -8,5 +8,5 @@ function refreshBlueview() {
 
 $(document).ready(function() {
     blueviewImage = $('#blueview_image');
-    setInterval(refreshBlueview, 500);
+    //setInterval(refreshBlueview, 500);
 });

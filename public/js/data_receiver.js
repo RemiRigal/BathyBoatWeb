@@ -13,7 +13,7 @@ function success(result) {
 
     if (json.pos.length > 0) {
         var pos = json.pos[json.pos.length - 1].content;
-        yaw = (- 360 * (pos.yaw / (2 * Math.PI)) + 90)%360;
+        yaw = (360 * (pos.yaw / (2 * Math.PI)) + 360)%360;
         setTelemetry(pos.lat, pos.long, pos.yaw, pos.speed, pos.signal);
     }
     if (json.data.length > 0) {
@@ -26,11 +26,12 @@ function success(result) {
     }
     if (json.mot.length > 0) {
         var mot = json.mot[json.mot.length - 1].content;
+        mot.m1 = (mot.m1 - 4000) / 40;
+        mot.m2 = (mot.m2 - 4000) / 40;
         updateBars(mot.m1, mot.m2);
     }
-
     //console.log(globalData);
-    //setTimeout(requestData, 100);
+    setTimeout(requestData, 100);
 }
 
 function requestData() {
@@ -50,6 +51,6 @@ function requestData() {
 }
 
 $(document).ready(function() {
-    setInterval(requestData, 100);
-    //setTimeout(requestData, 100);
+    //setInterval(requestData, 1000);
+    setTimeout(requestData, 100);
 });
