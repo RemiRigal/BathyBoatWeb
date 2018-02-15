@@ -34,6 +34,7 @@ function importMissions(jsonMission) {
     missions.forEach(function(m) {
         m.htmlElement.remove();
         globalMap.unsetMission(m);
+        miniMap.unsetMission(m);
     });
     missionList.html('');
     missionId = 0;

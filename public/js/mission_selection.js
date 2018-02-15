@@ -17,6 +17,7 @@ function Mission(missionId, color) {
         this.missionPoints.html('');
         this.missionExtra.html('');
         globalMap.clearMission(mission);
+        miniMap.clearMission(mission);
         this.markers = [];
         this.radiales = [];
         this.polyline = L.polyline([], {color: 'white'});
@@ -36,12 +37,14 @@ function Mission(missionId, color) {
                 mission.step = parseFloat(e.target.value);
                 mission.stepDisplay.html(mission.step + '°');
                 globalMap.displayRadiales();
+                miniMap.displayRadiales();
             });
             mission.angleInput = $('#mission_angle_input_' + mission.id);
             mission.angleInput.on('input', function(e) {
                 mission.angle = parseFloat(e.target.value);
                 mission.angleDisplay.html(Math.round(mission.angle * 360 / (2 * Math.PI)) + '°');
                 globalMap.displayRadiales();
+                miniMap.displayRadiales();
             });
         }
     };
@@ -87,6 +90,7 @@ function Mission(missionId, color) {
         $('#delete_mission_' + mission.id).on('click', function() {
             mission.htmlElement.remove();
             globalMap.unsetMission(mission);
+            miniMap.unsetMission(mission);
             missions = missions.filter(function(m) { return m.id !== mission.id });
         });
         mission.selectMissionType.on('change', function() {
@@ -128,6 +132,7 @@ function setCurrentMission(mission) {
     }
     currentMission = mission;
     globalMap.setMission(mission);
+    miniMap.setMission(mission);
 }
 
 function onAddMissionClicked() {

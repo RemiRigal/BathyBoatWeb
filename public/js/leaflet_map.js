@@ -58,6 +58,9 @@ function LeafletMap(id, position, zoom, interactive) {
             leafletMap.mission.securityPolygon.addTo(leafletMap.map);
             leafletMap.displayRadiales();
         }
+        // if (leafletMap.interactive) {
+        //     onAddPoint(latlng);
+        // }
     };
 
     this.findPolygonSecure = function(){
@@ -182,7 +185,8 @@ function LeafletMap(id, position, zoom, interactive) {
     }
 }
 
-function onMapUpdated() {
+function onAddPoint(latlng) {
+    miniMap.addPoint(latlng);
     // TODO: mirror on mini map
 }
 
