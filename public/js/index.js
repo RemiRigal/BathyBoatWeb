@@ -11,7 +11,7 @@ var globalData = {
 
 function setTelemetry(lat, long, yaw, speed) {
     $('#speed_lvl').html(Math.round(speed * 10) / 10 + ' kts');
-    $('#yaw_lvl').html(Math.round(360 * (yaw / (2 * Math.PI)) * 10) / 10 + '°');
+    $('#yaw_lvl').html(((360 * (yaw / (2 * Math.PI)) + 90 + 360)%360) + '°');
 
     // var deg = utmToDeg(lat, long);
     // updatePosition(deg.lat, deg.lng, true);
