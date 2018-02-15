@@ -168,15 +168,19 @@ function getJsonFileMission() {
             });
             json.waypoints = waypoints;
         } else if (m.type === 'Radiales') {
-            var radiales = m.radiales;
-            radiales.forEach(function(r, idx) {
+            var radiales = [];
+            var mapRadiales = m.radiales;
+            m.radiales.forEach(function(r, idx) {
                 var latlngs = r.getLatLngs();
-                radiales[idx] = {
-                    start: latlngs[0],
-                    end: latlngs[1]
+                radiales.push({ start: latlngs[0], end: latlngs[1] });
+                if (idx < m.radiales.length - 1) {
+                    var next = m.radiales[idx + 1].getLatLngs();
+                    radiales.push({ start: latlngs[1], end: next[0] });
                 }
+                mapRadiales[idx] = { start: latlngs[0], end: latlngs[1] };
             });
             json.radiales = radiales;
+            json.mapRadiales = mapRadiales;
             var polygon = m.polygon.getLatLngs()[0];
             polygon.forEach(function(p, idx) {
                 polygon[idx] = p;
