@@ -10,9 +10,11 @@ var ppmConverter = require('./utils/ppm_converter');
 var dataRouter = require('./routes/data');
 var videoRouter = require('./routes/video');
 var commandRouter = require('./routes/command');
+var missionRouter = require('./routes/mission');
 
 
 // Global data
+global.currentMission = null;
 global.globalData = {
     pos: [],
     mot: [],
@@ -41,5 +43,6 @@ app.use(cors());
 app.use(dataRouter);
 app.use(videoRouter);
 app.use(commandRouter);
+app.use(missionRouter);
 
 app.listen(29201);

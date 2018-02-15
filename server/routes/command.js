@@ -21,10 +21,10 @@ router.post('/command/idle', function(req, res) {
 });
 
 router.post('/command/mission', function(req, res) {
-    var mission = req.body.mission;
+    currentMission = req.body.mission;
     var file = fs.createWriteStream(missionFilePath);
     file.on('open', function() {
-        file.write(mission);
+        file.write(currentMission);
         file.close();
         commandTCP.write('MISSION\0');
     });

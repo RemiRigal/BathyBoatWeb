@@ -20,11 +20,13 @@ function LeafletMap(id, position, zoom, interactive) {
 
     this.setMission = function(mission) {
         leafletMap.mission = mission;
-        leafletMap.mission.polygon.addTo(leafletMap.map);
-        leafletMap.mission.polyline.addTo(leafletMap.map);
-        leafletMap.mission.securityPolygon.addTo(leafletMap.map);
-        leafletMap.mission.markers.forEach(function(m) { m.addTo(leafletMap.map) });
-        leafletMap.mission.radiales.forEach(function(l) { l.addTo(leafletMap.map); });
+        if (mission !== null) {
+            leafletMap.mission.polygon.addTo(leafletMap.map);
+            leafletMap.mission.polyline.addTo(leafletMap.map);
+            leafletMap.mission.securityPolygon.addTo(leafletMap.map);
+            leafletMap.mission.markers.forEach(function(m) { m.addTo(leafletMap.map) });
+            leafletMap.mission.radiales.forEach(function(l) { l.addTo(leafletMap.map); });
+        }
     };
 
     this.onMarkerMouseDown = function(event) {
@@ -56,6 +58,9 @@ function LeafletMap(id, position, zoom, interactive) {
             leafletMap.mission.securityPolygon.addTo(leafletMap.map);
             leafletMap.displayRadiales();
         }
+        // if (leafletMap.interactive) {
+        //     onAddPoint(latlng);
+        // }
     };
 
     this.findPolygonSecure = function(){
@@ -197,7 +202,8 @@ function LeafletMap(id, position, zoom, interactive) {
     }
 }
 
-function onMapUpdated() {
+function onAddPoint(latlng) {
+    miniMap.addPoint(latlng);
     // TODO: mirror on mini map
 }
 
