@@ -138,15 +138,30 @@ function LeafletMap(id, position, zoom, interactive) {
                 polygon2.push([p.lat, p.lng]);
             });
             var radiales = radiale(leafletMap.mission.angle, leafletMap.mission.step * 3, polygon);
-            radiales = radiales.concat(radiale(leafletMap.mission.angle + (Math.PI / 2), leafletMap.mission.step, polygon2));
+            //radiales = radiales.concat(radiale(leafletMap.mission.angle + (Math.PI / 2), leafletMap.mission.step, polygon2));
             if (leafletMap.mission.radiales) {
                 leafletMap.mission.radiales.forEach(function(l) { l.remove(); });
             }
             leafletMap.mission.radiales = [];
-            radiales.forEach(function(r) {
+
+            leafletMap.radialesMarkers.forEach(function(m) { m.remove(); });
+            leafletMap.radialesMarkers = [];
+            radiales.forEach(function(r, idx) {
                 var line = L.polyline([], {color: leafletMap.mission.color});
-                line.addLatLng(new L.LatLng(r[0][0], r[0][1]));
-                line.addLatLng(new L.LatLng(r[1][0], r[1][1]));
+                var radiale = r;
+                if (idx%2 === 0) {
+                    radiale = radiale.reverse();
+                }
+
+                // TODO
+                var radialeMarkerIcon = L.divIcon({
+                    html: '<div style="width: 100%; height: 100%; text-align: center; background-color: #ffffff">' + idx + '</div>',
+                    iconSize: [16, 16] });
+                var radialeMarker = new L.marker(radiale[0], {icon: radialeMarkerIcon}).addTo(leafletMap.map);
+                leafletMap.radialesMarkers.push(radialeMarker);
+
+                line.addLatLng(new L.LatLng(radiale[0][0], radiale[0][1]));
+                line.addLatLng(new L.LatLng(radiale[1][0], radiale[1][1]));
                 line.addTo(leafletMap.map);
                 leafletMap.mission.radiales.push(line);
             });
@@ -157,6 +172,8 @@ function LeafletMap(id, position, zoom, interactive) {
     this.isDragging = false;
     this.currentMarker = null;
     this.nbrPoint = 0;
+    this.radialesMarkers = [];
+
     this.map = L.map(id).setView(position, zoom);
     L.tileLayer('http://' + document.location.hostname + ':29201/images/maps/{z}/{x}/{y}.png', {
         maxZoom: 19,
