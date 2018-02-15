@@ -51,8 +51,7 @@ function importMissions(jsonMission) {
                 globalMap.addPoint(new L.LatLng(p.lat, p.lng));
             });
         } else if (m.type === 'Radiales') {
-            mission.angle = m.angle;
-            mission.step = m.step;
+            mission.setAngleAndStep(m.angle, m.step);
             m.polygon.forEach(function(p) {
                 globalMap.addPoint(new L.LatLng(p.lat, p.lng));
             });
@@ -61,17 +60,16 @@ function importMissions(jsonMission) {
 }
 
 function onStartMissionButtonClicked() {
-    if (missions.length > 0) {
-        var jsonFileMission = getJsonFileMission();
-        $.ajax({
-            type: 'POST',
-            url: 'http://' + document.location.hostname + ':29201/command/mission',
-            data: { mission: JSON.stringify(jsonFileMission) },
-            error: function(error) {
-                console.log(error);
-            }
-        });
-    }
+    var jsonFileMission = getJsonFileMission();
+    $.ajax({
+        type: 'POST',
+        url: 'http://' + document.location.hostname + ':29201/command/mission',
+        data: { mission: JSON.stringify(jsonFileMission) },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+    // TODO: disable interface
 }
 
 $(document).ready(function() {

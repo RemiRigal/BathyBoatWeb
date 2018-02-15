@@ -20,11 +20,13 @@ function LeafletMap(id, position, zoom, interactive) {
 
     this.setMission = function(mission) {
         leafletMap.mission = mission;
-        leafletMap.mission.polygon.addTo(leafletMap.map);
-        leafletMap.mission.polyline.addTo(leafletMap.map);
-        leafletMap.mission.securityPolygon.addTo(leafletMap.map);
-        leafletMap.mission.markers.forEach(function(m) { m.addTo(leafletMap.map) });
-        leafletMap.mission.radiales.forEach(function(l) { l.addTo(leafletMap.map); });
+        if (mission !== null) {
+            leafletMap.mission.polygon.addTo(leafletMap.map);
+            leafletMap.mission.polyline.addTo(leafletMap.map);
+            leafletMap.mission.securityPolygon.addTo(leafletMap.map);
+            leafletMap.mission.markers.forEach(function(m) { m.addTo(leafletMap.map) });
+            leafletMap.mission.radiales.forEach(function(l) { l.addTo(leafletMap.map); });
+        }
     };
 
     this.onMarkerMouseDown = function(event) {

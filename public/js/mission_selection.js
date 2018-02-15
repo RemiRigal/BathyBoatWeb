@@ -13,6 +13,7 @@ function Mission(missionId, color) {
 
     this.setType = function(type) {
         this.type = type;
+        mission.selectMissionType.prop('value', type);
         this.missionPoints.html('');
         this.missionExtra.html('');
         globalMap.clearMission(mission);
@@ -24,16 +25,16 @@ function Mission(missionId, color) {
         if (this.type === 'Waypoints') {
 
         } else if (this.type === 'Radiales') {
-            mission.missionExtra.html('<strong>Angle: <step id="mission_angle_' + mission.id + '">0°</step></strong>' +
-                '<input id="mission_angle_input_' + mission.id + '" type="range" value="0" min="0" max="3.14" step="0.01"/>' +
-                '<strong>Ecart: <step id="mission_span_' + mission.id + '">0.005°</step></strong>' +
-                '<input id="mission_span_input_' + mission.id + '" type="range" value="0.0001" min="0.0001" max="0.01" step="0.00001"/>');
+            mission.missionExtra.html('<strong>Angle: <step id="mission_angle_' + mission.id + '">' + mission.angle + '°</step></strong>' +
+                '<input id="mission_angle_input_' + mission.id + '" type="range" value="' + mission.angle + '" min="0" max="3.14" step="0.01"/>' +
+                '<strong>Ecart: <step id="mission_step_' + mission.id + '">' + missions.step + '°</step></strong>' +
+                '<input id="mission_step_input_' + mission.id + '" type="range" value="' + missions.step + '" min="0.0001" max="0.01" step="0.00001"/>');
             mission.angleDisplay = $('#mission_angle_' + mission.id);
-            mission.spanDisplay = $('#mission_span_' + mission.id);
-            mission.spanInput = $('#mission_span_input_' + mission.id);
-            mission.spanInput.on('input', function(e) {
+            mission.stepDisplay = $('#mission_step_' + mission.id);
+            mission.stepInput = $('#mission_step_input_' + mission.id);
+            mission.stepInput.on('input', function(e) {
                 mission.step = parseFloat(e.target.value);
-                mission.spanDisplay.html(mission.step + '°');
+                mission.stepDisplay.html(mission.step + '°');
                 globalMap.displayRadiales();
             });
             mission.angleInput = $('#mission_angle_input_' + mission.id);
@@ -43,6 +44,15 @@ function Mission(missionId, color) {
                 globalMap.displayRadiales();
             });
         }
+    };
+
+    this.setAngleAndStep = function(angle, step) {
+        mission.angle = angle;
+        mission.step = step;
+        mission.angleDisplay.html(mission.angle + '°');
+        mission.stepDisplay.html(mission.step + '°');
+        mission.stepInput.prop('value', mission.step);
+        mission.angleInput.prop('value', mission.angle);
     };
 
     this.updatePoints = function() {
@@ -83,7 +93,7 @@ function Mission(missionId, color) {
             mission.setType(mission.selectMissionType.prop('value'));
         });
         mission.missionHeader.on('click', function() {
-            if (currentMission === null || currentMission.id === mission.id) {
+            if (currentMission !== null && currentMission.id === mission.id) {
                 mission.missionBody.slideUp();
                 setCurrentMission(null);
             } else {
