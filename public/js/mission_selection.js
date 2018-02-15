@@ -27,9 +27,9 @@ function Mission(missionId, color) {
 
         } else if (this.type === 'Radiales') {
             mission.missionExtra.html('<strong>Angle: <step id="mission_angle_' + mission.id + '">' + mission.angle + '°</step></strong>' +
-                '<input id="mission_angle_input_' + mission.id + '" type="range" value="' + mission.angle + '" min="0" max="3.14" step="0.01"/>' +
-                '<strong>Ecart: <step id="mission_step_' + mission.id + '">' + missions.step + '°</step></strong>' +
-                '<input id="mission_step_input_' + mission.id + '" type="range" value="' + missions.step + '" min="0.0001" max="0.01" step="0.00001"/>');
+                '<input id="mission_angle_input_' + mission.id + '" type="range" value="' + mission.angle + '" min="0" max="6.28" step="0.01"/>' +
+                '<strong>Ecart: <step id="mission_step_' + mission.id + '">' + mission.step + '°</step></strong>' +
+                '<input id="mission_step_input_' + mission.id + '" type="range" value="' + mission.step + '" min="0.0001" max="0.001" step="0.00001"/>');
             mission.angleDisplay = $('#mission_angle_' + mission.id);
             mission.stepDisplay = $('#mission_step_' + mission.id);
             mission.stepInput = $('#mission_step_input_' + mission.id);
@@ -120,7 +120,7 @@ function Mission(missionId, color) {
     this.securityPolygon = L.polygon([], {color: '#ffee00'});
     this.radiales = [];
     this.angle = 0;
-    this.step = 0.001;
+    this.step = 0.0005;
 
     this.htmlElement = $('#mission_' + missionId);
     this.initHtml();
