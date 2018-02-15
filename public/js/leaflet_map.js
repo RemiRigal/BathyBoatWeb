@@ -143,6 +143,7 @@ function LeafletMap(id, position, zoom, interactive) {
                 polygon2.push([p.lat, p.lng]);
             });
             var radiales = radiale(leafletMap.mission.angle, leafletMap.mission.step * 3, polygon);
+            radiales = radiales.reverse();
             //radiales = radiales.concat(radiale(leafletMap.mission.angle + (Math.PI / 2), leafletMap.mission.step, polygon2));
             if (leafletMap.mission.radiales) {
                 leafletMap.mission.radiales.forEach(function(l) { l.remove(); });
