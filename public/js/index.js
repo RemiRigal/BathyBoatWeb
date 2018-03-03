@@ -27,9 +27,9 @@ function setConnectionState(connected) {
     $('#wifi_text').html(connected ? 'Connecté' : 'Déconnecté');
 }
 
-function setBatteryLevels(m1, m2, elec) {
-    $('#motor1_lvl_bat').html('M1: ' + m1 + '%');
-    $('#motor1_lv2_bat').html('M2: ' + m2 + '%');
+function setBatteryLevels(b1, b2) {
+    $('#b1_lvl_bat').html('B1: ' + b1 + '%');
+    $('#b2_lvl_bat').html('B2: ' + b2 + '%');
 }
 
 function onWindowResized() {

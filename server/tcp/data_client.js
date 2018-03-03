@@ -22,17 +22,17 @@ function onDataReceived(msg) {
             globalData.data.push(data);
             break;
     }
-    if (globalData.pos.length > 100) {
-        globalData.pos.slice(globalData.pos.length - 100, globalData.pos.length - 1);
+    if (globalData.pos.length > 50) {
+        globalData.pos = globalData.pos.slice(globalData.pos.length - 50, globalData.pos.length - 1);
     }
-    if (globalData.batt.length > 100) {
-        globalData.batt.slice(globalData.batt.length - 100, globalData.batt.length - 1);
+    if (globalData.batt.length > 50) {
+        globalData.batt = globalData.batt.slice(globalData.batt.length - 50, globalData.batt.length - 1);
     }
-    if (globalData.mot.length > 100) {
-        globalData.mot.slice(globalData.mot.length - 100, globalData.mot.length - 1);
+    if (globalData.mot.length > 50) {
+        globalData.mot = globalData.mot.slice(globalData.mot.length - 50, globalData.mot.length - 1);
     }
-    if (globalData.data.length > 100) {
-        globalData.data.slice(globalData.data.length - 100, globalData.data.length - 1);
+    if (globalData.data.length > 50) {
+        globalData.data = globalData.data.slice(globalData.data.length - 50, globalData.data.length - 1);
     }
 }
 
@@ -57,9 +57,8 @@ function splitData(raw) {
         msg.content.hydro1 = splitted[3];
         msg.content.hydro2 = splitted[4];
     } else if (msg.type === '$BATT') {
-        msg.content.m1 = splitted[2];
-        msg.content.m2 = splitted[3];
-        msg.content.elec = splitted[4];
+        msg.content.b1 = splitted[2];
+        msg.content.b2 = splitted[3];
     } else if (msg.type === '$MOT') {
             msg.content.m1 = splitted[2];
             msg.content.m2 = splitted[3];

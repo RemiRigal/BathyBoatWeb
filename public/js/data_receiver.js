@@ -18,11 +18,10 @@ function success(result) {
     }
     if (json.data.length > 0) {
         var data = json.data[json.data.length - 1].content;
-        // TODO
     }
     if (json.batt.length > 0) {
-        var batt = json.batt[json.batt.length - 1].content;
-        setBatteryLevels(batt.m1, batt.m2, batt.elec);
+        var battery = json.batt[json.batt.length - 1].content;
+        setBatteryLevels(battery.b1, battery.b2);
     }
     if (json.mot.length > 0) {
         var mot = json.mot[json.mot.length - 1].content;
