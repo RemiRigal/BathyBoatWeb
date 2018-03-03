@@ -129,8 +129,13 @@ function LeafletMap(id, position, zoom, interactive) {
     };
 
     this.setPositionMarker = function(lat, lng) {
-        this.positionMarker.setLatLng(new L.LatLng(lat, lng), {draggable: false});
+        this.currentPosition = new L.LatLng(lat, lng);
+        this.positionMarker.setLatLng(this.currentPosition, {draggable: false});
         this.positionMarker.setRotationAngle(yaw);
+        if (!this.interactive) {
+            var currentZoom = leafletMap.map.getZoom();
+            this.map.flyTo(this.currentPosition, Math.max(currentZoom, 12));
+        }
     };
 
     this.displayRadiales = function() {
@@ -159,7 +164,6 @@ function LeafletMap(id, position, zoom, interactive) {
                     radiale = radiale.reverse();
                 }
 
-                // TODO
                 var radialeMarkerIcon = L.divIcon({
                     html: '<div style="width: 100%; height: 100%; text-align: center; background-color: #ffffff">' + idx + '</div>',
                     iconSize: [16, 16] });
@@ -174,23 +178,42 @@ function LeafletMap(id, position, zoom, interactive) {
         }
     };
 
+    this.addZoomToCurrentButton = function() {
+        var zoomToCurrent = L.Control.extend({
+            options: { position: 'topleft' },
+            onAdd: function (map) {
+                var container = L.DomUtil.create('img', 'leaflet-gps');
+                container.src = 'images/gps_position.png';
+                container.style.marginLeft = '12px';
+                container.onclick = function() {
+                    var currentZoom = leafletMap.map.getZoom();
+                    leafletMap.map.flyTo(leafletMap.currentPosition, Math.max(currentZoom, 12));
+                };
+                return container;
+            }
+        });
+        this.map.addControl(new zoomToCurrent());
+    };
+
     this.mission = null;
     this.isDragging = false;
     this.currentMarker = null;
     this.nbrPoint = 0;
     this.radialesMarkers = [];
+    this.interactive = interactive;
+    this.currentPosition = new L.LatLng(0, 0);
 
     this.map = L.map(id).setView(position, zoom);
     L.tileLayer('http://' + document.location.hostname + ':29201/images/maps/{z}/{x}/{y}.png', {
         maxZoom: 19,
-        minZoom: 0
+        minZoom: 3
     }).addTo(this.map);
     var boatIcon = L.icon({
         iconUrl: 'http://' + document.location.hostname + ':29201/images/boat_icon.png',
         iconSize:     [27, 55],
         iconAnchor:   [13, 27]
     });
-    this.positionMarker = L.marker(new L.LatLng(0, 0), {
+    this.positionMarker = L.marker(this.currentPosition, {
         color: '#00fffc',
         icon: boatIcon,
         attribution: 'Position'
@@ -200,6 +223,9 @@ function LeafletMap(id, position, zoom, interactive) {
         this.map.on('click', this.onMapClicked);
         this.map.on('mouseup', this.onMouseUp);
         this.map.on('mousemove', this.onMouseMove);
+        this.addZoomToCurrentButton();
+    } else {
+        this.map.dragging.disable();
     }
 }
 
@@ -215,6 +241,6 @@ function updatePosition(lat, lng, remove) {
 
 
 $(document).ready(function() {
-    globalMap = new LeafletMap('globalMap', [48.199040, -3.015805], 17, true);
-    miniMap = new LeafletMap('miniMap', [48.199040, -3.015805], 17, false);
+    globalMap = new LeafletMap('globalMap', [45.199040, -1.015805], 5, true);
+    miniMap = new LeafletMap('miniMap', [45.199040, -1.015805], 5, false);
 });

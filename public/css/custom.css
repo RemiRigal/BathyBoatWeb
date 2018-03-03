@@ -1,3 +1,12 @@
 .expand-y {
     height: 100%
 }
+
+.leaflet-gps {
+    background-color : white;
+    margin-left : 12px;
+    border-radius : 2px;
+    padding : 4px;
+    width : 30px;
+    height : 30px;
+}
