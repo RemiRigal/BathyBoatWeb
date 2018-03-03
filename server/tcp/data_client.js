@@ -53,7 +53,7 @@ function splitData(raw) {
     };
     if (msg.type === '$POS') {
         msg.content.lat = splitted[2];
-        msg.content.long = splitted[3];
+        msg.content.lng = splitted[3];
         msg.content.yaw = splitted[4];
         msg.content.speed = splitted[5];
         msg.content.signal = splitted[6];

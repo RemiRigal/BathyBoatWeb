@@ -14,7 +14,7 @@ function success(result) {
     if (json.pos.length > 0) {
         var pos = json.pos[json.pos.length - 1].content;
         yaw = (360 * (pos.yaw / (2 * Math.PI)) + 360)%360;
-        setTelemetry(pos.lat, pos.long, pos.yaw, pos.speed, pos.signal);
+        setTelemetry(pos.lat, pos.lng, pos.yaw, pos.speed, pos.signal);
     }
     if (json.data.length > 0) {
         var data = json.data[json.data.length - 1].content;
