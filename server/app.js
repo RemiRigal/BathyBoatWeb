@@ -1,6 +1,8 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
+var yaml = require('js-yaml');
+var fs = require('fs');
 
 var dataClient = require('./tcp/data_client');
 var commandClient = require('./tcp/command_client');
@@ -12,6 +14,9 @@ var videoRouter = require('./routes/video');
 var commandRouter = require('./routes/command');
 var missionRouter = require('./routes/mission');
 
+
+// Config
+global.config = yaml.safeLoad(fs.readFileSync(__dirname + '/../../Config/config.yaml', 'utf8'));
 
 // Global data
 global.currentMission = null;
@@ -25,8 +30,6 @@ global.commandTCP = undefined;
 global.dataTCP = undefined;
 
 // TCP Client
-global.missionFilePath = '/home/user/BathyBoatMissions/mission.json';
-global.rosIP = '192.168.0.47';
 dataClient();
 commandClient();
 
@@ -45,4 +48,4 @@ app.use(videoRouter);
 app.use(commandRouter);
 app.use(missionRouter);
 
-app.listen(29201);
+app.listen(config.webServer.port);

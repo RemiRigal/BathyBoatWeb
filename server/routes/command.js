@@ -8,31 +8,37 @@ router.post('/command/rtl', function(req, res) {
     commandTCP.write('RTL\0');
 });
 
-router.post('/command/stop', function(req, res) {
-    commandTCP.write('STOP\0');
+router.post('/command/emergency', function(req, res) {
+    commandTCP.write('EMERGENCY\0');
 });
 
-router.post('/command/start', function(req, res) {
-    commandTCP.write('START\0');
+router.post('/command/resume', function(req, res) {
+    commandTCP.write('RESUME\0');
 });
 
-router.post('/command/idle', function(req, res) {
-    commandTCP.write('IDLE\0');
+router.post('/command/pause', function(req, res) {
+    commandTCP.write('PAUSE\0');
 });
 
 router.post('/command/mission', function(req, res) {
     currentMission = req.body.mission;
-    var file = fs.createWriteStream(missionFilePath);
+    var missionName = getMissionName();
+    var file = fs.createWriteStream(config.missions.path + missionName);
     file.on('open', function() {
         file.write(currentMission);
         file.close();
-        commandTCP.write('MISSION\0');
+        commandTCP.write('MISSION|' + missionName + '\0');
     });
 });
 
-router.post('/command/spd', function(req, res) {
+router.post('/command/speed', function(req, res) {
     var speed = parseFloat(req.body.speed);
-    commandTCP.write('SPD/' + speed + '\0');
+    commandTCP.write('SPEED|' + speed + '\0');
 });
+
+function getMissionName() {
+    var now = new Date();
+    return config.missions.name.replace('{DATE}', now.toLocaleDateString()).replace('{TIME}', now.toLocaleTimeString());
+}
 
 module.exports = router;

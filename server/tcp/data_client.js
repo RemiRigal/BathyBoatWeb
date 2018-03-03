@@ -2,7 +2,7 @@ var tcpClient = require('./tcp_client');
 
 
 module.exports = function() {
-    dataTCP = new tcpClient('Data', rosIP, 29200, onDataReceived);
+    dataTCP = new tcpClient('Data', config.webServer.rosIP, config.tcp.dataPort, onDataReceived);
 };
 
 function onDataReceived(msg) {
