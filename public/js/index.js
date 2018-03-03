@@ -10,7 +10,7 @@ var globalData = {
 };
 
 function setTelemetry(lat, long, yaw, speed) {
-    $('#speed_lvl').html(Math.round(speed * 10) / 10 + ' kts');
+    $('#speed_lvl').html(Math.round(speed * 10) / 10 + ' m/s');
     $('#yaw_lvl').html(Math.round((360 * (yaw / (2 * Math.PI)) + 360)%360) + '°');
 
     // var deg = utmToDeg(lat, long);
@@ -30,7 +30,6 @@ function setConnectionState(connected) {
 function setBatteryLevels(m1, m2, elec) {
     $('#motor1_lvl_bat').html('M1: ' + m1 + '%');
     $('#motor1_lv2_bat').html('M2: ' + m2 + '%');
-    $('#elec_lvl_bat').html('Elec: ' + elec + '%');
 }
 
 function onWindowResized() {
