@@ -50,11 +50,13 @@ function importMissions(jsonMission) {
         if (m.type === 'Waypoints') {
             m.waypoints.forEach(function(p) {
                 globalMap.addPoint(new L.LatLng(p.lat, p.lng));
+                mission.nbrPoint++;
             });
         } else if (m.type === 'Radiales') {
             mission.setAngleAndStep(m.angle, m.step);
             m.polygon.forEach(function(p) {
                 globalMap.addPoint(new L.LatLng(p.lat, p.lng));
+                mission.nbrPoint++;
             });
         }
     });

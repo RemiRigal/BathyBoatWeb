@@ -17,12 +17,10 @@ function Mission(missionId, color) {
         this.missionPoints.html('');
         this.missionExtra.html('');
         globalMap.clearMission(mission);
-        //miniMap.clearMission(mission);
-        this.markers = [];
-        this.radiales = [];
-        this.polyline = L.polyline([], {color: 'white'});
-        this.securityPolyline = L.polyline([], {color: '#ffee00'});
-        this.polygon = L.polygon([], {color: 'white'});
+        miniMap.clearMission(mission);
+        this.objects = new Map();
+        globalMap.initMissionObjects(mission);
+        miniMap.initMissionObjects(mission);
         if (this.type === 'Waypoints') {
 
         } else if (this.type === 'Radiales') {
@@ -37,14 +35,14 @@ function Mission(missionId, color) {
                 mission.step = parseFloat(e.target.value);
                 mission.stepDisplay.html(mission.step + '°');
                 globalMap.displayRadiales();
-                //miniMap.displayRadiales();
+                miniMap.displayRadiales();
             });
             mission.angleInput = $('#mission_angle_input_' + mission.id);
             mission.angleInput.on('input', function(e) {
                 mission.angle = parseFloat(e.target.value);
                 mission.angleDisplay.html(Math.round(mission.angle * 360 / (2 * Math.PI)) + '°');
                 globalMap.displayRadiales();
-                //miniMap.displayRadiales();
+                miniMap.displayRadiales();
             });
         }
     };
@@ -65,6 +63,7 @@ function Mission(missionId, color) {
         } else if (mission.type === 'Radiales') {
             latlngs = mission.polygon.getLatLngs();
         }
+        // TODO
         mission.missionPoints.html(html);
     };
 
@@ -90,7 +89,7 @@ function Mission(missionId, color) {
         $('#delete_mission_' + mission.id).on('click', function() {
             mission.htmlElement.remove();
             globalMap.unsetMission(mission);
-            //miniMap.unsetMission(mission);
+            miniMap.unsetMission(mission);
             missions = missions.filter(function(m) { return m.id !== mission.id });
         });
         mission.selectMissionType.on('change', function() {
@@ -111,16 +110,9 @@ function Mission(missionId, color) {
     this.name = 'Mission' + missionId;
     this.type = 'Waypoints';
     this.color = color;
-    this.markers = [];
     this.nbrPoint = 0;
 
-    // Waypoints
-    this.polyline = L.polyline([], {color: 'white'});
-    // Radiales
-    this.polygon = L.polygon([], {color: 'white'});
-    this.securityPolyline = L.polyline([], {color: '#ffee00'});
-    this.radiales = [];
-    this.radialesMarkers = [];
+    this.objects = new Map();
     this.angle = 0;
     this.step = 0.0005;
     this.reverseRadiales = false;
@@ -135,7 +127,7 @@ function setCurrentMission(mission) {
     }
     currentMission = mission;
     globalMap.setMission(mission);
-    //miniMap.setMission(mission);
+    miniMap.setMission(mission);
 }
 
 function onAddMissionClicked() {
@@ -163,30 +155,31 @@ function getCurrentMission() {
 function getJsonFileMission() {
     var fileMission = { missions: [] };
     missions.forEach(function(m) {
+        var mObj = m.objects.get(globalMap.id);
         var json = {
             type: m.type
         };
         if (m.type === 'Waypoints') {
-            var waypoints = m.polyline.getLatLngs();
+            var waypoints = mObj.polyline.getLatLngs();
             waypoints.forEach(function(p, idx) {
                 waypoints[idx] = p;
             });
             json.waypoints = waypoints;
         } else if (m.type === 'Radiales') {
             var radiales = [];
-            var mapRadiales = m.radiales;
-            m.radiales.forEach(function(r, idx) {
+            var mapRadiales = mObj.radiales;
+            mObj.radiales.forEach(function(r, idx) {
                 var latlngs = r.getLatLngs();
                 radiales.push({ start: latlngs[0], end: latlngs[1] });
-                if (idx < m.radiales.length - 1) {
-                    var next = m.radiales[idx + 1].getLatLngs();
+                if (idx < mObj.radiales.length - 1) {
+                    var next = mObj.radiales[idx + 1].getLatLngs();
                     radiales.push({ start: latlngs[1], end: next[0] });
                 }
                 mapRadiales[idx] = { start: latlngs[0], end: latlngs[1] };
             });
             json.radiales = radiales;
             json.mapRadiales = mapRadiales;
-            var polygon = m.polygon.getLatLngs()[0];
+            var polygon = mObj.polygon.getLatLngs()[0];
             polygon.forEach(function(p, idx) {
                 polygon[idx] = p;
             });
