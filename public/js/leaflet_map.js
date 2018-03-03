@@ -11,6 +11,7 @@ function LeafletMap(id, position, zoom, interactive) {
         mission.securityPolygon.remove();
         mission.markers.forEach(function(m) { m.remove(); });
         mission.radiales.forEach(function(l) { l.remove(); });
+        mission.radialesMarkers.forEach(function(l) { l.remove(); });
     };
 
     this.unsetMission = function(mission) {
@@ -26,6 +27,7 @@ function LeafletMap(id, position, zoom, interactive) {
             leafletMap.mission.securityPolygon.addTo(leafletMap.map);
             leafletMap.mission.markers.forEach(function(m) { m.addTo(leafletMap.map) });
             leafletMap.mission.radiales.forEach(function(l) { l.addTo(leafletMap.map); });
+            leafletMap.mission.radialesMarkers.forEach(function(l) { l.addTo(leafletMap.map); });
         }
     };
 
@@ -54,7 +56,7 @@ function LeafletMap(id, position, zoom, interactive) {
         } else if (leafletMap.mission.type === 'Radiales') {
             leafletMap.mission.polygon.addLatLng(latlng);
             leafletMap.mission.polygon.addTo(leafletMap.map);
-            leafletMap.findPolygonSecure();
+            leafletMap.addSecurityPolygon();
             leafletMap.mission.securityPolygon.addTo(leafletMap.map);
             leafletMap.displayRadiales();
         }
@@ -63,7 +65,7 @@ function LeafletMap(id, position, zoom, interactive) {
         // }
     };
 
-    this.findPolygonSecure = function(){
+    this.addSecurityPolygon = function(){
         var secureDistance = 10;
         var points = leafletMap.mission.polygon.getLatLngs()[0];
         var size = points.length;
@@ -72,12 +74,10 @@ function LeafletMap(id, position, zoom, interactive) {
             for (var j = 0; j < size; j++){
                 utm[j] = degToUtm(points[j].lat, points[j].lng);
             }
-
             var sumLat = utm.reduce(function(acc, p) { return acc + p.lat }, 0);
             var medX = sumLat / size;
             var sumLng = utm.reduce(function(acc, p) { return acc + p.lng }, 0);
             var medY = sumLng / size;
-
             var homothety = [];
             for (var i = 0; i < size; i++){
                 var lat = (utm[i].lat - medX);
@@ -121,7 +121,7 @@ function LeafletMap(id, position, zoom, interactive) {
                 latlngs[markerId] = new L.LatLng(latlng.lat, latlng.lng);
                 leafletMap.mission.polygon.setLatLngs(latlngs);
                 leafletMap.displayRadiales();
-                leafletMap.findPolygonSecure();
+                leafletMap.addSecurityPolygon();
             }
         } else if (leafletMap.currentMarker !== null) {
             leafletMap.currentMarker = null;
@@ -134,7 +134,7 @@ function LeafletMap(id, position, zoom, interactive) {
         this.positionMarker.setRotationAngle(yaw);
         if (!this.interactive) {
             var currentZoom = leafletMap.map.getZoom();
-            this.map.flyTo(this.currentPosition, Math.max(currentZoom, 12));
+            this.map.flyTo(this.currentPosition, Math.max(currentZoom, 14));
         }
     };
 
@@ -148,15 +148,15 @@ function LeafletMap(id, position, zoom, interactive) {
                 polygon2.push([p.lat, p.lng]);
             });
             var radiales = radiale(leafletMap.mission.angle, leafletMap.mission.step * 3, polygon);
-            radiales = radiales.reverse();
-            //radiales = radiales.concat(radiale(leafletMap.mission.angle + (Math.PI / 2), leafletMap.mission.step, polygon2));
+            if (leafletMap.mission.reverseRadiales) {
+                radiales = radiales.reverse();
+            }
             if (leafletMap.mission.radiales) {
                 leafletMap.mission.radiales.forEach(function(l) { l.remove(); });
             }
             leafletMap.mission.radiales = [];
-
-            leafletMap.radialesMarkers.forEach(function(m) { m.remove(); });
-            leafletMap.radialesMarkers = [];
+            leafletMap.mission.radialesMarkers.forEach(function(m) { m.remove(); });
+            leafletMap.mission.radialesMarkers = [];
             radiales.forEach(function(r, idx) {
                 var line = L.polyline([], {color: leafletMap.mission.color});
                 var radiale = r;
@@ -168,7 +168,7 @@ function LeafletMap(id, position, zoom, interactive) {
                     html: '<div style="width: 100%; height: 100%; text-align: center; background-color: #ffffff">' + idx + '</div>',
                     iconSize: [16, 16] });
                 var radialeMarker = new L.marker(radiale[0], {icon: radialeMarkerIcon}).addTo(leafletMap.map);
-                leafletMap.radialesMarkers.push(radialeMarker);
+                leafletMap.mission.radialesMarkers.push(radialeMarker);
 
                 line.addLatLng(new L.LatLng(radiale[0][0], radiale[0][1]));
                 line.addLatLng(new L.LatLng(radiale[1][0], radiale[1][1]));
@@ -187,7 +187,7 @@ function LeafletMap(id, position, zoom, interactive) {
                 container.style.marginLeft = '12px';
                 container.onclick = function() {
                     var currentZoom = leafletMap.map.getZoom();
-                    leafletMap.map.flyTo(leafletMap.currentPosition, Math.max(currentZoom, 12));
+                    leafletMap.map.flyTo(leafletMap.currentPosition, Math.max(currentZoom, 14));
                 };
                 return container;
             }
@@ -226,6 +226,7 @@ function LeafletMap(id, position, zoom, interactive) {
         this.addZoomToCurrentButton();
     } else {
         this.map.dragging.disable();
+        this.map.scrollWheelZoom.disable();
     }
 }
 

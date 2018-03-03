@@ -113,14 +113,17 @@ function Mission(missionId, color) {
     this.color = color;
     this.markers = [];
     this.nbrPoint = 0;
+
     // Waypoints
     this.polyline = L.polyline([], {color: 'white'});
     // Radiales
     this.polygon = L.polygon([], {color: 'white'});
-    this.securityPolygon = L.polygon([], {color: '#ffee00'});
+    this.securityPolygon = L.polyline([], {color: '#ffee00'});
     this.radiales = [];
+    this.radialesMarkers = [];
     this.angle = 0;
     this.step = 0.0005;
+    this.reverseRadiales = false;
 
     this.htmlElement = $('#mission_' + missionId);
     this.initHtml();
@@ -150,7 +153,9 @@ function getCurrentMission() {
         url: 'http://' + document.location.hostname + ':29201/mission',
         data: {},
         success: function (m) {
-            importMissions(JSON.parse(m));
+            if (m) {
+                importMissions(JSON.parse(m));
+            }
         }
     });
 }
