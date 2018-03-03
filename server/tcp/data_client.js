@@ -21,6 +21,8 @@ function onDataReceived(msg) {
         case '$DATA':
             globalData.data.push(data);
             break;
+        case '$STATE':
+            globalData.state.push(data);
     }
     if (globalData.pos.length > 50) {
         globalData.pos = globalData.pos.slice(globalData.pos.length - 50, globalData.pos.length - 1);
@@ -33,6 +35,9 @@ function onDataReceived(msg) {
     }
     if (globalData.data.length > 50) {
         globalData.data = globalData.data.slice(globalData.data.length - 50, globalData.data.length - 1);
+    }
+    if (globalData.state.length > 50) {
+        globalData.state = globalData.state.slice(globalData.state.length - 50, globalData.state.length - 1);
     }
 }
 
@@ -53,16 +58,17 @@ function splitData(raw) {
         msg.content.speed = splitted[5];
         msg.content.signal = splitted[6];
     } else if (msg.type === '$DATA') {
-        msg.content.temp = splitted[2];
-        msg.content.hydro1 = splitted[3];
-        msg.content.hydro2 = splitted[4];
+        msg.content.hydro1 = splitted[2];
+        msg.content.hydro2 = splitted[3];
     } else if (msg.type === '$BATT') {
         msg.content.b1 = splitted[2];
         msg.content.b2 = splitted[3];
     } else if (msg.type === '$MOT') {
-            msg.content.m1 = splitted[2];
-            msg.content.m2 = splitted[3];
-            msg.content.fidelity = splitted[4];
+        msg.content.m1 = splitted[2];
+        msg.content.m2 = splitted[3];
+        msg.content.fidelity = splitted[4];
+    } else if (msg.type === '$STATE') {
+        msg.content.state = splitted[2];
     } else {
         return null;
     }

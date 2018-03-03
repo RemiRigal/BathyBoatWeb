@@ -24,7 +24,8 @@ global.globalData = {
     pos: [],
     mot: [],
     batt: [],
-    data: []
+    data: [],
+    state: []
 };
 global.commandTCP = undefined;
 global.dataTCP = undefined;
