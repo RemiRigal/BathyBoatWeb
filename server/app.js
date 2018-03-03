@@ -21,7 +21,11 @@ global.config = yaml.safeLoad(fs.readFileSync(__dirname + '/../../Config/config.
 // Global data
 global.currentMission = null;
 global.globalData = {
-    pos: [{lat: config.map.initialPosition.lat, lng: config.map.initialPosition.lng, yaw: 0, speed: 0, signal: 0}],
+    pos: [{
+        type: '$POS',
+        date: new Date(),
+        content: {lat: config.map.initialPosition.lat, lng: config.map.initialPosition.lng, yaw: 0, speed: 0, signal: 0}
+    }],
     mot: [],
     batt: [],
     data: [],
