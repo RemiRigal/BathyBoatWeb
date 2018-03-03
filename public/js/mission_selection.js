@@ -21,7 +21,7 @@ function Mission(missionId, color) {
         this.markers = [];
         this.radiales = [];
         this.polyline = L.polyline([], {color: 'white'});
-        this.securityPolygon = L.polygon([], {color: '#ffee00'});
+        this.securityPolygon = L.polyline([], {color: '#ffee00'});
         this.polygon = L.polygon([], {color: 'white'});
         if (this.type === 'Waypoints') {
 

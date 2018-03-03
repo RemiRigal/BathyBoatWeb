@@ -89,6 +89,9 @@ function LeafletMap(id, position, zoom, interactive) {
                 var deg = utmToDeg(lat, lng);
                 homothety.push(new L.LatLng(deg.lat, deg.lng));
             }
+            if (homothety.length > 0) {
+                homothety.push(homothety[0]);
+            }
             leafletMap.mission.securityPolygon.setLatLngs(homothety);
         }
     };
