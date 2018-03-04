@@ -6,18 +6,26 @@ var router = express.Router();
 
 router.post('/command/rtl', function(req, res) {
     commandTCP.write('RTL\0');
+    res.status(200);
+    res.send(true);
 });
 
 router.post('/command/emergency', function(req, res) {
     commandTCP.write('EMERGENCY\0');
+    res.status(200);
+    res.send(true);
 });
 
 router.post('/command/resume', function(req, res) {
     commandTCP.write('RESUME\0');
+    res.status(200);
+    res.send(true);
 });
 
 router.post('/command/pause', function(req, res) {
     commandTCP.write('PAUSE\0');
+    res.status(200);
+    res.send(true);
 });
 
 router.post('/command/mission', function(req, res) {
@@ -28,12 +36,16 @@ router.post('/command/mission', function(req, res) {
         file.write(currentMission);
         file.close();
         commandTCP.write('MISSION|' + missionName + '\0');
+        res.status(200);
+        res.send(true);
     });
 });
 
 router.post('/command/speed', function(req, res) {
     var speed = parseFloat(req.body.speed);
     commandTCP.write('SPEED|' + speed + '\0');
+    res.status(200);
+    res.send(true);
 });
 
 function getMissionName() {

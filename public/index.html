@@ -157,12 +157,7 @@
                                                 <div style="margin-bottom: 10px">Fiabilité de la navigation: <strong id="reliability">_</strong></div>
                                                 <div>
                                                     Multiplicateur de vitesse: <strong><span id="speed_regulation">0.5</span></strong>
-                                                    <input type="range" min="0" max="100" oninput="showValue(this.value)" onclick="showValue(this.value)"/>
-                                                    <script>
-                                                        function showValue(newValue) {
-                                                            $('#speed_regulation').html(newValue / 100 + "");
-                                                        }
-                                                    </script>
+                                                    <input id="speed_cursor" type="range" min="0" max="100"/>
                                                 </div>
                                             </div>
                                         </div>

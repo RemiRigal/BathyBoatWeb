@@ -1,4 +1,4 @@
-var stopButton, rtlButton, startButton, idleButton;
+var stopButton, rtlButton, startButton, idleButton, speedCursor, speedRegulation;
 
 function sendCommandRequest(request, data) {
     $.ajax({
@@ -12,19 +12,25 @@ function sendCommandRequest(request, data) {
 }
 
 function onStopButtonClicked() {
-    sendCommandRequest('/stop');
+    sendCommandRequest('/emergency');
 }
 
 function onStartButtonClicked() {
-    sendCommandRequest('/start');
+    sendCommandRequest('/resume');
 }
 
 function onIdleButtonClicked() {
-    sendCommandRequest('/idle');
+    sendCommandRequest('/pause');
 }
 
 function onRTLButtonClicked() {
     sendCommandRequest('/rtl');
+}
+
+function onSpeedValueUpdated() {
+    var value = speedCursor.prop('value') / 100;
+    speedRegulation.html(value + "");
+    sendCommandRequest('/speed', { speed: value });
 }
 
 
@@ -33,9 +39,12 @@ $(document).ready(function() {
     rtlButton = $('#rtl_button');
     startButton = $('#start_button');
     idleButton = $('#idle_button');
+    speedCursor = $('#speed_cursor');
+    speedRegulation = $('#speed_regulation');
 
     stopButton.on('click', onStopButtonClicked);
     rtlButton.on('click', onRTLButtonClicked);
     startButton.on('click', onStartButtonClicked);
     idleButton.on('click', onIdleButtonClicked);
+    speedCursor.on('input', onSpeedValueUpdated)
 });
