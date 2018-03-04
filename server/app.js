@@ -17,7 +17,10 @@ var missionRouter = require('./routes/mission');
 
 
 // Config
-global.config = yaml.safeLoad(fs.readFileSync(__dirname + '/../../Config/config.yaml', 'utf8'));
+var userConfigPath = __dirname + '/../../Config/config.yaml';
+var defaultConfigPath = __dirname + '/../config.yaml';
+var configPath = fs.existsSync(userConfigPath) ? userConfigPath : defaultConfigPath;
+global.config = yaml.safeLoad(fs.readFileSync(configPath));
 
 // Global data
 global.currentMission = null;

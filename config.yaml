@@ -1,0 +1,34 @@
+# This is the default template for the configuration of the web server
+# You must place a similar config file in a Config directory in the parent of the git repository
+# The resulting structure will be:
+# /MyProject
+#     /BathyBoatWeb
+#         ...
+#     /Config
+#         config.yaml
+# If not present, this file will be used by default
+
+### Required ###
+webServer:
+    port: 29201
+    rosIP: 172.0.0.1
+missions:
+    path: /home/helios/Helios/Missions/
+    name: Mission_Brest_{DATE}_{TIME}.json
+tcp:
+    dataPort: 29200
+    commandPort: 22300
+
+### Optional ###
+map:
+    initialPosition:
+        lat: 48.395497
+        lng: -4.390246
+camera:
+    enable: true
+    streamPort: 8081
+    webSocketPort: 8082
+    record:
+        enable: true
+        path: /home/helios/Helios/Recordings/
+        name: Record_Brest_{DATE}_{TIME}.ts
