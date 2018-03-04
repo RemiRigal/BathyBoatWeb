@@ -10,6 +10,7 @@ function success(result) {
     globalData.data.concat(json.data);
     globalData.batt.concat(json.batt);
     globalData.mot.concat(json.mot);
+    globalData.state.concat(json.state);
 
     if (json.pos.length > 0) {
         var pos = json.pos[json.pos.length - 1].content;
@@ -29,7 +30,10 @@ function success(result) {
         mot.m2 = (mot.m2 - 4000) / 40;
         updateBars(mot.m1, mot.m2);
     }
-    //console.log(globalData);
+    if (json.state.length > 0) {
+        var state = json.state[json.state.length - 1].content;
+        updateState(state.state);
+    }
     setTimeout(requestData, 100);
 }
 

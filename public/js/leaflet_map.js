@@ -269,7 +269,7 @@ function onAddPoint(latlng) {
     miniMap.addPoint(latlng);
 }
 
-function updatePosition(lat, lng, remove) {
+function updatePosition(lat, lng) {
     globalMap.setPositionMarker(lat, lng);
     miniMap.setPositionMarker(lat, lng);
 }

@@ -6,25 +6,21 @@ var globalData = {
     pos: [],
     mot: [],
     batt: [],
-    data: []
+    data: [],
+    state: []
 };
 
 function setTelemetry(lat, long, yaw, speed) {
     $('#speed_lvl').html(Math.round(speed * 10) / 10 + ' m/s');
     $('#yaw_lvl').html(Math.round((360 * (yaw / (2 * Math.PI)) + 360)%360) + '°');
-
-    // var deg = utmToDeg(lat, long);
-    // updatePosition(deg.lat, deg.lng, true);
-    // $('#latitude').html(deg.lat);
-    // $('#longitude').html(deg.lng);
-
     $('#latitude').html(lat);
     $('#longitude').html(long);
-    updatePosition(lat, long, true);
+    updatePosition(lat, long);
 }
 
-function setConnectionState(connected) {
-    $('#wifi_text').html(connected ? 'Connecté' : 'Déconnecté');
+function updateState(state) {
+    var states = ['En attente', 'Mission en cours', 'Mission interrompue', 'RTL', 'Alert de niveau 5'];
+    $('#state_text').html(states[state]);
 }
 
 function setBatteryLevels(b1, b2) {
