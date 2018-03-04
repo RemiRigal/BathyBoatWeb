@@ -19,11 +19,6 @@ var missionRouter = require('./routes/mission');
 // Config
 global.config = yaml.safeLoad(fs.readFileSync(__dirname + '/../../Config/config.yaml', 'utf8'));
 
-// Camera
-if (config.camera && config.camera.enable) {
-    wsCamera.initWebSocket();
-}
-
 // Global data
 global.currentMission = null;
 global.globalData = {
@@ -55,8 +50,13 @@ app.use(cors());
 
 // Routers
 app.use(dataRouter);
-app.use(videoRouter);
 app.use(commandRouter);
 app.use(missionRouter);
+
+// Camera
+if (config.camera && config.camera.enable) {
+    app.use(videoRouter);
+    wsCamera.initWebSocket();
+}
 
 app.listen(config.webServer.port);

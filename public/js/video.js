@@ -11,30 +11,39 @@ function triggerVideo() {
         videoDiv.show();
         videoEnabled = true;
     }
-    console.log('Video state: ' + videoEnabled);
+    $.ajax({
+        type: 'POST',
+        url: 'http://' + document.location.hostname + ':29201/video',
+        data: {action: videoEnabled ? 'enable' : 'disable', time: new Date()}
+    });
+}
 
-    // $.ajax({
-    //     type: 'POST',
-    //     url: 'http://' + document.location.hostname + ':29201/video',
-    //     data: {action: videoEnabled ? 'enable' : 'disable', time: new Date()},
-    //     error: function(error) {
-    //         console.log(error);
-    //     }
-    // });
+function getVideoStatus() {
+    $.ajax({
+        type: 'GET',
+        url: 'http://' + document.location.hostname + ':29201/video',
+        success: function(boolResult) {
+            videoEnabled = boolResult;
+            if (videoEnabled) {
+                videoButton.hide();
+                videoDiv.show();
+            }
+        }
+    });
 }
 
 $(document).ready(function() {
     videoDiv = $('#video');
     videoButton = $('#video_button');
-    videoDiv.show();
-    videoButton.hide();
 
-    //videoDiv.hide();
-    //videoButton.show();
-    //videoDiv.on('click', triggerVideo);
-    //videoButton.on('click', triggerVideo);
+    videoDiv.hide();
+    videoButton.show();
+    videoDiv.on('click', triggerVideo);
+    videoButton.on('click', triggerVideo);
+
+    getVideoStatus();
 
     var canvas = document.getElementById('video-canvas');
     var url = 'ws://' + document.location.hostname + ':8082/';
-    var player = new JSMpeg.Player(url, {canvas: canvas});
+    new JSMpeg.Player(url, {canvas: canvas});
 });
