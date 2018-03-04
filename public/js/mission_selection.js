@@ -154,6 +154,7 @@ function getCurrentMission() {
 
 function getJsonFileMission() {
     var fileMission = { missions: [] };
+    var radialesCount = 1;
     missions.forEach(function(m) {
         var mObj = m.objects.get(globalMap.id);
         var json = {
@@ -162,6 +163,7 @@ function getJsonFileMission() {
         if (m.type === 'Waypoints') {
             var waypoints = mObj.polyline.getLatLngs();
             waypoints.forEach(function(p, idx) {
+                p.id = -1;
                 waypoints[idx] = p;
             });
             json.waypoints = waypoints;
@@ -170,10 +172,11 @@ function getJsonFileMission() {
             var mapRadiales = mObj.radiales;
             mObj.radiales.forEach(function(r, idx) {
                 var latlngs = r.getLatLngs();
-                radiales.push({ start: latlngs[0], end: latlngs[1] });
+                radiales.push({ start: latlngs[0], end: latlngs[1], id: radialesCount });
+                radialesCount++;
                 if (idx < mObj.radiales.length - 1) {
                     var next = mObj.radiales[idx + 1].getLatLngs();
-                    radiales.push({ start: latlngs[1], end: next[0] });
+                    radiales.push({ start: latlngs[1], end: next[0], id: -1 });
                 }
                 mapRadiales[idx] = { start: latlngs[0], end: latlngs[1] };
             });
