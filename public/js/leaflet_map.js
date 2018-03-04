@@ -48,7 +48,7 @@ function LeafletMap(id, position, zoom, interactive) {
     };
 
     this.onMarkerMouseDown = function(event) {
-        if (event.originalEvent.button === 0 && event.target.options.missionId === leafletMap.mission.id) {
+        if (event.originalEvent.button === 0 && leafletMap.mission && event.target.options.missionId === leafletMap.mission.id) {
             leafletMap.map.dragging.disable();
             leafletMap.currentMarker = event.target;
             leafletMap.isDragging = true;

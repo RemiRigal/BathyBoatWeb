@@ -5,6 +5,9 @@ var states = ['En attente', 'Mission en cours', 'Mission interrompue', 'RTL', 'A
 
 
 function setCurrentState(state) {
+    if (currentState === state) {
+        return;
+    }
     stateText.html(states[state]);
     switch (state) {
         case 0:
@@ -23,18 +26,31 @@ function setIdleState() {
     currentState = 0;
     panelMission.show();
     panelMonitoring.hide();
+    missions.forEach(function(m) { m.missionDelete.show(); });
 }
 
 function setRunningState() {
     currentState = 1;
     panelMission.hide();
     panelMonitoring.show();
+    if (globalMap.mission) {
+        globalMap.mission.missionBody.slideUp();
+    }
+    missions.forEach(function(m) { m.missionDelete.hide(); });
+    globalMap.setMission(null);
+    miniMap.setMission(null);
 }
 
 function setPauseState() {
     currentState = 2;
     panelMission.hide();
     panelMonitoring.show();
+    if (globalMap.mission) {
+        globalMap.mission.missionBody.slideUp();
+    }
+    missions.forEach(function(m) { m.missionDelete.hide(); });
+    globalMap.setMission(null);
+    miniMap.setMission(null);
 }
 
 function getCurrentState() {
@@ -42,7 +58,6 @@ function getCurrentState() {
         type: 'GET',
         url: 'http://' + document.domain + ':29201/state',
         success: function(resut) {
-            console.log(resut.state);
             setCurrentState(resut.state);
         }
     });

@@ -86,11 +86,14 @@ function Mission(missionId, color) {
         mission.missionHeader = $('#mission_header_' + mission.id);
         mission.missionBody = $('#mission_body_' + mission.id);
         mission.missionPoints = $('#mission_points_' + mission.id);
-        $('#delete_mission_' + mission.id).on('click', function() {
-            mission.htmlElement.remove();
-            globalMap.unsetMission(mission);
-            miniMap.unsetMission(mission);
-            missions = missions.filter(function(m) { return m.id !== mission.id });
+        mission.missionDelete = $('#delete_mission_' + mission.id);
+        mission.missionDelete.on('click', function() {
+            if (currentState === 0) {
+                mission.htmlElement.remove();
+                globalMap.unsetMission(mission);
+                miniMap.unsetMission(mission);
+                missions = missions.filter(function(m) { return m.id !== mission.id });
+            }
         });
         mission.selectMissionType.on('change', function() {
             mission.setType(mission.selectMissionType.prop('value'));
@@ -99,7 +102,7 @@ function Mission(missionId, color) {
             if (currentMission !== null && currentMission.id === mission.id) {
                 mission.missionBody.slideUp();
                 setCurrentMission(null);
-            } else {
+            } else if (currentState === 0) {
                 mission.missionBody.slideDown();
                 setCurrentMission(mission);
             }
