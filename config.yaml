@@ -11,7 +11,7 @@
 ### Required ###
 webServer:
     port: 29201
-    rosIP: 172.0.0.1
+    rosIP: 127.0.0.1
 missions:
     path: /home/helios/Helios/Missions/
     name: Mission_Brest_{DATE}_{TIME}.json
