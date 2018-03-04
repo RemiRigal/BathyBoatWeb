@@ -41,9 +41,9 @@ function getCurrentState() {
     $.ajax({
         type: 'GET',
         url: 'http://' + document.domain + ':29201/state',
-        success: function(state) {
-            console.log(state);
-            setCurrentState(state);
+        success: function(resut) {
+            console.log(resut.state);
+            setCurrentState(resut.state);
         }
     });
 }
