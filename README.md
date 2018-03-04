@@ -38,7 +38,7 @@ The `config.yaml` file must respect the following layout:
 ### Required ###
 webServer:
     port: 29201
-    rosIP: 172.0.0.1
+    rosIP: 127.0.0.1
 missions:
     path: /home/helios/Helios/Missions/
     name: Mission_{DATE}_{TIME}.json
