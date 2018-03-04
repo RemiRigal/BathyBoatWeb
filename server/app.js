@@ -22,20 +22,23 @@ global.config = yaml.safeLoad(fs.readFileSync(__dirname + '/../../Config/config.
 // Global data
 global.currentMission = null;
 global.globalData = {
-    pos: [{
-        type: '$POS',
-        date: new Date(),
-        content: {lat: config.map.initialPosition.lat, lng: config.map.initialPosition.lng, yaw: 0, speed: 0, signal: 0}
-    }],
+    pos: [],
     mot: [],
     batt: [],
     data: [],
     state: []
 };
+if (config.map && config.map.initialPosition && config.map.initialPosition.lat && config.map.initialPosition.lng) {
+    globalData.pos.push({
+        type: '$POS',
+        date: new Date(),
+        content: {lat: config.map.initialPosition.lat, lng: config.map.initialPosition.lng, yaw: 0, speed: 0, signal: 0}
+    });
+}
+
+// TCP Clients
 global.commandTCP = undefined;
 global.dataTCP = undefined;
-
-// TCP Client
 dataClient();
 commandClient();
 
