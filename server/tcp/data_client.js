@@ -23,6 +23,7 @@ function onDataReceived(msg) {
             globalData.data.push(data);
             break;
         case '$STATE':
+            currentState = data.content.state;
             globalData.state.push(data);
     }
     if (globalData.pos.length > 50) {

@@ -14,6 +14,7 @@ var dataRouter = require('./routes/data');
 var videoRouter = require('./routes/video');
 var commandRouter = require('./routes/command');
 var missionRouter = require('./routes/mission');
+var stateRouter = require('./routes/state');
 
 
 // Config
@@ -39,6 +40,14 @@ if (config.map && config.map.initialPosition && config.map.initialPosition.lat &
     });
 }
 
+// States
+global.STATE_IDLE = 0;
+global.STATE_RUNNING = 1;
+global.STATE_PAUSE = 2;
+global.STATE_RTL = 3;
+global.STATE_EMERGENCY = 4;
+global.currentState = STATE_IDLE;
+
 // TCP Clients
 global.commandTCP = undefined;
 global.dataTCP = undefined;
@@ -58,6 +67,7 @@ app.use(cors());
 app.use(dataRouter);
 app.use(commandRouter);
 app.use(missionRouter);
+app.use(stateRouter);
 
 // Camera
 if (config.camera && config.camera.enable) {
