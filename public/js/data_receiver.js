@@ -14,7 +14,7 @@ function success(result) {
 
     if (json.pos.length > 0) {
         var pos = json.pos[json.pos.length - 1].content;
-        yaw = (360 * (pos.yaw / (2 * Math.PI)) + 360)%360;
+        yaw = pos.yaw;
         setTelemetry(pos.lat, pos.lng, pos.yaw, pos.speed, pos.signal);
     }
     if (json.data.length > 0) {
@@ -26,8 +26,6 @@ function success(result) {
     }
     if (json.mot.length > 0) {
         var mot = json.mot[json.mot.length - 1].content;
-        mot.m1 = (mot.m1 - 4000) / 40;
-        mot.m2 = (mot.m2 - 4000) / 40;
         updateBars(mot.m1, mot.m2);
     }
     if (json.state.length > 0) {

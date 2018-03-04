@@ -2,6 +2,12 @@ var mainRow, footerBar, mainPanel;
 var mainTabContent, mainTabHead;
 var globalMapContainer;
 
+var speedLvl, yawLvl, latitude, longitude;
+var stateText, b1Lvl, b2Lvl, b1Image, b2Image;
+
+var states = ['En attente', 'Mission en cours', 'Mission interrompue', 'RTL', 'Alert de niveau 5'];
+var batteryImages = ['battery_very_low.png', 'battery_low.png', 'battery_not_so_full.png', 'battery_almost_full.png', 'battery_full.png'];
+
 var globalData = {
     pos: [],
     mot: [],
@@ -11,21 +17,24 @@ var globalData = {
 };
 
 function setTelemetry(lat, long, yaw, speed) {
-    $('#speed_lvl').html(Math.round(speed * 10) / 10 + ' m/s');
-    $('#yaw_lvl').html(Math.round((360 * (yaw / (2 * Math.PI)) + 360)%360) + '°');
-    $('#latitude').html(lat);
-    $('#longitude').html(long);
+    speedLvl.html(Math.round(speed * 10) / 10 + ' m/s');
+    yawLvl.html(Math.round(yaw) + '°');
+    latitude.html(lat);
+    longitude.html(long);
     updatePosition(lat, long);
 }
 
 function updateState(state) {
-    var states = ['En attente', 'Mission en cours', 'Mission interrompue', 'RTL', 'Alert de niveau 5'];
-    $('#state_text').html(states[state]);
+    stateText.html(states[state]);
 }
 
 function setBatteryLevels(b1, b2) {
-    $('#b1_lvl_bat').html('B1: ' + b1 + '%');
-    $('#b2_lvl_bat').html('B2: ' + b2 + '%');
+    var b1Idx = Math.floor((b1 + 24) / 25);
+    var b2Idx = Math.floor((b2 + 24) / 25);
+    b1Lvl.html('B1: ' + Math.round(b1) + '%');
+    b2Lvl.html('B2: ' + Math.round(b2) + '%');
+    b1Image.prop('src', 'images/' + batteryImages[b1Idx]);
+    b2Image.prop('src', 'images/' + batteryImages[b2Idx]);
 }
 
 function onWindowResized() {
@@ -46,6 +55,16 @@ $(document).ready(function() {
     mainTabContent = $('#main_tab_content');
     mainTabHead = $('#main_tab_head');
     globalMapContainer = $('#globalMap');
+
+    speedLvl = $('#speed_lvl');
+    yawLvl = $('#yaw_lvl');
+    latitude = $('#latitude');
+    longitude = $('#longitude');
+    stateText = $('#state_text');
+    b1Lvl = $('#b1_lvl_bat');
+    b2Lvl = $('#b2_lvl_bat');
+    b1Image = $('#b1_image');
+    b2Image = $('#b2_image');
 
     $(window).on('resize', onWindowResized);
     onWindowResized();
