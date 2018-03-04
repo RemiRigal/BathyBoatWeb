@@ -8,6 +8,7 @@ var dataClient = require('./tcp/data_client');
 var commandClient = require('./tcp/command_client');
 var mapDownloader = require('./utils/map_downloader');
 var ppmConverter = require('./utils/ppm_converter');
+var wsCamera = require('./ws/ws_camera');
 
 var dataRouter = require('./routes/data');
 var videoRouter = require('./routes/video');
@@ -17,6 +18,11 @@ var missionRouter = require('./routes/mission');
 
 // Config
 global.config = yaml.safeLoad(fs.readFileSync(__dirname + '/../../Config/config.yaml', 'utf8'));
+
+// Camera
+if (config.camera && config.camera.enable) {
+    wsCamera.initWebSocket();
+}
 
 // Global data
 global.currentMission = null;
