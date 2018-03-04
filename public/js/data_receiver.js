@@ -30,7 +30,7 @@ function success(result) {
     }
     if (json.state.length > 0) {
         var state = json.state[json.state.length - 1].content;
-        updateState(state.state);
+        setCurrentState(state.state);
     }
     setTimeout(requestData, 100);
 }

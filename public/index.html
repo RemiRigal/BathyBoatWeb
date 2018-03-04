@@ -29,6 +29,7 @@
     <script src="js/command.js"></script>
     <script src="js/radiale.js"></script>
     <script src="js/blueview.js"></script>
+    <script src="js/state_machine.js"></script>
 </head>
 <body>
 
@@ -112,18 +113,23 @@
                                         <h3 class="panel-title">Mission</h3>
                                     </div>
                                     <div class="panel-body">
-                                        <div class="row" style="padding-left: 15px; padding-right: 15px">
-                                            <div class="col-xs-6 text-center" style="padding-right: 4px">
-                                                <button class="btn btn-info" id="import_mission_button" style="width: 100%">Importer</button>
-                                                <input style="display:none;" id="importDialog" type="file"/>
+                                        <div id="panel_mission">
+                                            <div class="row" style="padding-left: 15px; padding-right: 15px">
+                                                <div class="col-xs-6 text-center" style="padding-right: 4px">
+                                                    <button class="btn btn-info" id="import_mission_button" style="width: 100%">Importer</button>
+                                                    <input style="display:none;" id="importDialog" type="file"/>
+                                                </div>
+                                                <div class="col-xs-6 text-center" style="padding-left: 4px; padding-right: 0">
+                                                    <a class="btn btn-info" href="" id="export_mission_button" style="width: 100%" download>Exporter</a>
+                                                </div>
                                             </div>
-                                            <div class="col-xs-6 text-center" style="padding-left: 4px; padding-right: 0">
-                                                <a class="btn btn-info" href="" id="export_mission_button" style="width: 100%" download>Exporter</a>
-                                            </div>
+                                            <button id="start_mission" style="width: 100%; margin-top: 10px" class="btn btn-success" type="button">Commencer la mission</button>
+                                            <button id="add_mission" style="width: 100%; margin-top: 10px; margin-bottom: 10px" class="btn btn-success" type="button">Ajouter une mission</button>
+                                            <div id="missions_list"></div>
                                         </div>
-                                        <button id="start_mission" style="width: 100%; margin-top: 10px" class="btn btn-success" type="button">Commencer la mission</button>
-                                        <button id="add_mission" style="width: 100%; margin-top: 10px; margin-bottom: 10px" class="btn btn-success" type="button">Ajouter une mission</button>
-                                        <div id="missions_list"></div>
+                                        <div id="panel_monitoring" style="display: none">
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>

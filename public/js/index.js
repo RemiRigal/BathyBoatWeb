@@ -3,9 +3,8 @@ var mainTabContent, mainTabHead;
 var globalMapContainer;
 
 var speedLvl, yawLvl, latitude, longitude;
-var stateText, b1Lvl, b2Lvl, b1Image, b2Image;
+var b1Lvl, b2Lvl, b1Image, b2Image;
 
-var states = ['En attente', 'Mission en cours', 'Mission interrompue', 'RTL', 'Alert de niveau 5'];
 var batteryImages = ['battery_very_low.png', 'battery_low.png', 'battery_not_so_full.png', 'battery_almost_full.png', 'battery_full.png'];
 
 var globalData = {
@@ -22,10 +21,6 @@ function setTelemetry(lat, long, yaw, speed) {
     latitude.html(lat);
     longitude.html(long);
     updatePosition(lat, long);
-}
-
-function updateState(state) {
-    stateText.html(states[state]);
 }
 
 function setBatteryLevels(b1, b2) {
@@ -60,7 +55,6 @@ $(document).ready(function() {
     yawLvl = $('#yaw_lvl');
     latitude = $('#latitude');
     longitude = $('#longitude');
-    stateText = $('#state_text');
     b1Lvl = $('#b1_lvl_bat');
     b2Lvl = $('#b2_lvl_bat');
     b1Image = $('#b1_image');
