@@ -18,14 +18,13 @@
     <script src="js/utils/map_projection.js"></script>
     <script src="js/index.js"></script>
     <script src="js/alerts.js"></script>
-    <script src="js/session.js"></script>
     <script src="js/data_receiver.js"></script>
     <script src="js/video.js"></script>
     <script src="js/motor_monitor.js"></script>
     <script src="js/imp_exp_mission.js"></script>
     <script src="js/fullscreen.js"></script>
     <script src="js/leaflet_map.js"></script>
-    <script src="js/mission_selection.js"></script>
+    <script src="js/mission.js"></script>
     <script src="js/command.js"></script>
     <script src="js/radiale.js"></script>
     <script src="js/blueview.js"></script>
@@ -247,8 +246,8 @@
     </div>
     <div id="footer_bar" class="footer-bottom navbar-fixed-bottom" style="text-align: center; font-size: 15px;">
         <div class="design col-md-1">
-            <span id="start_button" class="glyphicon glyphicon-play" style="padding: 10px"></span>
-            <span id="idle_button" class="glyphicon glyphicon-pause" style="padding: 10px"></span>
+            <span id="resume_button" class="glyphicon glyphicon-play" style="padding: 10px"></span>
+            <span id="pause_button" class="glyphicon glyphicon-pause" style="padding: 10px"></span>
         </div>
         <div class="col-md-3">
             <div class="copyright">
@@ -261,8 +260,8 @@
         <div class="design col-md-7">
             <div class="row">
                 <div class="col-xs-4">Progression: </div>
-                <div class="col-xs-8 progress progress-striped progress-bar-info active" style="height: 16px; margin: 8px 0 8px 0">
-                    <div class="progress-bar-info" id="session_progress" style="width: 100%; height: 100%"></div>
+                <div class="col-xs-8 progress" style="height: 16px; margin: 8px 0 8px 0">
+                    <div class="progress-bar progress-bar-info progress-striped" id="session_progress" style="width: 50%; height: 100%" aria-valuemin="0" aria-valuemax="0" role="progressbar"></div>
                 </div>
             </div>
         </div>

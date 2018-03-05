@@ -1,4 +1,4 @@
-var stopButton, rtlButton, startButton, idleButton, speedCursor, speedRegulation;
+var stopButton, rtlButton, resumeButton, pauseButton, speedCursor, speedRegulation;
 
 function sendCommandRequest(request, data) {
     $.ajax({
@@ -37,8 +37,8 @@ function onSpeedValueUpdated() {
 $(document).ready(function() {
     stopButton = $('#stop_button');
     rtlButton = $('#rtl_button');
-    startButton = $('#start_button');
-    idleButton = $('#idle_button');
+    resumeButton = $('#resume_button');
+    pauseButton = $('#pause_button');
     speedCursor = $('#speed_cursor');
     speedRegulation = $('#speed_regulation');
 
