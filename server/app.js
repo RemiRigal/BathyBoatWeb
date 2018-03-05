@@ -47,6 +47,11 @@ global.STATE_PAUSE = 2;
 global.STATE_RTL = 3;
 global.STATE_EMERGENCY = 4;
 global.currentState = STATE_IDLE;
+globalData.state.push({
+    type: '$STATE',
+    date: new Date(),
+    content: { state: currentState }
+});
 
 // TCP Clients
 global.commandTCP = undefined;

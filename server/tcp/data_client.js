@@ -73,8 +73,8 @@ function splitData(raw) {
         msg.content.m2 = (splitted[3] - 4000) / 40;
         msg.content.fidelity = splitted[4];
     } else if (msg.type === '$STATE') {
-        msg.content.state = splitted[2];
-        msg.content.stateText = states[splitted[2]];
+        msg.content.state = parseInt(splitted[2]);
+        msg.content.stateText = states[parseInt(splitted[2])];
     } else {
         return null;
     }
