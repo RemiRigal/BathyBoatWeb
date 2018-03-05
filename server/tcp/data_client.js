@@ -23,8 +23,11 @@ function onDataReceived(msg) {
             globalData.data.push(data);
             break;
         case '$STATE':
-            currentState = data.content.state;
-            globalData.state.push(data);
+            if (currentState !== data.content.state) {
+                currentState = data.content.state;
+                globalData.state.push(data);
+                console.log('New state: ' + states[currentState]);
+            }
     }
     if (globalData.pos.length > 50) {
         globalData.pos = globalData.pos.slice(globalData.pos.length - 50, globalData.pos.length - 1);
