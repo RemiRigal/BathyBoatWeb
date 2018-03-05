@@ -28,6 +28,12 @@ router.post('/command/pause', function(req, res) {
     res.send(true);
 });
 
+router.post('/command/stop', function(req, res) {
+    commandTCP.write('STOP\0');
+    res.status(200);
+    res.send(true);
+});
+
 router.post('/command/mission', function(req, res) {
     currentMission = req.body.mission;
     var missionName = getMissionName();

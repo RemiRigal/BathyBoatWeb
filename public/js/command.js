@@ -1,4 +1,4 @@
-var stopButton, rtlButton, resumeButton, pauseButton, speedCursor, speedRegulation;
+var emergencyButton, rtlButton, resumeButton, pauseButton, speedCursor, speedRegulation, stopButton;
 
 function sendCommandRequest(request, data) {
     $.ajax({
@@ -11,20 +11,24 @@ function sendCommandRequest(request, data) {
     });
 }
 
-function onStopButtonClicked() {
+function onEmergencyButtonClicked() {
     sendCommandRequest('/emergency');
 }
 
-function onStartButtonClicked() {
+function onResumeButtonClicked() {
     sendCommandRequest('/resume');
 }
 
-function onIdleButtonClicked() {
+function onPauseButtonClicked() {
     sendCommandRequest('/pause');
 }
 
 function onRTLButtonClicked() {
     sendCommandRequest('/rtl');
+}
+
+function onSTOPButtonClicked() {
+    sendCommandRequest('/stop');
 }
 
 function onSpeedValueUpdated() {
@@ -35,16 +39,18 @@ function onSpeedValueUpdated() {
 
 
 $(document).ready(function() {
-    stopButton = $('#stop_button');
+    emergencyButton = $('#emergency_button');
     rtlButton = $('#rtl_button');
     resumeButton = $('#resume_button');
     pauseButton = $('#pause_button');
     speedCursor = $('#speed_cursor');
     speedRegulation = $('#speed_regulation');
+    stopButton = $('#stop_button');
 
-    stopButton.on('click', onStopButtonClicked);
+    emergencyButton.on('click', onEmergencyButtonClicked);
     rtlButton.on('click', onRTLButtonClicked);
-    resumeButton.on('click', onStartButtonClicked);
-    pauseButton.on('click', onIdleButtonClicked);
-    speedCursor.on('input', onSpeedValueUpdated)
+    resumeButton.on('click', onResumeButtonClicked);
+    pauseButton.on('click', onPauseButtonClicked);
+    speedCursor.on('input', onSpeedValueUpdated);
+    stopButton.on('click', onSTOPButtonClicked);
 });
