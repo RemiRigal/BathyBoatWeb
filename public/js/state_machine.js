@@ -6,10 +6,11 @@ var sessionStart = null;
 var sessionDuration = 0;
 
 var currentState = 0;
-var states = ['En attente', 'Mission en cours', 'Mission interrompue', 'RTL', 'Alert de niveau 5'];
+var states = ['En attente', 'Mission en cours', 'Pause', 'RTL', 'Alerte de niv.5'];
 
 
 function setCurrentState(state) {
+    state = parseInt(state);
     if (currentState === state) {
         return;
     }
