@@ -1,5 +1,6 @@
 var panelMonitoring, panelMission, stateText;
 var sessionTime, sessionProgress;
+var pauseButtonFsm, resumeButtonFsm;
 
 var sessionStart = null;
 var sessionDuration = 0;
@@ -21,6 +22,7 @@ function setCurrentState(state) {
         case 1:
             startSessionDuration();
             setRunningState();
+            updateSessionTime();
             break;
         case 2:
             stopSessionDuration();
@@ -30,8 +32,12 @@ function setCurrentState(state) {
 }
 
 function updateSessionTime() {
-    sessionTime.html(sessionDuration.toLocaleTimeString());
-    // TODO: replace 600 with total time
+    if (sessionStart !== null) {
+        var now = new Date();
+        sessionDuration += (now - sessionStart);
+        sessionStart = now;
+    }
+    sessionTime.html(new Date(sessionDuration - (1000 * 3600)).toLocaleTimeString());
     var progress = Math.round(100 * sessionDuration / 60);
     sessionProgress.attr('style', 'width: ' + progress + '%');
     if (currentState === 1) {
@@ -41,11 +47,10 @@ function updateSessionTime() {
 
 function startSessionDuration() {
     sessionStart = new Date();
-    updateSessionTime();
 }
 
 function stopSessionDuration() {
-    sessionDuration += new Date() - sessionStart;
+    sessionDuration += (new Date() - sessionStart);
     sessionStart = null;
 }
 
@@ -59,10 +64,10 @@ function setIdleState() {
     panelMission.show();
     panelMonitoring.hide();
     missions.forEach(function(m) { m.missionDelete.show(); });
-    resumeButton.hide();
-    pauseButton.hide();
+    resumeButtonFsm.hide();
+    pauseButtonFsm.hide();
     sessionTime.parent().hide();
-    sessionProgress.parent().hide();
+    sessionProgress.parent().parent().hide();
 }
 
 function setRunningState() {
@@ -75,10 +80,10 @@ function setRunningState() {
     missions.forEach(function(m) { m.missionDelete.hide(); });
     globalMap.setMission(null);
     miniMap.setMission(null);
-    resumeButton.hide();
-    pauseButton.show();
+    resumeButtonFsm.hide();
+    pauseButtonFsm.show();
     sessionTime.parent().show();
-    sessionProgress.parent().show();
+    sessionProgress.parent().parent().show();
 }
 
 function setPauseState() {
@@ -91,10 +96,10 @@ function setPauseState() {
     missions.forEach(function(m) { m.missionDelete.hide(); });
     globalMap.setMission(null);
     miniMap.setMission(null);
-    resumeButton.show();
-    pauseButton.hide();
+    resumeButtonFsm.show();
+    pauseButtonFsm.hide();
     sessionTime.parent().show();
-    sessionProgress.parent().show();
+    sessionProgress.parent().parent().show();
 }
 
 function getCurrentState() {
@@ -114,9 +119,13 @@ $(document).ready(function() {
     stateText = $('#state_text');
     sessionTime = $('#session_time');
     sessionProgress = $('#session_progress');
+    pauseButtonFsm = $('#pause_button');
+    resumeButtonFsm = $('#resume_button');
 
+    pauseButtonFsm.hide();
+    resumeButtonFsm.hide();
     sessionTime.parent().hide();
-    sessionProgress.parent().hide();
+    sessionProgress.parent().parent().hide();
 
     getCurrentState();
 });

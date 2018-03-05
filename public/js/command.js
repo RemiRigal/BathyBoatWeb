@@ -44,7 +44,7 @@ $(document).ready(function() {
 
     stopButton.on('click', onStopButtonClicked);
     rtlButton.on('click', onRTLButtonClicked);
-    startButton.on('click', onStartButtonClicked);
-    idleButton.on('click', onIdleButtonClicked);
+    resumeButton.on('click', onStartButtonClicked);
+    pauseButton.on('click', onIdleButtonClicked);
     speedCursor.on('input', onSpeedValueUpdated)
 });
