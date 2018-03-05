@@ -54,6 +54,14 @@ router.post('/command/speed', function(req, res) {
     res.send(true);
 });
 
+router.post('/command/factors', function(req, res) {
+    var p = parseFloat(req.body.p);
+    var i = parseFloat(req.body.i);
+    commandTCP.write('FACTOR|' + p + '|' + i + '\0');
+    res.status(200);
+    res.send(true);
+});
+
 function getMissionName() {
     var now = new Date();
     return config.missions.name.replace('{DATE}', now.toLocaleDateString()).replace('{TIME}', now.toLocaleTimeString());

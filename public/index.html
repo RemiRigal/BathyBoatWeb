@@ -29,6 +29,7 @@
     <script src="js/radiale.js"></script>
     <script src="js/blueview.js"></script>
     <script src="js/state_machine.js"></script>
+    <script src="js/temp_pid_factor.js"></script>
 </head>
 <body>
 
@@ -159,6 +160,29 @@
                                                 <div>
                                                     Multiplicateur de vitesse: <strong><span id="speed_regulation">0.5</span></strong>
                                                     <input id="speed_cursor" type="range" min="0" max="100"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">PID</div>
+                                            <div class="panel-body">
+                                                <div>
+                                                    <div class="col-xs-10">
+                                                        <div class="pull-left"><label>Facteur P</label></div>
+                                                        <input class="form-control" id="p_factor" type="number" min="0.0" max="10.0" step="0.01" style="width: 50%"/>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <button class="btn btn-success" id="p_factor_button">OK</button>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="col-xs-10">
+                                                        <div class="pull-left"><label>Facteur I</label></div>
+                                                        <input class="form-control" id="i_factor" type="number" min="0.0" max="10.0" step="0.01" style="width: 50%"/>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <button class="btn btn-success" id="i_factor_button">OK</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
