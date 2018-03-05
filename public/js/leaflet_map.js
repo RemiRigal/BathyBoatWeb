@@ -1,7 +1,7 @@
 var globalMap, miniMap;
 
 
-function LeafletMap(id, position, zoom, interactive) {
+function LeafletMap(id, position, zoom, interactive, maxZoom, minZoom) {
 
     var leafletMap = this;
 
@@ -78,6 +78,11 @@ function LeafletMap(id, position, zoom, interactive) {
         if (leafletMap.interactive) {
             onAddPoint(latlng);
         }
+    };
+
+    this.setView = function(latlng) {
+        var currentZoom = leafletMap.map.getZoom();
+        leafletMap.map.setView(latlng, Math.max(currentZoom, 15));
     };
 
     this.addSecurityPolygon = function(){
@@ -159,7 +164,7 @@ function LeafletMap(id, position, zoom, interactive) {
         this.positionMarker.setRotationAngle(yaw);
         if (!this.interactive) {
             var currentZoom = leafletMap.map.getZoom();
-            this.map.flyTo(this.currentPosition, Math.max(currentZoom, 14));
+            this.map.setView(this.currentPosition, Math.max(currentZoom, 15));
         }
     };
 
@@ -211,7 +216,7 @@ function LeafletMap(id, position, zoom, interactive) {
                 container.style.marginLeft = '12px';
                 container.onclick = function() {
                     var currentZoom = leafletMap.map.getZoom();
-                    leafletMap.map.flyTo(leafletMap.currentPosition, Math.max(currentZoom, 14));
+                    leafletMap.map.setView(leafletMap.currentPosition, Math.max(currentZoom, 15));
                 };
                 container.onmouseenter = function () { leafletMap.mouseOverControl = true; };
                 container.onmouseleave = function () { leafletMap.mouseOverControl = false; };
@@ -233,8 +238,8 @@ function LeafletMap(id, position, zoom, interactive) {
 
     this.map = L.map(id).setView(position, zoom);
     L.tileLayer('http://' + document.location.hostname + ':29201/images/maps/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        minZoom: 3
+        maxZoom: maxZoom,
+        minZoom: minZoom
     }).addTo(this.map);
     var boatIcon = L.icon({
         iconUrl: 'http://' + document.location.hostname + ':29201/images/boat_icon.png',
@@ -276,6 +281,6 @@ function updatePosition(lat, lng) {
 
 
 $(document).ready(function() {
-    globalMap = new LeafletMap('globalMap', [45.199040, -1.015805], 5, true);
-    miniMap = new LeafletMap('miniMap', [45.199040, -1.015805], 5, false);
+    globalMap = new LeafletMap('globalMap', [45.199040, -1.015805], 5, true, 19, 3);
+    miniMap = new LeafletMap('miniMap', [45.199040, -1.015805], 5, false, 19, 15);
 });

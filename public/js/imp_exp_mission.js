@@ -39,6 +39,7 @@ function importMissions(jsonMission) {
     missionList.html('');
     missionId = 0;
     missions = [];
+    var first = true;
     jsonMission.missions.forEach(function(m) {
         missionId++;
         $('<div class="row" id="mission_' + missionId + '"  style="padding-left: 15px; padding-right: 15px"></div>').appendTo(missionList);
@@ -59,6 +60,12 @@ function importMissions(jsonMission) {
                 mission.nbrPoint++;
             });
         }
+        if (first) {
+            first = false;
+            var objects = mission.objects.get(globalMap.id);
+            var latlngs = mission.type === 'Waypoints' ? objects.polyline.getLatLngs() : objects.polygon.getLatLngs()[0];
+            globalMap.setView(latlngs[0]);
+        }
     });
 }
 
@@ -72,7 +79,6 @@ function onStartMissionButtonClicked() {
             console.log(error);
         }
     });
-    // TODO: disable interface
 }
 
 $(document).ready(function() {
