@@ -9,8 +9,10 @@ module.exports = function(name, ip, port, receiveCallback) {
     this.client.setEncoding('utf8');
 
     this.write = function(msg) {
-        console.log('Write to TCP ' + tcp.name + ': ' + msg);
-        tcp.client.write(msg);
+        if (tcp.client.remoteAddress !== undefined && !tcp.client.destroyed && !tcp.client.connecting) {
+            console.log('TCP', tcp.name, 'write: ', msg);
+            tcp.client.write(msg);
+        }
     };
 
     this.initConnection = function() {
@@ -27,7 +29,7 @@ module.exports = function(name, ip, port, receiveCallback) {
     });
 
     this.client.on('connect', function() {
-        console.log('TCP client ' + tcp.name + ' connected');
+        console.log('TCP', tcp.name, 'connected');
     });
 
     this.client.on('error', function(e) {
@@ -35,8 +37,8 @@ module.exports = function(name, ip, port, receiveCallback) {
     });
 
     this.client.on('close', function() {
-        console.log('Connection ' + tcp.name + ' timeout. Reconnecting...');
-        setTimeout(tcp.initConnection, 10000);
+        console.log('TCP', tcp.name, 'timeout. Reconnecting...');
+        setTimeout(tcp.initConnection, 5000);
     });
 
     this.name = name;
@@ -46,6 +48,6 @@ module.exports = function(name, ip, port, receiveCallback) {
 
     this.readBuffer = '';
 
-    console.log('Connecting TCP client: ' + tcp.name);
+    console.log('TCP', this.name, 'connection');
     this.client.connect(this.port, this.ip);
 };

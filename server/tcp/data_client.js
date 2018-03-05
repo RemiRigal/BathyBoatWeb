@@ -26,7 +26,7 @@ function onDataReceived(msg) {
             if (currentState !== data.content.state) {
                 currentState = data.content.state;
                 globalData.state.push(data);
-                console.log('New state: ' + states[currentState]);
+                console.log('State:', states[currentState]);
             }
     }
     if (globalData.pos.length > 50) {
