@@ -88,7 +88,7 @@ function setRunningState() {
     resumeButtonFsm.hide();
     pauseButtonFsm.show();
     sessionTime.parent().show();
-    sessionProgress.parent().parent().show();
+    //sessionProgress.parent().parent().show();
 }
 
 function setPauseState() {
@@ -104,7 +104,7 @@ function setPauseState() {
     resumeButtonFsm.show();
     pauseButtonFsm.hide();
     sessionTime.parent().show();
-    sessionProgress.parent().parent().show();
+    //sessionProgress.parent().parent().show();
 }
 
 function getCurrentState() {
