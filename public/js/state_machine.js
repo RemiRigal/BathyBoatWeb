@@ -51,8 +51,12 @@ function startSessionDuration() {
 }
 
 function stopSessionDuration() {
-    sessionDuration += (new Date() - sessionStart);
-    sessionStart = null;
+    if (sessionStart === null) {
+        sessionDuration = 0;
+    } else {
+        sessionDuration += (new Date() - sessionStart);
+        sessionStart = null;
+    }
 }
 
 function resetSessionDuration() {
