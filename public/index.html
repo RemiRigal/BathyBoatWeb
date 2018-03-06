@@ -29,7 +29,7 @@
     <script src="js/radiale.js"></script>
     <script src="js/blueview.js"></script>
     <script src="js/state_machine.js"></script>
-    <script src="js/temp_pid_factor.js"></script>
+    <script src="js/pid_factor.js"></script>
 </head>
 <body>
 
@@ -141,6 +141,9 @@
                                         <div class="panel panel-default">
                                             <div class="panel-body">
                                                 <div class="btn btn-info" id="rtl_button" style="width: 100%"><strong>RTL</strong></div>
+                                                <div style="margin-top: 10px">Multiplicateur de vitesse: <strong><span id="speed_regulation">0.5</span></strong>
+                                                    <input id="speed_cursor" type="range" min="0" max="100"/>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="panel panel-default">
@@ -154,35 +157,32 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="panel panel-default">
-                                            <div class="panel-body">
-                                                <div style="margin-bottom: 10px">Fiabilité de la navigation: <strong id="reliability">_</strong></div>
-                                                <div>
-                                                    Multiplicateur de vitesse: <strong><span id="speed_regulation">0.5</span></strong>
-                                                    <input id="speed_cursor" type="range" min="0" max="100"/>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <!--<div class="panel panel-default">-->
+                                            <!--<div class="panel-body">-->
+                                                <!--<div style="margin-bottom: 10px">Fiabilité de la navigation: <strong id="reliability">_</strong></div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
                                         <div class="panel panel-info">
                                             <div class="panel-heading">PID</div>
-                                            <div class="panel-body">
-                                                <div>
-                                                    <div class="col-xs-10">
-                                                        <div class="pull-left"><label>Facteur P</label></div>
-                                                        <input class="form-control" id="p_factor" type="number" min="0.0" max="10.0" step="0.01" style="width: 50%"/>
+                                            <div class="panel-body form-group-sm">
+                                                <div class="row" style="padding: 10px">
+                                                    <div class="col-xs-3">
+                                                        <div>Facteur P</div>
                                                     </div>
-                                                    <div class="col-xs-2">
-                                                        <button class="btn btn-success" id="p_factor_button">OK</button>
+                                                    <div class="col-xs-9">
+                                                        <input class="form-control" id="p_factor" type="number" min="0.0" max="10.0" step="0.01"/>
                                                     </div>
                                                 </div>
-                                                <div>
-                                                    <div class="col-xs-10">
-                                                        <div class="pull-left"><label>Facteur I</label></div>
-                                                        <input class="form-control" id="i_factor" type="number" min="0.0" max="10.0" step="0.01" style="width: 50%"/>
+                                                <div class="row" style="padding: 10px">
+                                                    <div class="col-xs-3">
+                                                        <div>Facteur I</div>
                                                     </div>
-                                                    <div class="col-xs-2">
-                                                        <button class="btn btn-success" id="i_factor_button">OK</button>
+                                                    <div class="col-xs-9">
+                                                        <input class="form-control" id="i_factor" type="number" min="0.0" max="10.0" step="0.01"/>
                                                     </div>
+                                                </div>
+                                                <div class="row text-center center-block" style="padding: 10px">
+                                                    <button class="btn btn-success" id="pi_factor_button">Valider</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -204,52 +204,52 @@
                             </table>
                         </div>
                         <div class="tab-pane clearfix" id="tab-measures">
-                            <table class="table">
-                                <tr>
-                                    <td class="col-md-6">
-                                        <div class="panel panel-primary">
-                                            <div class="panel-heading">
-                                                <h3 class="panel-title">Données</h3>
-                                            </div>
-                                            <div class="panel-body">
-                                                <table class="table table-striped table-hover">
-                                                    <tr>
-                                                        <td class="col-md-6">Température</td>
-                                                        <td class="col-md-6" id="temperature">10°</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="col-md-6">Profondeur</td>
-                                                        <td class="col-md-6" id="depth">5m</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="col-md-6">Classe des fonds</td>
-                                                        <td class="col-md-6" id="ground_class">Vase</td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="col-md-6">
-                                        <div class="panel panel-primary">
-                                            <div class="panel-heading">
-                                                <h3 class="panel-title">Contrôle qualité</h3>
-                                            </div>
-                                            <div class="panel-body">
-                                                <table class="table table-striped table-hover">
-                                                    <tr>
-                                                        <td class="col-md-6">Mode du GPS</td>
-                                                        <td class="col-md-6" id="gps_mode">Mode1</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="col-md-6">Réception des corrections</td>
-                                                        <td class="col-md-6" id="bool_correction_reception">OUI</td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
+                            <!--<table class="table">-->
+                                <!--<tr>-->
+                                    <!--<td class="col-md-6">-->
+                                        <!--<div class="panel panel-primary">-->
+                                            <!--<div class="panel-heading">-->
+                                                <!--<h3 class="panel-title">Données</h3>-->
+                                            <!--</div>-->
+                                            <!--<div class="panel-body">-->
+                                                <!--<table class="table table-striped table-hover">-->
+                                                    <!--<tr>-->
+                                                        <!--<td class="col-md-6">Température</td>-->
+                                                        <!--<td class="col-md-6" id="temperature">10°</td>-->
+                                                    <!--</tr>-->
+                                                    <!--<tr>-->
+                                                        <!--<td class="col-md-6">Profondeur</td>-->
+                                                        <!--<td class="col-md-6" id="depth">5m</td>-->
+                                                    <!--</tr>-->
+                                                    <!--<tr>-->
+                                                        <!--<td class="col-md-6">Classe des fonds</td>-->
+                                                        <!--<td class="col-md-6" id="ground_class">Vase</td>-->
+                                                    <!--</tr>-->
+                                                <!--</table>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</td>-->
+                                    <!--<td class="col-md-6">-->
+                                        <!--<div class="panel panel-primary">-->
+                                            <!--<div class="panel-heading">-->
+                                                <!--<h3 class="panel-title">Contrôle qualité</h3>-->
+                                            <!--</div>-->
+                                            <!--<div class="panel-body">-->
+                                                <!--<table class="table table-striped table-hover">-->
+                                                    <!--<tr>-->
+                                                        <!--<td class="col-md-6">Mode du GPS</td>-->
+                                                        <!--<td class="col-md-6" id="gps_mode">Mode1</td>-->
+                                                    <!--</tr>-->
+                                                    <!--<tr>-->
+                                                        <!--<td class="col-md-6">Réception des corrections</td>-->
+                                                        <!--<td class="col-md-6" id="bool_correction_reception">OUI</td>-->
+                                                    <!--</tr>-->
+                                                <!--</table>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</td>-->
+                                <!--</tr>-->
+                            <!--</table>-->
                             <div class="panel panel-info">
                                 <div class="panel-heading">
                                     <h3 class="panel-title">BlueView</h3>

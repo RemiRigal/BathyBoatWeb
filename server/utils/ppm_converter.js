@@ -4,9 +4,9 @@ var PNG = require('pngjs').PNG;
 
 
 var blueviewImagePattern = '/images/blueview';
-var ppmPath = '/home/user/BlueView/bvtsdk/examples/net_sonar/cimg.ppm';
-var pngPath = '/var/www/public/images/blueview/img.png';
-var pngNormalizedPath = '/var/www/public/images/blueview/imgn.png';
+var ppmPath = '/home/helios/Blueview/Daemon/cimg.ppm';
+var pngPath = '/home/helios/Helios/Web/public/images/blueview/img.png';
+var pngNormalizedPath = '/home/helios/Helios/Web/public/images/blueview/imgn.png';
 
 
 module.exports = function(req, res, next) {
