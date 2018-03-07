@@ -166,6 +166,20 @@ function LeafletMap(id, position, zoom, interactive, maxZoom, minZoom) {
             var currentZoom = leafletMap.map.getZoom();
             this.map.setView(this.currentPosition, Math.max(currentZoom, 15));
         }
+        var lastTrackLatLngs = this.track.getLatLngs();
+        if (lastTrackLatLngs.length > 0) {
+            var lastTrack = lastTrackLatLngs[lastTrackLatLngs.length - 1];
+            var distance = Math.sqrt(Math.pow(lastTrack.lat - this.currentPosition.lat, 2) + Math.pow(lastTrack.lng - this.currentPosition.lng, 2));
+            if (distance > 0.00001) {
+                lastTrackLatLngs.push(this.currentPosition);
+                if (lastTrackLatLngs.length > 10000) {
+                    lastTrackLatLngs = lastTrackLatLngs.slice(1);
+                }
+                this.track.setLatLngs(lastTrackLatLngs);
+            }
+        } else {
+            this.track.addLatLng(this.currentPosition);
+        }
     };
 
     this.displayRadiales = function() {
@@ -235,7 +249,6 @@ function LeafletMap(id, position, zoom, interactive, maxZoom, minZoom) {
     this.interactive = interactive;
     this.currentPosition = new L.LatLng(0, 0);
     this.mouseOverControl = false;
-
     this.map = L.map(id).setView(position, zoom);
     L.tileLayer('http://' + document.location.hostname + ':29201/images/maps/{z}/{x}/{y}.png', {
         maxZoom: maxZoom,
@@ -251,6 +264,7 @@ function LeafletMap(id, position, zoom, interactive, maxZoom, minZoom) {
         icon: boatIcon,
         attribution: 'Position'
     }).addTo(this.map);
+    this.track = L.polyline([], {color: '#00fffc', weight: 5, pane: 'shadowPane' }).addTo(this.map);
 
     if (interactive) {
         this.map.on('click', this.onMapClicked);

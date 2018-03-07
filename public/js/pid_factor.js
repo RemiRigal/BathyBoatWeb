@@ -1,5 +1,4 @@
-var pFactor, pFactorButton;
-var iFactor, iFactorButton;
+var pFactor, piFactorButton, iFactor;
 
 
 function sendFactors() {
@@ -12,10 +11,8 @@ function sendFactors() {
 
 $(document).ready(function() {
     pFactor = $('#p_factor');
-    pFactorButton = $('#p_factor_button');
     iFactor = $('#i_factor');
-    iFactorButton = $('#i_factor_button');
+    piFactorButton = $('#pi_factor_button');
 
-    pFactorButton.on('click', sendFactors);
-    iFactorButton.on('click', sendFactors);
+    piFactorButton.on('click', sendFactors);
 });

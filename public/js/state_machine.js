@@ -51,8 +51,12 @@ function startSessionDuration() {
 }
 
 function stopSessionDuration() {
-    sessionDuration += (new Date() - sessionStart);
-    sessionStart = null;
+    if (sessionStart === null) {
+        sessionDuration = 0;
+    } else {
+        sessionDuration += (new Date() - sessionStart);
+        sessionStart = null;
+    }
 }
 
 function resetSessionDuration() {
@@ -84,7 +88,7 @@ function setRunningState() {
     resumeButtonFsm.hide();
     pauseButtonFsm.show();
     sessionTime.parent().show();
-    sessionProgress.parent().parent().show();
+    //sessionProgress.parent().parent().show();
 }
 
 function setPauseState() {
@@ -100,7 +104,7 @@ function setPauseState() {
     resumeButtonFsm.show();
     pauseButtonFsm.hide();
     sessionTime.parent().show();
-    sessionProgress.parent().parent().show();
+    //sessionProgress.parent().parent().show();
 }
 
 function getCurrentState() {
