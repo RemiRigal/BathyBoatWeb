@@ -4,9 +4,9 @@ var PNG = require('pngjs').PNG;
 
 
 var blueviewImagePattern = '/images/blueview';
-var ppmPath = '/home/user/BlueView/bvtsdk/examples/net_sonar/cimg.ppm';
-var pngPath = '/var/www/public/images/blueview/img.png';
-var pngNormalizedPath = '/var/www/public/images/blueview/imgn.png';
+var ppmPath = '/home/helios/Blueview/bvtsdk/examples/net_sonar/cimg.ppm';
+var pngPath = '/home/helios/Helios/Web/public/images/blueview/img.png';
+var pngNormalizedPath = '/home/helios/Helios/Web/public/images/blueview/imgn.png';
 
 
 module.exports = function(req, res, next) {
@@ -14,7 +14,7 @@ module.exports = function(req, res, next) {
         next();
         return;
     }
-    shell.exec('convert ' + ppmPath + ' ' + pngPath);
+    shell.exec('convert ' + ppmPath + ' ' + pngPath, { silent: true });
     var readStream = fs.createReadStream(pngPath).pipe(new PNG({filterType: 4}));
     readStream.on('parsed', function() {
         var min = 255;
