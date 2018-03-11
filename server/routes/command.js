@@ -37,8 +37,12 @@ router.post('/command/stop', function(req, res) {
 router.post('/command/mission', function(req, res) {
     currentMission = req.body.mission;
     var missionName = getMissionName();
-    var file = fs.createWriteStream(config.missions.path + missionName);
-    file.on('open', function() {
+    var file = fs.createWriteStream(config.common.missions.path + missionName);
+    file.on('open', function(error) {
+        if (error) {
+            console.log('Error saving mission:', error);
+            return;
+        }
         file.write(currentMission);
         file.close();
         commandTCP.write('MISSION|' + missionName + '\0');
@@ -64,7 +68,7 @@ router.post('/command/factors', function(req, res) {
 
 function getMissionName() {
     var now = new Date();
-    return config.missions.name.replace('{DATE}', now.toLocaleDateString()).replace('{TIME}', now.toLocaleTimeString());
+    return config.common.missions.name.replace('{DATE}', now.toLocaleDateString()).replace('{TIME}', now.toLocaleTimeString());
 }
 
 module.exports = router;

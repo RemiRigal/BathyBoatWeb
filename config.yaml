@@ -8,27 +8,52 @@
 #         config.yaml
 # If not present, this file will be used by default
 
-### Required ###
-webServer:
-    port: 29201
-    rosIP: 127.0.0.1
-missions:
-    path: /home/helios/Helios/Missions/
-    name: Mission_Brest_{DATE}_{TIME}.json
-tcp:
-    dataPort: 29200
-    commandPort: 22300
+### COMMON ###
+common:
+    # REQUIRED #
+    missions:
+        path: /home/helios/Helios/Missions/
+        name: Mission_Brest_{DATE}_{TIME}.json
+    tcp:
+        dataPort: 29200
+        commandPort: 22300
 
-### Optional ###
-map:
-    initialPosition:
-        lat: 48.395497
-        lng: -4.390246
-camera:
-    enable: true
-    streamPort: 8081
-    webSocketPort: 8082
-    record:
+### WEB ###
+web:
+    # REQUIRED #
+    webServer:
+        port: 29201
+        rosIP: 127.0.0.1
+    # OPTIONAL #
+    map:
+        initialPosition:
+            lat: 48.395497
+            lng: -4.390246
+    camera: 
         enable: true
-        path: /home/helios/Helios/Recordings/
-        name: Record_Brest_{DATE}_{TIME}.ts
+        streamPort: 8081
+        webSocketPort: 8082
+        record:
+            enable: true
+            path: /home/helios/Helios/Recordings/
+            name: Record_Brest_{DATE}_{TIME}.ts
+
+### ROS ###
+ros:
+    # REQUIRED #
+    target:
+        accept_dist: 2.0
+    pololu:
+        serial_path: /dev/pololu_servo_serial
+        turn_gap: 1000
+    simulation:
+        x_initial: 155165.0
+        y_initial: 6829365.0
+        yaw_initial: 0.0
+    regulation:
+        full_left: 2.5
+        k_P: 0.5
+        k_I: 0.5
+        k_D: 0.0
+        initial_speed: 0.5
+

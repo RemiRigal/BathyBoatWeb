@@ -4,7 +4,7 @@ var tcpClient = require('./tcp_client');
 var states = ['Idle', 'Running', 'Pause', 'RTL', 'Emergency'];
 
 module.exports = function() {
-    dataTCP = new tcpClient('Data', config.webServer.rosIP, config.tcp.dataPort, onDataReceived);
+    dataTCP = new tcpClient('Data', config.web.webServer.rosIP, config.common.tcp.dataPort, onDataReceived);
 };
 
 function onDataReceived(msg) {

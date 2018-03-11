@@ -32,11 +32,11 @@ global.globalData = {
     data: [],
     state: []
 };
-if (config.map && config.map.initialPosition && config.map.initialPosition.lat && config.map.initialPosition.lng) {
+if (config.common.map && config.common.map.initialPosition && config.common.map.initialPosition.lat && config.common.map.initialPosition.lng) {
     globalData.pos.push({
         type: '$POS',
         date: new Date(),
-        content: {lat: config.map.initialPosition.lat, lng: config.map.initialPosition.lng, yaw: 0, speed: 0, signal: 0}
+        content: {lat: config.common.map.initialPosition.lat, lng: config.common.map.initialPosition.lng, yaw: 0, speed: 0, signal: 0}
     });
 }
 
@@ -75,9 +75,9 @@ app.use(missionRouter);
 app.use(stateRouter);
 
 // Camera
-if (config.camera && config.camera.enable) {
+if (config.web.camera && config.web.camera.enable) {
     app.use(videoRouter);
     wsCamera.initWebSocket();
 }
 
-app.listen(config.webServer.port);
+app.listen(config.web.webServer.port);

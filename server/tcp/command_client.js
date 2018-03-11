@@ -2,7 +2,7 @@ var tcpClient = require('./tcp_client');
 
 
 module.exports = function() {
-    commandTCP = new tcpClient('Command', config.webServer.rosIP, config.tcp.commandPort, onDataReceived);
+    commandTCP = new tcpClient('Command', config.web.webServer.rosIP, config.common.tcp.commandPort, onDataReceived);
 };
 
 function onDataReceived(msg) {

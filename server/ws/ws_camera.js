@@ -4,7 +4,7 @@ var ws = require('ws');
 
 
 exports.initWebSocket = function() {
-    var socketServer = new ws.Server({port: config.camera.webSocketPort, perMessageDeflate: false});
+    var socketServer = new ws.Server({port: config.web.camera.webSocketPort, perMessageDeflate: false});
     socketServer.connectionCount = 0;
     socketServer.on('connection', function(socket) {
         socketServer.connectionCount++;
@@ -34,11 +34,11 @@ exports.initWebSocket = function() {
             }
         });
 
-        if (config.camera.record && config.camera.record.enable) {
+        if (config.web.camera.record && config.web.camera.record.enable) {
             var now = new Date();
-            var fileName = config.camera.record.name.replace('{DATE}', now.toLocaleDateString()).replace('{TIME}', now.toLocaleTimeString());
-            var path = config.camera.record.path + fileName;
+            var fileName = config.web.camera.record.name.replace('{DATE}', now.toLocaleDateString()).replace('{TIME}', now.toLocaleTimeString());
+            var path = config.web.camera.record.path + fileName;
             request.socket.recording = fs.createWriteStream(path);
         }
-    }).listen(config.camera.streamPort);
+    }).listen(config.web.camera.streamPort);
 };
