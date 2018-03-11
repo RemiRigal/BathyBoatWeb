@@ -31,6 +31,8 @@ function success(result) {
     if (json.state.length > 0) {
         var state = json.state[json.state.length - 1].content;
         setCurrentState(state.state);
+        setRegulationFactors(state.pFactor, state.iFactor, state.dFactor);
+        setSpeedFactor(state.speedFactor);
     }
     setTimeout(requestData, 100);
 }

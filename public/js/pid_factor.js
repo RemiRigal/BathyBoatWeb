@@ -8,6 +8,11 @@ function sendFactors() {
     });
 }
 
+function setRegulationFactors(kp, ki, kd) {
+    pFactor.prop('value', kp);
+    iFactor.prop('value', ki);
+}
+
 
 $(document).ready(function() {
     pFactor = $('#p_factor');

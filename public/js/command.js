@@ -37,6 +37,11 @@ function onSpeedValueUpdated() {
     sendCommandRequest('/speed', { speed: value });
 }
 
+function setSpeedFactor(speedFactor) {
+    speedCursor.prop('value', speedFactor);
+    speedRegulation.html(speedFactor + "");
+}
+
 
 $(document).ready(function() {
     emergencyButton = $('#emergency_button');

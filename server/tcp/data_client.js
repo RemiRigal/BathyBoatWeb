@@ -75,6 +75,10 @@ function splitData(raw) {
     } else if (msg.type === '$STATE') {
         msg.content.state = parseInt(splitted[2]);
         msg.content.stateText = states[parseInt(splitted[2])];
+        msg.content.speedFactor = splitted[3];
+        msg.content.pFactor = splitted[4];
+        msg.content.iFactor = splitted[5];
+        msg.content.dFactor = splitted[6];
     } else {
         return null;
     }
