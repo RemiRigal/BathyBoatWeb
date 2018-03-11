@@ -31,8 +31,8 @@ function success(result) {
     if (json.state.length > 0) {
         var state = json.state[json.state.length - 1].content;
         setCurrentState(state.state);
-        setRegulationFactors(state.pFactor, state.iFactor, state.dFactor);
-        setSpeedFactor(state.speedFactor);
+        setRegulationFactors(state.pFactor || 0, state.iFactor || 0, state.dFactor || 0);
+        setSpeedFactor(state.speedFactor || 0);
     }
     setTimeout(requestData, 100);
 }
