@@ -17,6 +17,11 @@ common:
     tcp:
         dataPort: 29200
         commandPort: 22300
+    # OPTIONAL #
+    map:
+        initialPosition:
+            lat: 48.395497
+            lng: -4.390246
 
 ### WEB ###
 web:
@@ -25,11 +30,7 @@ web:
         port: 29201
         rosIP: 127.0.0.1
     # OPTIONAL #
-    map:
-        initialPosition:
-            lat: 48.395497
-            lng: -4.390246
-    camera: 
+    camera:
         enable: true
         streamPort: 8081
         webSocketPort: 8082
