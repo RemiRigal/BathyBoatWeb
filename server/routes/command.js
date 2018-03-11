@@ -37,14 +37,13 @@ router.post('/command/stop', function(req, res) {
 router.post('/command/mission', function(req, res) {
     currentMission = req.body.mission;
     var missionName = getMissionName();
-    var file = fs.createWriteStream(config.common.missions.path + missionName);
-    file.on('open', function(error) {
+
+    fs.writeFile(config.common.missions.path + missionName, currentMission, function (error) {
         if (error) {
-            console.log('Error saving mission:', error);
-            return;
+            res.status(500);
+            res.send('Unable to save mission file');
+            throw error;
         }
-        file.write(currentMission);
-        file.close();
         commandTCP.write('MISSION|' + missionName + '\0');
         res.status(200);
         res.send(true);
